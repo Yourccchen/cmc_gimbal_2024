@@ -1,0 +1,13 @@
+//
+// Created by mjw on 2022/9/29.
+//
+
+#ifndef GIMBAL_2023_ABOARD_WITREG_H
+#define GIMBAL_2023_ABOARD_WITREG_H
+
+#define IMU_HEAD 0X55
+#define IMU_ANGLE 0X53
+#define IMU_QUATERNION 0X59
+#define IMU_SPEED 0X52
+
+#endif //GIMBAL_2023_ABOARD_WITREG_H
