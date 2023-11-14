@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CMakePresetLoader"><![CDATA[{
-  "useNewFormat": true
-}]]></component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
   <component name="CMakeReloadState">
     <option name="reloaded" value="true" />
   </component>
@@ -17,7 +20,71 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="build: 建立英雄云台C板工程">
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS.lib" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS_middleware.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS_middleware.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_common_tables.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_const_structs.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_math.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/core_sc000.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/core_sc300.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_delay.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_delay.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_flash.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_flash.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_imu_pwm.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_imu_pwm.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/controller/pid_imu.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/controller/pid_imu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088Middleware.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088Middleware.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088driver.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088driver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088reg.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver_middleware.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver_middleware.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/task/struct_typedef.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/FreeRTOSConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/FreeRTOSConfig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/stm32f4xx_hal_conf.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/stm32f4xx_hal_conf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/stm32f4xx_it.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/stm32f4xx_it.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/tim.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/tim.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/usart.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/usart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/dma.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/dma.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/freertos.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/freertos.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/gpio.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/gpio.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/tim.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/tim.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/USB_DEVICE/App/usbd_desc.c" beforeDir="false" afterPath="$PROJECT_DIR$/USB_DEVICE/App/usbd_desc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/USB_DEVICE/Target/usbd_conf.h" beforeDir="false" afterPath="$PROJECT_DIR$/USB_DEVICE/Target/usbd_conf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMUC/imuc.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMUC/imuc.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMUC/witreg.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +118,11 @@
     "WebServerToolWindowFactoryState": "false",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024",
+    "last_opened_file_path": "D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024/User/Framework",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
@@ -59,13 +130,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+  <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
@@ -73,6 +145,18 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="cmc_gimbal_2024.elf" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" nameIsGenerated="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
+      <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="D:\Programs\Clion_Programs\daplink_F4.cfg" reset-type="INIT" download-type="ALWAYS">
+        <debugger kind="GDB" isBundled="true" />
+      </openocd>
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake 应用程序.cmc_gimbal_2024.elf" />
+      <item itemvalue="OpenOCD 下载并运行.cmc_gimbal_2024.elf" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -82,8 +166,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1699843821352</updated>
-      <workItem from="1699843847096" duration="3826000" />
+      <workItem from="1699843847096" duration="6003000" />
+      <workItem from="1699964739683" duration="4420000" />
     </task>
+    <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
+      <created>1699874062731</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699874062731</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,5 +198,7 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="build: 建立英雄云台C板工程" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: 建立英雄云台C板工程" />
   </component>
 </project>

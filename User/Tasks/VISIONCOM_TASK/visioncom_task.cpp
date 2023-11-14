@@ -8,7 +8,6 @@
 #include "task.h"
 #include "cmsis_os.h"
 #include "remotec.h"
-#include "imuc.h"
 #include "bsp_can.h"
 #include "debugc.h"
 #include "main.h"
@@ -43,16 +42,16 @@ void VisionChattingLoop(uint8_t mode)
 //	float x = IMU_Quaternion().x;
 //	float y = IMU_Quaternion().y;
 //	float z = IMU_Quaternion().z;
-    float roll = IMU_NavigationAngle().roll;
-    float pitch = IMU_NavigationAngle().pitch; //用原始角好还是连续化之后的好？
-    float yaw = IMU_NavigationAngle().yaw;
+//    float roll = IMU_NavigationAngle().roll;
+//    float pitch = IMU_NavigationAngle().pitch; //用原始角好还是连续化之后的好？
+//    float yaw = IMU_NavigationAngle().yaw;
 //	if (Color_now == 1)	send_packet.color =0;
 //	if (Color_now == 0)	send_packet.color =1;
     send_packet.header = 0x5A;
     send_packet.shoot_spd = ShootSpeed;
-    send_packet.pitch = pitch;
-    send_packet.yaw = yaw;
-    send_packet.roll = roll;
+//    send_packet.pitch = pitch;
+//    send_packet.yaw = yaw;
+//    send_packet.roll = roll;
 
 //    if(MyColor == 0)
 //        send_packet.enemy_color = 'B';

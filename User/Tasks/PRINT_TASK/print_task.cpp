@@ -9,7 +9,7 @@
 #include "gimbalc.h"
 
 
-void PrintTask(void const* argument)
+void PrintControlTask(void const* argument)
 {
     /* USER CODE BEGIN GimbalControlTask */
     portTickType CurrentTime;

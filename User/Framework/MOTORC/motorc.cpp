@@ -6,7 +6,7 @@
 #include "bsp_can.h"
 #include "debugc.h"
 #include "gimbalc.h"
-#include "imuc.h"
+#include "INS_task.h"
 /**
   *@brief   M3508角度连续化,并判断方向
   *@param   编码值读到的上次角度Last和当前角度Now

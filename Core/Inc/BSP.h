@@ -21,6 +21,7 @@
 #include "power.h"
 #include "bsp_can.h"
 #include "gimbalc.h"
-#include "imuc.h"
 #include "laser.h"
+#include "spi.h"
+#include "i2c.h"
 #endif //CMC_GIMBAL_2024_BSP_H

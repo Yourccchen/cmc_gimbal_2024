@@ -3,7 +3,7 @@
 //
 
 #include "gimbalc.h"
-
+#include "INS_task.h"
 
 cGimbal gimbal; //定义云台总类
 extern ReceivePacket vision_pkt;
@@ -532,5 +532,6 @@ void cGimbal::Printf_Test()
 //                 ,vision_pkt.offset_pitch,lowfilter.Filter(vision_pkt.offset_pitch));
     //按键打印//
 //    usart_printf("%d,%d\r\n",RC_GetDatas().key.A.Now_State,RC_GetDatas().key.Q.Is_Click_Once);
-    usart_printf("%d,%d\r\n",Debug_Param().speed_maxIntegral,motors[ShootLMotor].RawSpeed);
+//    usart_printf("%d,%d\r\n",Debug_Param().speed_maxIntegral,motors[ShootLMotor].RawSpeed);
+    usart_printf("%f,%f\r\n", IMU_Angle(PIH_ANGLE),IMU_Angle(YAW_ANGLE));
 }

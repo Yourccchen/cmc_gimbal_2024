@@ -60,13 +60,10 @@
 #define SHOOT_FORBID 0
 #define SHOOT_PERMIT 1
 
-
-
 extern ExtU rtU;
 extern ExtY rtY;
 #define Pid_In rtU
 #define Pid_Out rtY //matlab生成的PID
-
 
 ///电机PID计算枚举类型
 typedef enum
