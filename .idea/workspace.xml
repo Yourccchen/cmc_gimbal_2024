@@ -20,11 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 移植C盘陀螺仪文件">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 解决了任务无法进入的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -129,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1699969504753</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix: 解决了任务无法进入的问题">
+      <created>1700053874588</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700053874588</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,6 +161,7 @@
     </ignored-roots>
     <MESSAGE value="build: 建立英雄云台C板工程" />
     <MESSAGE value="feat: 移植C盘陀螺仪文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 移植C盘陀螺仪文件" />
+    <MESSAGE value="fix: 解决了任务无法进入的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 解决了任务无法进入的问题" />
   </component>
 </project>

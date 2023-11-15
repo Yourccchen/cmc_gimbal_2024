@@ -533,5 +533,8 @@ void cGimbal::Printf_Test()
     //按键打印//
 //    usart_printf("%d,%d\r\n",RC_GetDatas().key.A.Now_State,RC_GetDatas().key.Q.Is_Click_Once);
 //    usart_printf("%d,%d\r\n",Debug_Param().speed_maxIntegral,motors[ShootLMotor].RawSpeed);
-    usart_printf("%f,%f\r\n", IMU_Angle(PIH_ANGLE),IMU_Angle(YAW_ANGLE));
+//    float pitch_angle= IMU_Angle(PIH_ANGLE);
+//    float yaw_angle= IMU_Angle(YAW_ANGLE);
+//    usart_printf("%f,%f\r\n", pitch_angle,yaw_angle);
+    usart_printf("%f,%f,%f\r\n",INS_angle[0],INS_angle[1],INS_angle[2]);
 }

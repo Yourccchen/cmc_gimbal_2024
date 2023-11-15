@@ -706,7 +706,6 @@ float IMU_Angle(int8_t Witch_angle)
             return imuAngle[INS_PITCH_ADDRESS_OFFSET] * rad2degree;
         case 2:
             return imuAngle[INS_YAW_ADDRESS_OFFSET] * rad2degree;
-
     }
 }
 /**

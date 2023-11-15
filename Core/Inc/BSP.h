@@ -24,4 +24,5 @@
 #include "laser.h"
 #include "spi.h"
 #include "i2c.h"
+#include "bsp_delay.h"
 #endif //CMC_GIMBAL_2024_BSP_H

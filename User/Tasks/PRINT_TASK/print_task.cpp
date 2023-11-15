@@ -7,7 +7,7 @@
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 #include "gimbalc.h"
-
+#include "INS_task.h"
 
 void PrintControlTask(void const* argument)
 {
@@ -18,12 +18,11 @@ void PrintControlTask(void const* argument)
     for (;;)
     {
         CurrentTime = xTaskGetTickCount();
-
         gimbal.Printf_Test();
 
         if(count_number % 100 ==0)
         {
-            HAL_GPIO_TogglePin(LED_B_GPIO_Port,LED_B_Pin);
+            HAL_GPIO_TogglePin(LED_G_GPIO_Port,LED_G_Pin);
             count_number = 0;
         }
         count_number++;

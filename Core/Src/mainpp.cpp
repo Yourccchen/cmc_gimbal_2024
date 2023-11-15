@@ -3,6 +3,7 @@
 //
 #include "BSP.h"
 
+
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
 void BSP_Init(void)
@@ -28,6 +29,7 @@ void BSP_Init(void)
     MX_SPI1_Init();
     MX_I2C3_Init();
 
+    delay_init();
     MX_FREERTOS_Init();  //FreeRTOS初始化
 }
 

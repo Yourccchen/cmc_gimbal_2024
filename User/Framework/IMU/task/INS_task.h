@@ -193,6 +193,7 @@ extern const fp32 *get_accel_fliter_data_point(void);
   * @param[in]      none
   * @retval         INS_mag的指针
   */
+extern fp32 INS_angle[3];
 extern const fp32 *get_mag_data_point(void);
 float getIMUTemp(void);
 float IMU_Angle(int8_t Witch_angle);
