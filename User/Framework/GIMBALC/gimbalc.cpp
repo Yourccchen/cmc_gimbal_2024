@@ -95,7 +95,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
     {
         case PROTECT:
         {
-            Power_off();//Pih轴相关的MOS管拉低
+//            Power_off();//Pih轴相关的MOS管拉低
             //摩擦轮、拨弹轮输出为0
             shoot.ShootSpeedClean();
             //YAW轴输出为0
@@ -110,7 +110,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
         }
         case SUIDONG:
         {
-            Power_on();
+//            Power_on();
             ///优弧劣弧处理
             if (ChassisYawTarget - motors[YawMotor].RealAngle_Ecd > 180)
                 ChassisYawTarget -= 360;            //加减2π

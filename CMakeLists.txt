@@ -65,8 +65,16 @@ include_directories(
         User/Framework/IMU/bsp
         User/Framework/IMU/task
 )
+add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx)
+
+file(GLOB_RECURSE SOURCES "Library/*.*" "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*" "User/*.*" "PID_stm32/*.*")
+
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F407IGHX_FLASH.ld)
+
 add_definitions(
-        -DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx
+        -DDEBUG
+        -DUSE_HAL_DRIVER
+        -DSTM32F407xx
         -DARM_MATH_CM4
         -D__FPU_USED=1U
         -D__FPU_PRESENT=1U
@@ -77,10 +85,6 @@ add_definitions(
 link_directories(${PROJECT_SOURCE_DIR}/Middlewares/ST/ARM/DSP/Lib)
 link_libraries("arm_cortexM4lf_math.a")
 link_directories(${PROJECT_SOURCE_DIR}/User/Framework/IMU/algorithm)
-
-file(GLOB_RECURSE SOURCES "Library/*.*" "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*" "User/*.*" "PID_stm32/*.*")
-
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F407IGHX_FLASH.ld)
 
 add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 add_link_options(-mcpu=cortex-m4 -mthumb -mthumb-interwork)

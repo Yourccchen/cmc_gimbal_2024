@@ -30,6 +30,10 @@ extern "C" {
 #include "struct_typedef.h"
 #include "BMI088driver.h"
 
+#define PI 3.1415926535
+
+#define rad2degree 180.0f/PI    //弧度转换为度
+#define rad2rpm     30.0f/PI    //rad/s转换为rpm
 
 #define SPI_DMA_GYRO_LENGHT       8
 #define SPI_DMA_ACCEL_LENGHT      9

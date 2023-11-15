@@ -703,9 +703,9 @@ float IMU_Angle(int8_t Witch_angle)
     switch (Witch_angle)
     {
         case 1:
-            return imuAngle[INS_PITCH_ADDRESS_OFFSET];
+            return imuAngle[INS_PITCH_ADDRESS_OFFSET] * rad2degree;
         case 2:
-            return imuAngle[INS_YAW_ADDRESS_OFFSET];
+            return imuAngle[INS_YAW_ADDRESS_OFFSET] * rad2degree;
 
     }
 }
@@ -721,8 +721,8 @@ float IMU_Speed(int8_t Witch_angle)
     switch (Witch_angle)
     {
         case 1:
-            return imuGyro[INS_GYRO_X_ADDRESS_OFFSET];
+            return imuGyro[INS_GYRO_X_ADDRESS_OFFSET] * rad2rpm;
         case 2:
-            return imuGyro[INS_GYRO_Y_ADDRESS_OFFSET];
+            return imuGyro[INS_GYRO_Y_ADDRESS_OFFSET] * rad2rpm;
     }
 }

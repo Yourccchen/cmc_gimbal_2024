@@ -130,12 +130,13 @@ void MX_FREERTOS_Init(void) {
   PrintControlHandle = osThreadCreate(osThread(PrintControl), NULL);
 
   /* definition and creation of imuTask */
-  osThreadStaticDef(imuTask, INS_task, osPriorityNormal, 0, 256, imuTaskBuffer, &imuTaskControlBlock);
+  osThreadStaticDef(imuTask, INS_task, osPriorityNormal, 0, 512, imuTaskBuffer, &imuTaskControlBlock);
   imuTaskHandle = osThreadCreate(osThread(imuTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
+
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */

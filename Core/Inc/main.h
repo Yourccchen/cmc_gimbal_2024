@@ -56,7 +56,6 @@ void Error_Handler(void);
 void BSP_Init(void);
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
-void INS_task(void const * argument);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
