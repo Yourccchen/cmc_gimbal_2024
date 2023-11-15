@@ -23,7 +23,7 @@ void PrintControlTask(void const* argument)
 
         if(count_number % 100 ==0)
         {
-            HAL_GPIO_TogglePin(LED_G_GPIO_Port,LED_G_Pin);
+            HAL_GPIO_TogglePin(LED_B_GPIO_Port,LED_B_Pin);
             count_number = 0;
         }
         count_number++;

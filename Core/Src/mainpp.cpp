@@ -47,7 +47,7 @@ int main()
 {
     BSP_Init();
     User_Init();
-//    usart_printf("Program Success!\r\n");
+    usart_printf("Program Success!\r\n");
     while(1)
     {
         HAL_Delay(100);

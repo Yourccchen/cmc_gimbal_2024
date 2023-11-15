@@ -31,7 +31,10 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+void VisionComTask(void const* argument);
+void GimbalControlTask(void const * argument);
+void PrintControlTask(void const* argument);
+void INS_task(void const * argument);
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
