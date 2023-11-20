@@ -274,9 +274,6 @@ void INS_task(void const *pvParameters)
     }
 }
 
-
-
-
 /**
   * @brief          rotate the gyro, accel and mag, and calculate the zero drift, because sensors have
   *                 different install derection.
@@ -541,7 +538,6 @@ extern const fp32 *get_mag_data_point(void)
     return INS_mag;
 }
 
-
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     if(GPIO_Pin == INT1_ACCEL_Pin)
@@ -625,9 +621,6 @@ static void imu_cmd_spi_dma(void)
         return;
     }
 
-
-
-
     if((accel_temp_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
        && !(gyro_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_update_flag & (1 << IMU_SPI_SHFITS)))
     {
@@ -688,40 +681,5 @@ void SPI_RxCallBack(void)
             gyro_update_flag |= (1 << IMU_NOTIFY_SHFITS);
             __HAL_GPIO_EXTI_GENERATE_SWIT(GPIO_PIN_0);
         }
-    }
-}
-
-/**
-	* @name   IMU_Angle
-	* @brief  返回IMU_Angle,1为PIH轴角度，2为YAW轴角度
-	* @param  Witch_angle
-	* @retval 角度
-*/
-float IMU_Angle(int8_t Witch_angle)
-{
-    const float *imuAngle = get_INS_angle_point();
-    switch (Witch_angle)
-    {
-        case 1:
-            return imuAngle[INS_PITCH_ADDRESS_OFFSET] * rad2degree;
-        case 2:
-            return imuAngle[INS_YAW_ADDRESS_OFFSET] * rad2degree;
-    }
-}
-/**
-	* @name   IMU_Speed
-	* @brief  返回IMU_Speed，1为PIH轴速度，2为YAW轴速度
-	* @param  Witch_speed
-	* @retval 速度
-*/
-float IMU_Speed(int8_t Witch_angle)
-{
-    const float *imuGyro = get_gyro_data_point();
-    switch (Witch_angle)
-    {
-        case 1:
-            return imuGyro[INS_GYRO_X_ADDRESS_OFFSET] * rad2rpm;
-        case 2:
-            return imuGyro[INS_GYRO_Y_ADDRESS_OFFSET] * rad2rpm;
     }
 }

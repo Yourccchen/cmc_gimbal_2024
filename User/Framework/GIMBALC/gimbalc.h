@@ -30,8 +30,9 @@
 //选择是哪个角
 #define PIH_ANGLE 1  //Pitch轴角度
 #define YAW_ANGLE 2  //Yaw轴角度
-#define RAM_ANGLE 3  //拨弹轮角度
-#define NO_ANGLE  4  //只用到速度环的电机，如摩擦轮
+#define ROLL_ANGLE 3
+#define RAM_ANGLE 4  //拨弹轮角度
+#define NO_ANGLE  5  //只用到速度环的电机，如摩擦轮
 
 //算法选择
 #define NORMAL 1    //普通PID

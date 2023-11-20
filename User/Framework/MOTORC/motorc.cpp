@@ -3,10 +3,9 @@
 //
 
 #include "motorc.h"
-#include "bsp_can.h"
 #include "debugc.h"
 #include "gimbalc.h"
-#include "INS_task.h"
+#include "imuc.h"
 /**
   *@brief   M3508角度连续化,并判断方向
   *@param   编码值读到的上次角度Last和当前角度Now
