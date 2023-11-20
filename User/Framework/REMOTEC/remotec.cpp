@@ -39,21 +39,21 @@ const RC_ctrl_t* get_remote_control_point(void)
 }
 
 /**
-  * @brief     huart1中断服务程序
+  * @brief     huart3中断服务程序
   * @param     none
   * @retval    none
   */
 void REMOTEC_UartIrqHandler(void)
 {
-    if (huart1.Instance->SR & UART_FLAG_RXNE)//接收到数据
+    if (huart3.Instance->SR & UART_FLAG_RXNE)//接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart1);
     }
-    else if (USART1->SR & UART_FLAG_IDLE)
+    else if (USART3->SR & UART_FLAG_IDLE)
     {
         static uint16_t this_time_rx_len = 0;
 
-        __HAL_UART_CLEAR_PEFLAG(&huart1);
+        __HAL_UART_CLEAR_PEFLAG(&huart3);
 
         if ((hdma_usart3_rx.Instance->CR & DMA_SxCR_CT) == RESET)
         {
@@ -101,7 +101,7 @@ void REMOTEC_UartIrqHandler(void)
 
             //set memory buffer 0
             //设定缓冲区0
-            DMA2_Stream2->CR &= ~(DMA_SxCR_CT);
+            DMA1_Stream1->CR &= ~(DMA_SxCR_CT);
 
             //enable DMA
             //使能DMA

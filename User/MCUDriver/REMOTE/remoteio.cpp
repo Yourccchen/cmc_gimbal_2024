@@ -16,10 +16,10 @@ extern DMA_HandleTypeDef hdma_usart3_rx;
 void REMOTEIO_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 {
     //使能DMA串口接收
-    SET_BIT(huart1.Instance->CR3, USART_CR3_DMAR);
+    SET_BIT(huart3.Instance->CR3, USART_CR3_DMAR);
 
     //使能空闲中断
-    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+    __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
 
     //失效DMA
     __HAL_DMA_DISABLE(&hdma_usart3_rx);
@@ -28,7 +28,7 @@ void REMOTEIO_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
         __HAL_DMA_DISABLE(&hdma_usart3_rx);
     }
 
-    hdma_usart3_rx.Instance->PAR = (uint32_t) & (USART1->DR);
+    hdma_usart3_rx.Instance->PAR = (uint32_t) & (USART3->DR);
     //内存缓冲区1
     hdma_usart3_rx.Instance->M0AR = (uint32_t)(rx1_buf);
     //内存缓冲区2

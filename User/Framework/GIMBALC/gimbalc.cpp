@@ -532,10 +532,11 @@ void cGimbal::Printf_Test()
 //                 ,vision_pkt.offset_pitch,lowfilter.Filter(vision_pkt.offset_pitch));
     //按键打印//
 //    usart_printf("%d,%d\r\n",RC_GetDatas().key.A.Now_State,RC_GetDatas().key.Q.Is_Click_Once);
-//    usart_printf("%d,%d\r\n",Debug_Param().speed_maxIntegral,motors[ShootLMotor].RawSpeed);
-    float pitch_angle= IMU_Angle(PIH_ANGLE);
-    float yaw_angle= IMU_Angle(YAW_ANGLE);
-    float roll_angle= IMU_Angle(ROLL_ANGLE);
-    usart_printf("%f,%f,%f\r\n", pitch_angle,yaw_angle,roll_angle);
-//    usart_printf("%f,%f,%f\r\n",INS_angle[0],INS_angle[1],INS_angle[2]);
+    //IMU打印//
+//    float pitch_angle= IMU_Angle(PIH_ANGLE);
+//    float yaw_angle= IMU_Angle(YAW_ANGLE);
+//    float roll_angle= IMU_Angle(ROLL_ANGLE);
+//    usart_printf("%f,%f,%f\r\n", pitch_angle,yaw_angle,roll_angle);
+    //遥控器打印//
+    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
 }

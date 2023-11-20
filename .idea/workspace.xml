@@ -20,16 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: C板内置IMU可以正常接收到数据">
-      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.h" afterDir="false" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了IMU角度连续化部分">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/REMOTE/remoteio.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/REMOTE/remoteio.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +116,7 @@
       <workItem from="1700051367309" duration="1063000" />
       <workItem from="1700203329699" duration="310000" />
       <workItem from="1700299060037" duration="2146000" />
-      <workItem from="1700449796117" duration="3821000" />
+      <workItem from="1700449796117" duration="7558000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -150,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700056753468</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: 增加了IMU角度连续化部分">
+      <created>1700465894289</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700465894289</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +179,7 @@
     <MESSAGE value="feat: 移植C盘陀螺仪文件" />
     <MESSAGE value="fix: 解决了任务无法进入的问题" />
     <MESSAGE value="feat: C板内置IMU可以正常接收到数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: C板内置IMU可以正常接收到数据" />
+    <MESSAGE value="feat: 增加了IMU角度连续化部分" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了IMU角度连续化部分" />
   </component>
 </project>

@@ -184,8 +184,8 @@ private:
     float _Pitch_EcdUpLimit=-119;
     float _Pitch_EcdLowLimit=-163;
 
-    float _Pitch_ImuUpLimit=7;
-    float _Pitch_ImuLowLimit=-34;
+    float _Pitch_ImuUpLimit=25;
+    float _Pitch_ImuLowLimit=-12;
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
