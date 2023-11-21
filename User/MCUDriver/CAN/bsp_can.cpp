@@ -43,15 +43,15 @@ void CAN_Filter_Init(CAN_HandleTypeDef* hcan)
 {
     CAN_FilterTypeDef sFilterConfig;
     HAL_StatusTypeDef HAL_Status;
-    sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK; //工作在标识符屏蔽位模式
+    sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK; //工作在32位掩码模式
     sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;//滤波器位宽为单个32位
-
     sFilterConfig.FilterIdHigh = 0X0000;
     sFilterConfig.FilterIdLow = 0X0000;
     //过滤屏蔽码
     sFilterConfig.FilterMaskIdHigh = 0X0000;
     sFilterConfig.FilterMaskIdLow = 0X0000;
     sFilterConfig.SlaveStartFilterBank=14;
+
     sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
     if (hcan->Instance == CAN1)
     {
@@ -61,12 +61,11 @@ void CAN_Filter_Init(CAN_HandleTypeDef* hcan)
     {
         sFilterConfig.FilterBank = 14;
     }
-//    sFilterConfig.SlaveStartFilterBank = 0x14;
     sFilterConfig.FilterActivation = ENABLE;
     HAL_Status = HAL_CAN_ConfigFilter(hcan, &sFilterConfig);
     if (HAL_Status != HAL_OK)
     {
-        //usart_printf(" NO CAN\r\n");
+        usart_printf("NO CAN\r\n");
     }
 }
 
@@ -222,6 +221,7 @@ void CAN_YawSendCurrent(int16_t current)
     tx_msg.DLC = 0x08;
     send_data[0] = (current >> 8);
     send_data[1] = current & 0xff;
+//    usart_printf("%d,%d\r\n",send_data[0],send_data[1]);
 
     HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
 }

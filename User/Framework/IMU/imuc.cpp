@@ -36,7 +36,7 @@ float IMU_AngleIncreLoop(float now_angle)
 float IMU_Angle(int8_t Witch_angle)
 {
     const float *imuAngle = get_INS_angle_point();
-    Pih_Angle=-imuAngle[INS_PITCH_ADDRESS_OFFSET] * rad2degree;
+    Pih_Angle=imuAngle[INS_PITCH_ADDRESS_OFFSET] * rad2degree;
 
     Yaw_Angle=IMU_AngleIncreLoop(imuAngle[INS_YAW_ADDRESS_OFFSET] * rad2degree);
 

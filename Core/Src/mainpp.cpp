@@ -18,7 +18,6 @@ void BSP_Init(void)
 
 //    MX_IWDG_Init();
 
-    MX_TIM4_Init();
     MX_TIM5_Init();
     MX_TIM10_Init();
 

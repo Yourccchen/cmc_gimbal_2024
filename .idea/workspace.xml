@@ -20,12 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了IMU角度连续化部分">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: CAN收发数据正常">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/REMOTE/remoteio.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/REMOTE/remoteio.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +33,9 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -116,7 +116,11 @@
       <workItem from="1700051367309" duration="1063000" />
       <workItem from="1700203329699" duration="310000" />
       <workItem from="1700299060037" duration="2146000" />
-      <workItem from="1700449796117" duration="7558000" />
+      <workItem from="1700449796117" duration="9293000" />
+      <workItem from="1700477722465" duration="6793000" />
+      <workItem from="1700485094783" duration="3602000" />
+      <workItem from="1700567069467" duration="2912000" />
+      <workItem from="1700571307163" duration="2828000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -153,7 +157,21 @@
       <option name="project" value="LOCAL" />
       <updated>1700465894289</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix: 接收遥控器数据正常">
+      <created>1700476289644</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1700476289644</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fix: CAN收发数据正常">
+      <created>1700573748919</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1700573748919</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +198,8 @@
     <MESSAGE value="fix: 解决了任务无法进入的问题" />
     <MESSAGE value="feat: C板内置IMU可以正常接收到数据" />
     <MESSAGE value="feat: 增加了IMU角度连续化部分" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了IMU角度连续化部分" />
+    <MESSAGE value="fix: 接收遥控器数据正常" />
+    <MESSAGE value="fix: CAN收发数据正常" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: CAN收发数据正常" />
   </component>
 </project>

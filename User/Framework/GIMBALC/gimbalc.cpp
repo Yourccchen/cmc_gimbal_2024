@@ -41,7 +41,7 @@ void cGimbal::Gimbal_ControlWithRC(void)
     if(CarMode!=PROTECT && ControlMode!=ZIMIAO && ProtectFlag!=OFFLINE)
     {
         //保护模式和自瞄模式下不允许读取遥控器键值，防止回到正常时疯转
-        PihTarget -= MousePih * 2 / 1000;
+        PihTarget += MousePih * 2 / 1000;
         YawTarget += MouseYaw * 5 / 1000;
     }
 
@@ -70,20 +70,7 @@ void cGimbal::Gimbal_ControlWithRC(void)
 void cGimbal::Gimbal_CarMode(int8_t car_mode)
 {
     ///***********遥控器掉电保护**************///
-    RC_CheckTimes--;
-    if(RC_CheckTimes==0)
-    {   //每2s(40*5ms)一次检测，查看键值以及底盘状态值是否更新，若没有，则断电
-        RC_CheckTimes=40;
-        if(RC_UpdateData() == RC_GetLastData)
-        {
-            ProtectFlag=OFFLINE;
-        }
-        else
-        {
-            ProtectFlag=ONLINE;
-        }
-        RC_GetLastData=RC_UpdateData();//更新遥控器接受数据的检测判断
-    }
+    Online_Check();
     ///*************************************///
 
     if(ProtectFlag==OFFLINE)
@@ -95,7 +82,6 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
     {
         case PROTECT:
         {
-//            Power_off();//Pih轴相关的MOS管拉低
             //摩擦轮、拨弹轮输出为0
             shoot.ShootSpeedClean();
             //YAW轴输出为0
@@ -110,7 +96,6 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
         }
         case SUIDONG:
         {
-//            Power_on();
             ///优弧劣弧处理
             if (ChassisYawTarget - motors[YawMotor].RealAngle_Ecd > 180)
                 ChassisYawTarget -= 360;            //加减2π
@@ -319,7 +304,7 @@ void cGimbal::Gimbal_SpeedC()
     {
         case NORMAL:
         {
-            shoot.Shoot_SendCurrent(Debug_Param().speed_maxIntegral,motors_pid[ShootSpdR].PID_Out,motors_pid[ShootSpdU].PID_Out,motors_pid[RamSpd].PID_Out);
+            shoot.Shoot_SendCurrent(motors_pid[ShootSpdL].PID_Out,motors_pid[ShootSpdR].PID_Out,motors_pid[ShootSpdU].PID_Out,motors_pid[RamSpd].PID_Out);
             break;
         }
         case ADRC:
@@ -502,10 +487,30 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
     motors_pid[ChassisYaw].PID_OutMax = 400;
 }
 
+///遥控器在线状态检测
+void cGimbal::Online_Check()
+{
+    RC_CheckTimes--;
+    if(RC_CheckTimes==0)
+    {   //每2s(40*5ms)一次检测，查看键值以及底盘状态值是否更新，若没有，则断电
+        RC_CheckTimes=40;
+        if(RC_UpdateData() == RC_GetLastData)
+        {
+            ProtectFlag=OFFLINE;
+        }
+        else
+        {
+            ProtectFlag=ONLINE;
+        }
+        RC_GetLastData=RC_UpdateData();//更新遥控器接受数据的检测判断
+    }
+}
+
 ///打印函数
 void cGimbal::Printf_Test()
 {
     //Yaw打印//
+    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f,%f,%f\r\n",motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,vision_pkt.offset_pitch,vision_pkt.offset_yaw);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -518,7 +523,7 @@ void cGimbal::Printf_Test()
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdU].PID_Target,gimbal.motors[ShootUMotor].RealSpeed);
     //ADRC打印//
-//    usart_printf("%f,%f,%f,%f,%f,%F\r\n",shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
+//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,
 //                 shoot.ShootUOUT_ADRC,motors[ShootUMotor].RealSpeed);
     //拨弹轮打印//
@@ -538,5 +543,6 @@ void cGimbal::Printf_Test()
 //    float roll_angle= IMU_Angle(ROLL_ANGLE);
 //    usart_printf("%f,%f,%f\r\n", pitch_angle,yaw_angle,roll_angle);
     //遥控器打印//
-    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
+//    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
+//    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
 }
