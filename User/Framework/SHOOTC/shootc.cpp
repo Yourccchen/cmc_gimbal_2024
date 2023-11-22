@@ -59,6 +59,7 @@ void cShoot::Shoot_SpeedC()
     gimbal.motors_pid[ShootSpdL].PID_GetPositionPID(gimbal.motors[ShootLMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdR].PID_GetPositionPID(gimbal.motors[ShootRMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdU].PID_GetPositionPID(gimbal.motors[ShootUMotor].RealSpeed);
+
     gimbal.motors_pid[RamSpd].PID_GetPositionPID(gimbal.motors[RamMotor].RealSpeed);
 }
 /**

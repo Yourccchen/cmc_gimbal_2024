@@ -41,7 +41,7 @@ void cGimbal::Gimbal_ControlWithRC(void)
     if(CarMode!=PROTECT && ControlMode!=ZIMIAO && ProtectFlag!=OFFLINE)
     {
         //保护模式和自瞄模式下不允许读取遥控器键值，防止回到正常时疯转
-        PihTarget += MousePih * 2 / 1000;
+        PihTarget -= MousePih * 2 / 1000;
         YawTarget += MouseYaw * 5 / 1000;
     }
 
@@ -88,6 +88,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             motors_pid[YawSpd].PID_Out=0;
             Pid_Out.YawCurrent = 0;
             //PIH轴输出为0
+            motors_pid[PihPos].PID_Out=0;
             motors_pid[PihSpd].PID_Out=0;
             Pid_Out.PihCurrent=0;
             //底盘目标值给0
@@ -255,6 +256,10 @@ void cGimbal::Gimbal_PosC()
 //    setMotorSpeed(PihSpd,Pihout);
     setMotorSpeed(YawSpd,YawOut);
 
+    //计算Pih轴和Yaw轴的速度环输出
+    motors_pid[YawSpd].PID_GetPositionPID((float)(motors[YawMotor].RealSpeed));
+    motors_pid[PihSpd].PID_GetPositionPID((float)(motors[PihMotor].RealSpeed));
+
     //拨弹轮、摩擦轮的位置环和速度环
     shoot.Shoot_PosC();
 }
@@ -262,10 +267,6 @@ void cGimbal::Gimbal_PosC()
 ///电机速度环
 void cGimbal::Gimbal_SpeedC()
 {
-    //计算Pih轴和Yaw轴的速度环输出
-    motors_pid[YawSpd].PID_GetPositionPID((float)(motors[YawMotor].RealSpeed));
-    motors_pid[PihSpd].PID_GetPositionPID((float)(motors[PihMotor].RealSpeed));
-
     //根据算法发送电流
     //Yaw轴算法选择
     if(count_time_send==2)
@@ -400,15 +401,15 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawS_MO = 25192;
 
             ///Pih轴的MATLAB_PID参数///
-            Pid_In.PihP_P = 1;
+            Pid_In.PihP_P = 0.7;
             Pid_In.PihP_I = 0;
-            Pid_In.PihP_D = 0;
+            Pid_In.PihP_D = 0.35;
             Pid_In.PihP_N = 175;
             Pid_In.PihP_MO = 300;
-            Pid_In.Pih_Dif_Gain = 0.15;
+            Pid_In.Pih_Dif_Gain = 0.05;
 
-            Pid_In.PihS_P = 100;
-            Pid_In.PihS_I = 100;
+            Pid_In.PihS_P = 1000;
+            Pid_In.PihS_I = 1200;
             Pid_In.PihS_D = 0;
             Pid_In.PihS_N = 0;
             Pid_In.PihS_MO = 20192;
@@ -416,11 +417,12 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             ///Pih轴的普通PID参数///
             motors_pid[PihPos].Kp = 0.1;
             motors_pid[PihPos].Ki = 0;
-            motors_pid[PihPos].Kd = 2;
+            motors_pid[PihPos].Kd = 0;
 
-            motors_pid[PihSpd].Kp = 10;
-            motors_pid[PihSpd].Ki = 5;
+            motors_pid[PihSpd].Kp = 100;
+            motors_pid[PihSpd].Ki = 10;
             motors_pid[PihSpd].Kd = 0;
+            Pid_In.Pih_Dif_Gain = 0;
             break;
         }
         case ECD_MODE://编码器反馈模式
@@ -439,14 +441,14 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawS_MO = 28000;
 
             ///Pih轴的普通PID参数///
-            motors_pid[PihPos].Kp = 1.2;
+            motors_pid[PihPos].Kp = 0.2;
             motors_pid[PihPos].Ki = 0;
             motors_pid[PihPos].Kd = 0;
 
-            motors_pid[PihSpd].Kp = 1000;
-            motors_pid[PihSpd].Ki = 50;
+            motors_pid[PihSpd].Kp = 1;
+            motors_pid[PihSpd].Ki = 5;
             motors_pid[PihSpd].Kd = 0;
-            Pid_In.Pih_Dif_Gain = 0.13;
+            Pid_In.Pih_Dif_Gain = 0;
             break;
         }
         case ZIMIAO://自瞄模式
@@ -512,9 +514,10 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
     //Pih打印//
-//    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
