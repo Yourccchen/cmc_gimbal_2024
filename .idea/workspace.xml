@@ -20,9 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: CAN收发数据正常">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: YAW轴现在效果还行">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +122,7 @@
       <workItem from="1700485094783" duration="3602000" />
       <workItem from="1700567069467" duration="2912000" />
       <workItem from="1700571307163" duration="3486000" />
-      <workItem from="1700622129227" duration="1613000" />
+      <workItem from="1700622129227" duration="3816000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -179,7 +180,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700575276751</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="perf: YAW轴现在效果还行">
+      <created>1700624128513</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1700624128513</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +216,7 @@
     <MESSAGE value="feat: 增加了IMU角度连续化部分" />
     <MESSAGE value="fix: 接收遥控器数据正常" />
     <MESSAGE value="fix: CAN收发数据正常" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: CAN收发数据正常" />
+    <MESSAGE value="perf: YAW轴现在效果还行" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: YAW轴现在效果还行" />
   </component>
 </project>

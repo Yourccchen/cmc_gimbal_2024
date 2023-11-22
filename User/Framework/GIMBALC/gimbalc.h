@@ -121,7 +121,7 @@ public:
                 },
          motors
                 {
-    /*PihMotor*/        {GM6020,IMU_MODE,PIH_ANGLE,NORMAL},
+    /*PihMotor*/        {GM6020,IMU_MODE,PIH_ANGLE,MATLAB},
     /*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,MATLAB},
     /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
     /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
@@ -166,7 +166,7 @@ public:
 
     ///遥控器控制变量///
     float MousePih,MouseYaw;
-    float ChassisYawTarget=93;//随动模式下正方向的角度
+    float ChassisYawTarget=270;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY;//定义一个卡尔曼滤波器结构体
 

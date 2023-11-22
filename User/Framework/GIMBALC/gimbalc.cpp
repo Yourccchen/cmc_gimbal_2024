@@ -388,13 +388,13 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             ///Yaw轴的MATLAB_PID参数///
             Pid_In.YawP_P = 0.3;
             Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.2;
+            Pid_In.YawP_D = 0.15;
             Pid_In.YawP_N = 100;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.12;
+            Pid_In.Yaw_Dif_Gain = 0.005;
 
-            Pid_In.YawS_P = 600;
-            Pid_In.YawS_I = 600;
+            Pid_In.YawS_P = 800;
+            Pid_In.YawS_I = 800;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 25192;
@@ -407,8 +407,8 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.PihP_MO = 300;
             Pid_In.Pih_Dif_Gain = 0.15;
 
-            Pid_In.PihS_P = 10;
-            Pid_In.PihS_I = 10;
+            Pid_In.PihS_P = 100;
+            Pid_In.PihS_I = 100;
             Pid_In.PihS_D = 0;
             Pid_In.PihS_N = 0;
             Pid_In.PihS_MO = 20192;
