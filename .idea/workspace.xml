@@ -20,12 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: YAW轴跟随效果现在不错">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: PIH轴现在效果能看">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +122,7 @@
       <workItem from="1700485094783" duration="3602000" />
       <workItem from="1700567069467" duration="2912000" />
       <workItem from="1700571307163" duration="3486000" />
-      <workItem from="1700622129227" duration="9568000" />
+      <workItem from="1700622129227" duration="10626000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -196,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700644188746</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="perf: PIH轴现在效果能看">
+      <created>1700651287368</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1700651287368</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +232,7 @@
     <MESSAGE value="fix: CAN收发数据正常" />
     <MESSAGE value="perf: YAW轴现在效果还行" />
     <MESSAGE value="perf: YAW轴跟随效果现在不错" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: YAW轴跟随效果现在不错" />
+    <MESSAGE value="perf: PIH轴现在效果能看" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: PIH轴现在效果能看" />
   </component>
 </project>

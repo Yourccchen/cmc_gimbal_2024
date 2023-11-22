@@ -166,7 +166,7 @@ public:
 
     ///遥控器控制变量///
     float MousePih,MouseYaw;
-    float ChassisYawTarget=270;//随动模式下正方向的角度
+    float ChassisYawTarget=90;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY;//定义一个卡尔曼滤波器结构体
 

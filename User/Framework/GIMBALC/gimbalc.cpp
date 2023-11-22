@@ -102,8 +102,8 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
                 ChassisYawTarget -= 360;            //加减2π
             if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
                 ChassisYawTarget += 360;
-            vz=0;
-//            vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
+//            vz=0;
+            vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
             break;
         }
         case TUOLUO:
@@ -387,14 +387,14 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 0.3;
+            Pid_In.YawP_P = 0.7;
             Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.15;
+            Pid_In.YawP_D = 0.3;
             Pid_In.YawP_N = 100;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.005;
+            Pid_In.Yaw_Dif_Gain = 0;
 
-            Pid_In.YawS_P = 800;
+            Pid_In.YawS_P = 600;
             Pid_In.YawS_I = 800;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
@@ -514,10 +514,10 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
