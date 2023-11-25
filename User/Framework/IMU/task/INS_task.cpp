@@ -21,23 +21,22 @@
   ****************************(C) COPYRIGHT 2019 DJI****************************
   */
 
-#include "INS_task.h"
 
+extern "C"
+{
 #include "main.h"
 
 #include "cmsis_os.h"
 
-#include "../bsp/bsp_imu_pwm.h"
-#include "../bsp/bsp_spi.h"
+#include "bsp_imu_pwm.h"
+#include "bsp_spi.h"
 #include "BMI088driver.h"
 #include "ist8310driver.h"
 #include "pid_imu.h"
 #include "AHRS.h"
-#include "debugc.h"
-//#include "calibrate_task.h"
-#include "usart.h"
-//#include "detect_task.h"
-
+}
+#include "imu_tool.h"
+#include "INS_task.h"
 
 #define IMU_temp_PWM(pwm)  imu_pwm_set(pwm)                    //pwm给定
 
@@ -99,7 +98,10 @@ static void imu_temp_control(fp32 temp);
   */
 static void imu_cmd_spi_dma(void);
 
+
+
 extern SPI_HandleTypeDef hspi1;
+
 
 static TaskHandle_t INS_task_local_handler;
 
@@ -149,13 +151,19 @@ static fp32 accel_fliter_2[3] = {0.0f, 0.0f, 0.0f};
 static fp32 accel_fliter_3[3] = {0.0f, 0.0f, 0.0f};
 static const fp32 fliter_num[3] = {1.929454039488895f, -0.93178349823448126f, 0.002329458745586203f};
 
+
+
+
 static fp32 INS_gyro[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_accel[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_mag[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_quat[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 fp32 INS_angle[3] = {0.0f, 0.0f, 0.0f};      //euler angle, unit rad.欧拉角 单位 rad
+fp32 INS_angle_complementry[3] = {0.0f, 0.0f, 0.0f};
 
-
+ComplementaryFilterROS imu_tool;
+Imu_Msg imumsg;
+Mag_Msg magmsg;
 
 
 
@@ -209,6 +217,7 @@ void INS_task(void const *pvParameters)
     SPI1_DMA_init((uint32_t)gyro_dma_tx_buf, (uint32_t)gyro_dma_rx_buf, SPI_DMA_GYRO_LENGHT);
 
     imu_start_dma_flag = 1;
+    imu_tool.initializeParams();
 
     while (1)
     {
@@ -218,6 +227,8 @@ void INS_task(void const *pvParameters)
         while (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) != pdPASS)
         {
         }
+
+
         if(gyro_update_flag & (1 << IMU_NOTIFY_SHFITS))
         {
             gyro_update_flag &= ~(1 << IMU_NOTIFY_SHFITS);
@@ -241,6 +252,16 @@ void INS_task(void const *pvParameters)
         //rotate and zero drift
         imu_cali_slove(INS_gyro, INS_accel, INS_mag, &bmi088_real_data, &ist8310_real_data);
 
+        imumsg.angular_velocity.x = INS_gyro[0];//角速度，单位：rad/s
+        imumsg.angular_velocity.y = INS_gyro[1];
+        imumsg.angular_velocity.z = INS_gyro[2];
+        imumsg.linear_acceleration.x = INS_accel[0];//加速度，单位：m/s^2
+        imumsg.linear_acceleration.y = INS_accel[1];
+        imumsg.linear_acceleration.z = INS_accel[2];
+        imumsg.time = imumsg.time + timing_time;//timing_time为两次数据更新的时间间隔，单位：s
+        magmsg.x = INS_mag[0];
+        magmsg.y = INS_mag[1];
+        magmsg.z = INS_mag[2];
 
         //加速度计低通滤波
         //accel low-pass filter
@@ -259,20 +280,29 @@ void INS_task(void const *pvParameters)
 
         accel_fliter_3[2] = accel_fliter_2[2] * fliter_num[0] + accel_fliter_1[2] * fliter_num[1] + INS_accel[2] * fliter_num[2];
 
+        imu_tool.imuCallback(imumsg);
 
         AHRS_update(INS_quat, timing_time, INS_gyro, accel_fliter_3, INS_mag);
         get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET);
+
+        get_angle(imu_tool.quat,
+                  INS_angle_complementry + INS_YAW_ADDRESS_OFFSET,
+                  INS_angle_complementry + INS_PITCH_ADDRESS_OFFSET,
+                   INS_angle_complementry + INS_ROLL_ADDRESS_OFFSET);
 
         //because no use ist8310 and save time, no use
         if(mag_update_flag &= 1 << IMU_DR_SHFITS)
         {
             mag_update_flag &= ~(1<< IMU_DR_SHFITS);
             mag_update_flag |= (1 << IMU_SPI_SHFITS);
-//            ist8310_read_mag(ist8310_real_data.mag);
+            ist8310_read_mag(ist8310_real_data.mag);
         }
 
     }
 }
+
+
+
 
 /**
   * @brief          rotate the gyro, accel and mag, and calculate the zero drift, because sensors have
@@ -315,6 +345,7 @@ static void imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real
   */
 int8_t get_control_temperature(void)
 {
+
     return head_cali.temperature;
 }
 
@@ -472,7 +503,10 @@ const fp32 *get_INS_angle_point(void)
 {
     return INS_angle;
 }
-
+const fp32 *get_INS_complementry_angle_point(void)
+{
+    return INS_angle_complementry;
+}
 /**
   * @brief          get the rotation speed, 0:x-axis, 1:y-axis, 2:roll-axis,unit rad/s
   * @param[in]      none
@@ -577,8 +611,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         }
 
     }
-
-
 }
 
 /**
@@ -633,6 +665,53 @@ static void imu_cmd_spi_dma(void)
         return;
     }
     taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
+}
+
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    /* Prevent unused argument(s) compilation warning */
+    //gyro read over
+    //陀螺仪读取完毕
+    if(gyro_update_flag & (1 << IMU_SPI_SHFITS))
+    {
+        gyro_update_flag &= ~(1 << IMU_SPI_SHFITS);
+        gyro_update_flag |= (1 << IMU_UPDATE_SHFITS);
+
+        HAL_GPIO_WritePin(CS1_GYRO_GPIO_Port, CS1_GYRO_Pin, GPIO_PIN_SET);
+
+    }
+
+    //accel read over
+    //加速度计读取完毕
+    if(accel_update_flag & (1 << IMU_SPI_SHFITS))
+    {
+        accel_update_flag &= ~(1 << IMU_SPI_SHFITS);
+        accel_update_flag |= (1 << IMU_UPDATE_SHFITS);
+
+        HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_SET);
+    }
+    //temperature read over
+    //温度读取完毕
+    if(accel_temp_update_flag & (1 << IMU_SPI_SHFITS))
+    {
+        accel_temp_update_flag &= ~(1 << IMU_SPI_SHFITS);
+        accel_temp_update_flag |= (1 << IMU_UPDATE_SHFITS);
+
+        HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_SET);
+    }
+
+    imu_cmd_spi_dma();
+
+    if(gyro_update_flag & (1 << IMU_UPDATE_SHFITS))
+    {
+        gyro_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
+        gyro_update_flag |= (1 << IMU_NOTIFY_SHFITS);
+        __HAL_GPIO_EXTI_GENERATE_SWIT(GPIO_PIN_0);
+    }
+
+    /* NOTE : This function should not be modified, when the callback is needed,
+              the HAL_SPI_RxCpltCallback should be implemented in the user file
+     */
 }
 
 //原名称：void DMA2_Stream2_IRQHandler(void) 创建一个函数，在这里调用

@@ -30,10 +30,7 @@ extern "C" {
 #include "struct_typedef.h"
 #include "BMI088driver.h"
 
-#define PI 3.1415926535
 
-#define rad2degree 180.0f/PI    //弧度转换为度
-#define rad2rpm     30.0f/PI    //rad/s转换为rpm
 
 #define SPI_DMA_GYRO_LENGHT       8
 #define SPI_DMA_ACCEL_LENGHT      9
@@ -182,6 +179,7 @@ extern const fp32 *get_gyro_data_point(void);
   * @retval         INS_gyro的指针
   */
 extern const fp32 *get_accel_data_point(void);
+
 extern const fp32 *get_accel_fliter_data_point(void);
 /**
   * @brief          get mag, 0:x-axis, 1:y-axis, 2:roll-axis unit ut
@@ -194,8 +192,14 @@ extern const fp32 *get_accel_fliter_data_point(void);
   * @retval         INS_mag的指针
   */
 extern fp32 INS_angle[3];
+
 extern const fp32 *get_mag_data_point(void);
+
+const fp32 *get_INS_complementry_angle_point(void);
+
 float getIMUTemp(void);
+
+void SPI_RxCallBack(void);
 
 bmi088_real_data_t* getBMI088RealData(void);
 #ifdef __cplusplus

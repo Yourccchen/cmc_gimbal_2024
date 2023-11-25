@@ -514,7 +514,7 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -542,10 +542,7 @@ void cGimbal::Printf_Test()
     //按键打印//
 //    usart_printf("%d,%d\r\n",RC_GetDatas().key.A.Now_State,RC_GetDatas().key.Q.Is_Click_Once);
     //IMU打印//
-//    float pitch_angle= IMU_Angle(PIH_ANGLE);
-//    float yaw_angle= IMU_Angle(YAW_ANGLE);
-//    float roll_angle= IMU_Angle(ROLL_ANGLE);
-//    usart_printf("%f,%f,%f\r\n", pitch_angle,yaw_angle,roll_angle);
+    usart_printf("%f,%f,%f\r\n", IMU_Angle(PIH_ANGLE),IMU_Angle(YAW_ANGLE),IMU_Angle(ROLL_ANGLE));
     //遥控器打印//
 //    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);

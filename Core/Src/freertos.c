@@ -126,7 +126,7 @@ void MX_FREERTOS_Init(void) {
   VisionComHandle = osThreadCreate(osThread(VisionCom), NULL);
 
   /* definition and creation of PrintControl */
-  osThreadDef(PrintControl, PrintControlTask, osPriorityNormal, 0, 512);
+  osThreadDef(PrintControl, PrintControlTask, osPriorityNormal, 0, 1024);
   PrintControlHandle = osThreadCreate(osThread(PrintControl), NULL);
 
   /* definition and creation of imuTask */

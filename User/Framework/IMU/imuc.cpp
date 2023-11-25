@@ -35,12 +35,13 @@ float IMU_AngleIncreLoop(float now_angle)
 */
 float IMU_Angle(int8_t Witch_angle)
 {
-    const float *imuAngle = get_INS_angle_point();
-    Pih_Angle=imuAngle[INS_PITCH_ADDRESS_OFFSET] * rad2degree;
+//    const float *imuAngle = get_INS_angle_point();              //官方IMU算法，零漂很大
+    const float *imuAngle = get_INS_complementry_angle_point();   //融合滤波MU算法，几乎没零漂
+    Pih_Angle=imuAngle[INS_PITCH_ADDRESS_OFFSET]*rad2degree ;
 
-    Yaw_Angle=IMU_AngleIncreLoop(imuAngle[INS_YAW_ADDRESS_OFFSET] * rad2degree);
+    Yaw_Angle=IMU_AngleIncreLoop(imuAngle[INS_YAW_ADDRESS_OFFSET])*rad2degree;
 
-    Roll_Angle=imuAngle[INS_ROLL_ADDRESS_OFFSET] * rad2degree;
+    Roll_Angle=imuAngle[INS_ROLL_ADDRESS_OFFSET]*rad2degree;
     switch (Witch_angle)
     {
         case 1:

@@ -64,6 +64,7 @@ include_directories(
         User/Framework/IMU/devices
         User/Framework/IMU/bsp
         User/Framework/IMU/task
+        User/Framework/IMU/filter
         User/Framework/IMU
 )
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx)
