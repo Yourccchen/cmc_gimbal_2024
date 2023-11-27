@@ -281,11 +281,11 @@ void cGimbal::Gimbal_SpeedC()
             case MATLAB:
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
+//                CAN_YawSendCurrent(Debug_Param().pos_maxIntegral);
                 break;
             }
         }
     }
-
     //Pitch轴算法选择
     switch(motors[PihMotor].Algorithm)
     {
@@ -387,12 +387,12 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 0.5;
+            Pid_In.YawP_P = 0.4;
             Pid_In.YawP_I = 0;
             Pid_In.YawP_D = 0.3;
             Pid_In.YawP_N = 100;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0;
+            Pid_In.Yaw_Dif_Gain = 0.005;
 
             Pid_In.YawS_P = 600;
             Pid_In.YawS_I = 800;
@@ -514,7 +514,8 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);

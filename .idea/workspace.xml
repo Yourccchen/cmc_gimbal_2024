@@ -20,16 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 移植好了融合滤波IMU算法，效果非常好">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/freertos.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/freertos.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +129,7 @@
       <workItem from="1700622129227" duration="12065000" />
       <workItem from="1700808208775" duration="4799000" />
       <workItem from="1700881645276" duration="5510000" />
-      <workItem from="1701071348423" duration="5206000" />
+      <workItem from="1701071348423" duration="6459000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -229,7 +222,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700889692840</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，">
+      <created>1701076912569</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1701076912569</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,6 +263,7 @@
     <MESSAGE value="perf: PIH轴现在效果能看" />
     <MESSAGE value="perf: 云台回来了（虽然效果还没达到之前的高度）" />
     <MESSAGE value="perf: 移植好了融合滤波IMU算法，效果非常好" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 移植好了融合滤波IMU算法，效果非常好" />
+    <MESSAGE value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
   </component>
 </project>
