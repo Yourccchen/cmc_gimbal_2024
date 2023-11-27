@@ -12,7 +12,7 @@
 #define rad2rpm     30.0f/PI    //rad/s转换为rpm
 
 float IMU_AngleIncreLoop(float now_angle);
-float IMU_Angle(int8_t Witch_angle);
-float IMU_Speed(int8_t Witch_angle);
+float IMU_Angle(int8_t Which_angle);
+float IMU_Speed(int8_t Which_angle);
 
 #endif //CMC_GIMBAL_2024_IMUC_H

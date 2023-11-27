@@ -63,6 +63,7 @@ include_directories(
         User/Framework/IMU/devices
         User/Framework/IMU/bsp
         User/Framework/IMU/task
+        User/Framework/IMU/filter
         User/Framework/IMU
 )
 add_definitions(${defines})

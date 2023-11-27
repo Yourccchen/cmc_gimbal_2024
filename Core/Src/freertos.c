@@ -53,7 +53,7 @@ osThreadId GimbalControlHandle;
 osThreadId VisionComHandle;
 osThreadId PrintControlHandle;
 osThreadId imuTaskHandle;
-uint32_t imuTaskBuffer[ 512 ];
+uint32_t imuTaskBuffer[ 2048 ];
 osStaticThreadDef_t imuTaskControlBlock;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -130,7 +130,7 @@ void MX_FREERTOS_Init(void) {
   PrintControlHandle = osThreadCreate(osThread(PrintControl), NULL);
 
   /* definition and creation of imuTask */
-  osThreadStaticDef(imuTask, INS_task, osPriorityNormal, 0, 512, imuTaskBuffer, &imuTaskControlBlock);
+  osThreadStaticDef(imuTask, INS_task, osPriorityNormal, 0, 2048, imuTaskBuffer, &imuTaskControlBlock);
   imuTaskHandle = osThreadCreate(osThread(imuTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */

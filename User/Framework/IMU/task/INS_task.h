@@ -60,7 +60,7 @@ extern "C" {
 #define MPU6500_TEMP_PWM_MAX 5000 //mpu6500控制温度的设置TIM的重载值，即给PWM最大为 MPU6500_TEMP_PWM_MAX - 1
 
 
-#define INS_TASK_INIT_TIME 7 //任务开始初期 delay 一段时间
+#define INS_TASK_INIT_TIME 5//任务开始初期 delay 一段时间
 
 #define INS_YAW_ADDRESS_OFFSET    0
 #define INS_PITCH_ADDRESS_OFFSET  1
