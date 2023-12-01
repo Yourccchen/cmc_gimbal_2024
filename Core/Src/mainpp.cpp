@@ -26,6 +26,10 @@ void BSP_Init(void)
     MX_I2C3_Init();
 
     delay_init();
+
+    HAL_Delay(2000);
+    init_cybergear(&mi_motor[0],0x7F,Motion_mode);          //小米电机初始化
+
     MX_FREERTOS_Init();  //FreeRTOS初始化
 }
 
@@ -39,8 +43,8 @@ void User_Init()
 //    Laser_On();
 //    TIM5_IT_Init();          //TIM5中断打开
 
-    init_cybergear(&mi_motor[0],0x7F,Motion_mode);          //小米电机初始化
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时
+
 }
 
 int main()

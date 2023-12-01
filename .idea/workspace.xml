@@ -20,18 +20,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="revert: 保留一个正常版本">
-      <change afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决">
       <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +136,7 @@
       <workItem from="1701353967064" duration="2428000" />
       <workItem from="1701398364394" duration="5593000" />
       <workItem from="1701408954053" duration="3140000" />
-      <workItem from="1701418092198" duration="2474000" />
+      <workItem from="1701418092198" duration="2785000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -246,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701076912569</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决">
+      <created>1701420772255</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1701420772255</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,6 +278,7 @@
     <MESSAGE value="perf: 云台回来了（虽然效果还没达到之前的高度）" />
     <MESSAGE value="perf: 移植好了融合滤波IMU算法，效果非常好" />
     <MESSAGE value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
+    <MESSAGE value="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决" />
   </component>
 </project>
