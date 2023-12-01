@@ -8,7 +8,7 @@
 #include "gimbalc.h"
 #include "shootc.h"
 #include "visioncom_task.h"
-
+#include "CyberGear.h"
 ///掉线检测
 uint16_t isRecvShoot; //摩擦轮掉线检测
 uint16_t isRecvYaw;   //Yaw掉线检测
@@ -158,7 +158,24 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 return;
             }
         }
+
+        ///小米电机部分
+        HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rxMsg, rx_data);//接收数据
+        Motor_Can_ID=Get_Motor_ID(rxMsg.ExtId);//首先获取回传电机ID信息
+        switch(Motor_Can_ID)                   //将对应ID电机信息提取至对应结构体
+        {
+            case 0x7F:
+                if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模式
+                    Motor_Data_Handler(&mi_motor[0],rx_data,rxMsg.ExtId);
+                else
+                    mi_motor[0].MCU_ID = rx_data[0];
+                break;
+            default:
+                break;
+        }
+
     }
+
     if (hcan->Instance == CAN2)
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据

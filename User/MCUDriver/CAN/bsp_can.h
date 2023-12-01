@@ -7,8 +7,14 @@
 #include "stm32f4xx_hal.h"
 #include "motorc.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
+#ifdef __cplusplus
+}
+#endif
 
 //Pitch CAN1
 //Yaw CAN2

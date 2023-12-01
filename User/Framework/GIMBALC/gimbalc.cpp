@@ -4,6 +4,7 @@
 
 #include "gimbalc.h"
 #include "imuc.h"
+#include "CyberGear.h"
 
 cGimbal gimbal; //定义云台总类
 extern ReceivePacket vision_pkt;
@@ -41,7 +42,7 @@ void cGimbal::Gimbal_ControlWithRC(void)
     if(CarMode!=PROTECT && ControlMode!=ZIMIAO && ProtectFlag!=OFFLINE)
     {
         //保护模式和自瞄模式下不允许读取遥控器键值，防止回到正常时疯转
-        PihTarget -= MousePih * 2 / 1000;
+        PihTarget += MousePih * 2 / 1000;
         YawTarget += MouseYaw * 5 / 1000;
     }
 
@@ -223,6 +224,9 @@ void cGimbal::Gimbal_PosC()
         case IMU_MODE:
             Pitch_ImuLimit(PihTarget); //陀螺仪
             break;
+        case CYBERGEAR:
+            Pitch_MILimit(PihTarget); //小米电机
+            break;
     }
 
     //通过遥控器设置Pih轴和Yaw轴的位置环目标值
@@ -281,7 +285,6 @@ void cGimbal::Gimbal_SpeedC()
             case MATLAB:
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
-//                CAN_YawSendCurrent(Debug_Param().pos_maxIntegral);
                 break;
             }
         }
@@ -298,6 +301,10 @@ void cGimbal::Gimbal_SpeedC()
         {
             CAN_PitchSendCurrent((int16_t)Pid_Out.PihCurrent);
             break;
+        }
+        case CYBERGEAR:
+        {
+            motor_controlmode(&mi_motor[0],0,PihTarget,0,8,0.4);
         }
     }
 
@@ -366,7 +373,17 @@ void cGimbal::Pitch_ImuLimit(float& Target)
         Target = _Pitch_ImuLowLimit;
     }
 }
-
+void cGimbal::Pitch_MILimit(float& Target)
+{
+    if (Target >  _Pitch_MIUpLimit) //ecd pitch限位
+    {
+        Target =  _Pitch_MIUpLimit;
+    }
+    if (Target < _Pitch_MILowLimit)
+    {
+        Target = _Pitch_MILowLimit;
+    }
+}
 ///云台的卡尔曼滤波算法初始函数
 void cGimbal::Gimbal_KalmanInit(void)
 {
@@ -519,6 +536,7 @@ void cGimbal::Printf_Test()
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
+//    usart_printf("%f,%f\r\n",mi_motor[0].Angle,mi_motor[0].Speed);
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
@@ -546,6 +564,6 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f\r\n", IMU_Angle(PIH_ANGLE),IMU_Angle(YAW_ANGLE),IMU_Angle(ROLL_ANGLE));
 //    usart_printf("%f,%f\r\n",motors[YawMotor].RealAngle_Imu,motors[PihMotor].RealAngle_Imu);
     //遥控器打印//
-//    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
+    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
 }

@@ -3,9 +3,6 @@
 //
 #include "BSP.h"
 
-
-extern CAN_HandleTypeDef hcan1;
-extern CAN_HandleTypeDef hcan2;
 void BSP_Init(void)
 {
     HAL_Init();
@@ -41,6 +38,8 @@ void User_Init()
     gimbal.Gimbal_KalmanInit();//云台的卡尔曼算法初始函数
 //    Laser_On();
 //    TIM5_IT_Init();          //TIM5中断打开
+
+    init_cybergear(&mi_motor[0],0x7F,Motion_mode);          //小米电机初始化
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时
 }
 
@@ -48,7 +47,6 @@ int main()
 {
     BSP_Init();
     User_Init();
-    usart_printf("Program Success!\r\n");
     while(1)
     {
         HAL_Delay(100);

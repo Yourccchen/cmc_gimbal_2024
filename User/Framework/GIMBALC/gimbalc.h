@@ -38,7 +38,7 @@
 #define NORMAL 1    //普通PID
 #define MATLAB 2    //MATLAB算法，自带积分抗饱和(基本上所有兵种的Yaw轴可以用这个算法，Pitch轴需要根据实际情况调整)
 #define ADRC 3      //ADRC算法
-
+#define CYBERGEAR 4 //小米电机自带的运控模式
 //车体模式赋值(右侧拨杆)
 #define PROTECT  1    //保护模式
 #define SUIDONG  3    //随动模式
@@ -121,7 +121,7 @@ public:
                 },
          motors
                 {
-    /*PihMotor*/        {GM6020,IMU_MODE,PIH_ANGLE,MATLAB},
+    /*PihMotor*/        {GM6020,CYBERGEAR,PIH_ANGLE,CYBERGEAR},
     /*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,MATLAB},
     /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
     /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
@@ -147,6 +147,7 @@ public:
 
     void Pitch_EcdLimit(float & Target);
     void Pitch_ImuLimit(float& Target);
+    void Pitch_MILimit(float& Target);
     void Gimbal_KalmanInit(void);
     void Online_Check();
     void Printf_Test();
@@ -186,6 +187,9 @@ private:
 
     float _Pitch_ImuUpLimit = 15;
     float _Pitch_ImuLowLimit=-20;
+
+    float _Pitch_MIUpLimit=30;
+    float _Pitch_MILowLimit=-5;
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
