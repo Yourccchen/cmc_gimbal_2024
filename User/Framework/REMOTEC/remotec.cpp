@@ -415,7 +415,7 @@ int8_t portSetShootMode(void)
         }
         case RC_MODE:
         {
-            if(RC_GetDatas().rc.ch[4]==-660)
+            if(RC_GetDatas().rc.ch[4]<-550)
             {
                 gimbal.shoot.fric_count++;
                 if( ((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==CLOSEFRIC)) )

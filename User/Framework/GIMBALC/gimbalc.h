@@ -188,8 +188,8 @@ private:
     float _Pitch_ImuUpLimit = 15;
     float _Pitch_ImuLowLimit=-20;
 
-    float _Pitch_MIUpLimit=30;
-    float _Pitch_MILowLimit=-5;
+    float _Pitch_MIUpLimit=40;
+    float _Pitch_MILowLimit=-40;
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;

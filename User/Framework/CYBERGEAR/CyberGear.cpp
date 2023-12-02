@@ -17,7 +17,7 @@ MI_Motor mi_motor[4];//预先定义四个小米电机
   * @retval         4字节数组
   * @description  : IEEE 754 协议
   */
-static uint8_t* Float_to_Byte(float f)
+uint8_t* Float_to_Byte(float f)
 {
     unsigned long longdata = 0;
     longdata = *(unsigned long*)&f;
@@ -36,7 +36,7 @@ static uint8_t* Float_to_Byte(float f)
   * @param[in]      bits:参数位数
   * @retval         返回浮点值
   */
-static float uint16_to_float(uint16_t x,float x_min,float x_max,int bits)
+float uint16_to_float(uint16_t x,float x_min,float x_max,int bits)
 {
     uint32_t span = (1 << bits) - 1;
     float offset = x_max - x_min;
@@ -51,7 +51,7 @@ static float uint16_to_float(uint16_t x,float x_min,float x_max,int bits)
   * @param[in]      bits:参数位数
   * @retval         返回浮点值
   */
-static int float_to_uint(float x, float x_min, float x_max, int bits)
+int float_to_uint(float x, float x_min, float x_max, int bits)
 {
     float span = x_max - x_min;
     float offset = x_min;
@@ -68,7 +68,7 @@ static int float_to_uint(float x, float x_min, float x_max, int bits)
   * @param[in]      Value_type:写入参数数据类型
   * @retval         none
   */
-static void Set_Motor_Parameter(MI_Motor *Motor,uint16_t Index,float Value,char Value_type)
+void Set_Motor_Parameter(MI_Motor *Motor,uint16_t Index,float Value,char Value_type)
 {
     uint8_t tx_data[8];
     txMsg.ExtId = Communication_Type_SetSingleParameter<<24|Master_CAN_ID<<8|Motor->CAN_ID;
@@ -232,7 +232,7 @@ void init_cybergear(MI_Motor *Motor,uint8_t Can_Id, uint8_t mode)
   * @brief          小米运控模式指令
   * @param[in]      Motor:  目标电机结构体
   * @param[in]      torque: 力矩设置[-12,12] N*M
-  * @param[in]      MechPosition: 位置设置[-12.5,12.5] rad
+  * @param[in]      MechPosition: 位置设置[-720,720] °
   * @param[in]      speed: 速度设置[0,300] rpm
   * @param[in]      kp: 比例参数设置
   * @param[in]      kd: 微分参数设置

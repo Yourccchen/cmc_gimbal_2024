@@ -42,9 +42,7 @@ void User_Init()
     gimbal.Gimbal_KalmanInit();//云台的卡尔曼算法初始函数
 //    Laser_On();
 //    TIM5_IT_Init();          //TIM5中断打开
-
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时
-
 }
 
 int main()
