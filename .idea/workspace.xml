@@ -20,13 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 解决了小米电机启动时需要硬件先自启动的问题">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 解决了小米电机启动时会自转46°的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +71,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -91,11 +88,6 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -143,7 +135,10 @@
       <workItem from="1701398364394" duration="5593000" />
       <workItem from="1701408954053" duration="3140000" />
       <workItem from="1701418092198" duration="6249000" />
-      <workItem from="1701482844925" duration="4480000" />
+      <workItem from="1701482844925" duration="6501000" />
+      <workItem from="1701604276958" duration="1305000" />
+      <workItem from="1701698083491" duration="1589000" />
+      <workItem from="1701776578146" duration="3031000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -257,7 +252,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701421112765</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="fix: 解决了小米电机启动时会自转46°的问题">
+      <created>1701489272941</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1701489272941</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +296,8 @@
     <MESSAGE value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
     <MESSAGE value="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决" />
     <MESSAGE value="feat: 解决了小米电机启动时需要硬件先自启动的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 解决了小米电机启动时需要硬件先自启动的问题" />
+    <MESSAGE value="fix: 解决了小米电机启动时会自转46°的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 解决了小米电机启动时会自转46°的问题" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

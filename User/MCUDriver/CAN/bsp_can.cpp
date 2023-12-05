@@ -103,11 +103,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
             ///小米电机部分
-            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
-//            switch(Motor_Can_ID)                   //将对应ID电机信息提取至对应结构体
+//            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
+//            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
 //            {
 //                case 0x7F:
-//                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模式
+//                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模 式
                         Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
 //                    else
 //                        mi_motor[0].MCU_ID = recvData[0];
@@ -225,7 +225,6 @@ void CAN_YawSendCurrent(int16_t current)
     send_data[0] = (current >> 8);
     send_data[1] = current & 0xff;
 //    usart_printf("%d,%d\r\n",send_data[0],send_data[1]);
-
     HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
 }
 

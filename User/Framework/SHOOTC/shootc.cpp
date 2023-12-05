@@ -43,8 +43,8 @@ void cShoot::Shoot_SpeedC()
 {
     if(gimbal.CarMode!=PROTECT)
     {
-        gimbal.setMotorSpeed(ShootSpdL,SHOOT_SPEED);
-        gimbal.setMotorSpeed(ShootSpdR,-SHOOT_SPEED);
+        gimbal.setMotorSpeed(ShootSpdL,-SHOOT_SPEED);
+        gimbal.setMotorSpeed(ShootSpdR,SHOOT_SPEED);
         gimbal.setMotorSpeed(ShootSpdU,1.01*SHOOT_SPEED);
     }
     //ADRC摩擦轮计算
@@ -142,7 +142,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(3,0,0.1); //空转时，3稳定;负载时，7稳定
+    gimbal.motors_pid[RamPos].SetKpid(7,0,0.1); //空转时，3稳定;负载时，7稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);
