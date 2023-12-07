@@ -416,8 +416,8 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawP_MO = 300;
             Pid_In.Yaw_Dif_Gain = 0.005;
 
-            Pid_In.YawS_P = 600;
-            Pid_In.YawS_I = 800;
+            Pid_In.YawS_P = 800;
+            Pid_In.YawS_I = 1000;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 25192;

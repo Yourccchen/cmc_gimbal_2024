@@ -21,8 +21,9 @@
   ****************************(C) COPYRIGHT 2019 DJI****************************
   */
 
-#include "INS_task.h"
 
+extern "C"
+{
 #include "main.h"
 
 #include "cmsis_os.h"
@@ -33,12 +34,15 @@
 #include "ist8310driver.h"
 #include "pid_imu.h"
 #include "AHRS.h"
+}
 
-//#include "calibrate_task.h"
-#include "usart.h"
-//#include "detect_task.h"
+#include "imu_tool.h"
+#include "INS_task.h"
+#include "DebugC.h"
 
-
+ComplementaryFilterROS imu_tool;
+Imu_Msg imumsg;
+Mag_Msg magmsg;
 #define IMU_temp_PWM(pwm)  imu_pwm_set(pwm)                    //pwm给定
 
 #define BMI088_BOARD_INSTALL_SPIN_MATRIX    \
@@ -54,7 +58,7 @@
 
 
 
-static head_cali_t     head_cali;       //head cali data
+static head_cali_t head_cali;       //head cali data
 /**
   * @brief          rotate the gyro, accel and mag, and calculate the zero drift, because sensors have
   *                 different install derection.
@@ -100,22 +104,20 @@ static void imu_temp_control(fp32 temp);
 static void imu_cmd_spi_dma(void);
 
 
-
 extern SPI_HandleTypeDef hspi1;
 
 
 static TaskHandle_t INS_task_local_handler;
 
 uint8_t gyro_dma_rx_buf[SPI_DMA_GYRO_LENGHT];
-uint8_t gyro_dma_tx_buf[SPI_DMA_GYRO_LENGHT] = {0x82,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+uint8_t gyro_dma_tx_buf[SPI_DMA_GYRO_LENGHT] = {0x82, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
 uint8_t accel_dma_rx_buf[SPI_DMA_ACCEL_LENGHT];
-uint8_t accel_dma_tx_buf[SPI_DMA_ACCEL_LENGHT] = {0x92,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+uint8_t accel_dma_tx_buf[SPI_DMA_ACCEL_LENGHT] = {0x92, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
 
 uint8_t accel_temp_dma_rx_buf[SPI_DMA_ACCEL_TEMP_LENGHT];
-uint8_t accel_temp_dma_tx_buf[SPI_DMA_ACCEL_TEMP_LENGHT] = {0xA2,0xFF,0xFF,0xFF};
-
+uint8_t accel_temp_dma_tx_buf[SPI_DMA_ACCEL_TEMP_LENGHT] = {0xA2, 0xFF, 0xFF, 0xFF};
 
 
 volatile uint8_t gyro_update_flag = 0;
@@ -143,7 +145,7 @@ static uint8_t first_temperate;
 static const fp32 imu_temp_PID[3] = {TEMPERATURE_PID_KP, TEMPERATURE_PID_KI, TEMPERATURE_PID_KD};
 static pid_type_def imu_temp_pid;
 
-static const float timing_time = 0.001f;   //tast run time , unit s.任务运行的时间 单位 s
+static  float timing_time = 0.001f;   //tast run time , unit s.任务运行的时间 单位 s
 
 
 //加速度计低通滤波
@@ -153,14 +155,12 @@ static fp32 accel_fliter_3[3] = {0.0f, 0.0f, 0.0f};
 static const fp32 fliter_num[3] = {1.929454039488895f, -0.93178349823448126f, 0.002329458745586203f};
 
 
-
-
 static fp32 INS_gyro[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_accel[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_mag[3] = {0.0f, 0.0f, 0.0f};
 static fp32 INS_quat[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 fp32 INS_angle[3] = {0.0f, 0.0f, 0.0f};      //euler angle, unit rad.欧拉角 单位 rad
-
+fp32 INS_angle_complementry[3] = {0.0f, 0.0f, 0.0f};
 
 
 
@@ -180,11 +180,11 @@ void INS_task(void const *pvParameters)
 {
     //wait a time
     osDelay(INS_TASK_INIT_TIME);
-    while(BMI088_init())
+    while (BMI088_init())
     {
         osDelay(100);
     }
-    while(ist8310_init())
+    while (ist8310_init())
     {
         osDelay(100);
     }
@@ -212,13 +212,16 @@ void INS_task(void const *pvParameters)
     }
 
 
-    SPI1_DMA_init((uint32_t)gyro_dma_tx_buf, (uint32_t)gyro_dma_rx_buf, SPI_DMA_GYRO_LENGHT);
+    SPI1_DMA_init((uint32_t) gyro_dma_tx_buf, (uint32_t) gyro_dma_rx_buf, SPI_DMA_GYRO_LENGHT);
+
 
     imu_start_dma_flag = 1;
 
-    while (1)
+    imu_tool.initializeParams();
+    TickType_t current;
+   for(;;)
     {
-
+        current = xTaskGetTickCount();
         //wait spi DMA tansmit done
         //等待SPI DMA传输
         while (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) != pdPASS)
@@ -226,20 +229,20 @@ void INS_task(void const *pvParameters)
         }
 
 
-        if(gyro_update_flag & (1 << IMU_NOTIFY_SHFITS))
+        if (gyro_update_flag & (1 << IMU_NOTIFY_SHFITS))
         {
             gyro_update_flag &= ~(1 << IMU_NOTIFY_SHFITS);
             BMI088_gyro_read_over(gyro_dma_rx_buf + BMI088_GYRO_RX_BUF_DATA_OFFSET, bmi088_real_data.gyro);
         }
 
-        if(accel_update_flag & (1 << IMU_UPDATE_SHFITS))
+        if (accel_update_flag & (1 << IMU_UPDATE_SHFITS))
         {
             accel_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
             BMI088_accel_read_over(accel_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, bmi088_real_data.accel, &bmi088_real_data.time);
 
         }
 
-        if(accel_temp_update_flag & (1 << IMU_UPDATE_SHFITS))
+        if (accel_temp_update_flag & (1 << IMU_UPDATE_SHFITS))
         {
             accel_temp_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
             BMI088_temperature_read_over(accel_temp_dma_rx_buf + BMI088_ACCEL_RX_BUF_DATA_OFFSET, &bmi088_real_data.temp);
@@ -249,36 +252,50 @@ void INS_task(void const *pvParameters)
         //rotate and zero drift
         imu_cali_slove(INS_gyro, INS_accel, INS_mag, &bmi088_real_data, &ist8310_real_data);
 
+        imumsg.angular_velocity.x = INS_gyro[0];//角速度，单位：rad/s
+        imumsg.angular_velocity.y = INS_gyro[1];
+        imumsg.angular_velocity.z = INS_gyro[2];
+        imumsg.linear_acceleration.x = INS_accel[0];//加速度，单位：m/s^2
+        imumsg.linear_acceleration.y = INS_accel[1];
+        imumsg.linear_acceleration.z = INS_accel[2];
+        imumsg.time = (float )current/ ((float )portTICK_RATE_MS)*0.001f;//timing_time为两次数据更新的时间间隔，单位：s
+        magmsg.x = INS_mag[0];
+        magmsg.y = INS_mag[1];
+        magmsg.z = INS_mag[2];
 
         //加速度计低通滤波
         //accel low-pass filter
-        accel_fliter_1[0] = accel_fliter_2[0];
-        accel_fliter_2[0] = accel_fliter_3[0];
+//        accel_fliter_1[0] = accel_fliter_2[0];
+//        accel_fliter_2[0] = accel_fliter_3[0];
+//
+//        accel_fliter_3[0] = accel_fliter_2[0] * fliter_num[0] + accel_fliter_1[0] * fliter_num[1] + INS_accel[0] * fliter_num[2];
+//
+//        accel_fliter_1[1] = accel_fliter_2[1];
+//        accel_fliter_2[1] = accel_fliter_3[1];
+//
+//        accel_fliter_3[1] = accel_fliter_2[1] * fliter_num[0] + accel_fliter_1[1] * fliter_num[1] + INS_accel[1] * fliter_num[2];
+//
+//        accel_fliter_1[2] = accel_fliter_2[2];
+//        accel_fliter_2[2] = accel_fliter_3[2];
+//
+//        accel_fliter_3[2] = accel_fliter_2[2] * fliter_num[0] + accel_fliter_1[2] * fliter_num[1] + INS_accel[2] * fliter_num[2];
 
-        accel_fliter_3[0] = accel_fliter_2[0] * fliter_num[0] + accel_fliter_1[0] * fliter_num[1] + INS_accel[0] * fliter_num[2];
-
-        accel_fliter_1[1] = accel_fliter_2[1];
-        accel_fliter_2[1] = accel_fliter_3[1];
-
-        accel_fliter_3[1] = accel_fliter_2[1] * fliter_num[0] + accel_fliter_1[1] * fliter_num[1] + INS_accel[1] * fliter_num[2];
-
-        accel_fliter_1[2] = accel_fliter_2[2];
-        accel_fliter_2[2] = accel_fliter_3[2];
-
-        accel_fliter_3[2] = accel_fliter_2[2] * fliter_num[0] + accel_fliter_1[2] * fliter_num[1] + INS_accel[2] * fliter_num[2];
-
-
-        AHRS_update(INS_quat, timing_time, INS_gyro, accel_fliter_3, INS_mag);
-        get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET);
-
+        imu_tool.imuCallback(imumsg);
+//        AHRS_update(INS_quat, timing_time, INS_gyro, accel_fliter_3, INS_mag);
+//        get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET);
+        get_angle(imu_tool.quat,
+                  INS_angle_complementry + INS_YAW_ADDRESS_OFFSET,
+                  INS_angle_complementry + INS_PITCH_ADDRESS_OFFSET,
+                  INS_angle_complementry + INS_ROLL_ADDRESS_OFFSET);
 
         //because no use ist8310 and save time, no use
-        if(mag_update_flag &= 1 << IMU_DR_SHFITS)
+        if (mag_update_flag &= 1 << IMU_DR_SHFITS)
         {
-            mag_update_flag &= ~(1<< IMU_DR_SHFITS);
+            mag_update_flag &= ~(1 << IMU_DR_SHFITS);
             mag_update_flag |= (1 << IMU_SPI_SHFITS);
-//            ist8310_read_mag(ist8310_real_data.mag);
+            ist8310_read_mag(ist8310_real_data.mag);
         }
+
     }
 }
 
@@ -344,33 +361,36 @@ static void imu_temp_control(fp32 temp)
 {
     uint16_t tempPWM;
     static uint8_t temp_constant_time = 0;
-    if (first_temperate)
-    {
-        PID_calc(&imu_temp_pid, temp, get_control_temperature());
+//    if (first_temperate)
+//    {
+        PID_calc(&imu_temp_pid, temp, 40.0f);
         if (imu_temp_pid.out < 0.0f)
         {
             imu_temp_pid.out = 0.0f;
         }
-        tempPWM = (uint16_t)imu_temp_pid.out;
+        tempPWM = (uint16_t) imu_temp_pid.out;
         IMU_temp_PWM(tempPWM);
-    }
-    else
-    {
-        //在没有达到设置的温度，一直最大功率加热
-        //in beginning, max power
-        if (temp > get_control_temperature())
-        {
-            temp_constant_time++;
-            if (temp_constant_time > 200)
-            {
-                //达到设置温度，将积分项设置为一半最大功率，加速收敛
-                first_temperate = 1;
-                imu_temp_pid.Iout = MPU6500_TEMP_PWM_MAX / 2.0f;
-            }
-        }
+//    }
+//    else
+//    {
+//        //在没有达到设置的温度，一直最大功率加热
+//        //in beginning, max power
+//        if (temp > get_control_temperature())
+//        {
+//            temp_constant_time++;
+//            if (temp_constant_time > 200)
+//            {
+//                //达到设置温度，将积分项设置为一半最大功率，加速收敛
+//                //
+//                first_temperate = 1;
+//                imu_temp_pid.Iout = MPU6500_TEMP_PWM_MAX / 2.0f;
+//            }
+//        }
+//
+//        IMU_temp_PWM(MPU6500_TEMP_PWM_MAX - 1);
+//    }
 
-        IMU_temp_PWM(MPU6500_TEMP_PWM_MAX - 1);
-    }
+//    usart_printf("%.2f,%.2f,%.2f,%.2f,%d,%.2f\r\n", IMU_Angle(0), IMU_Angle(1), IMU_Speed(0), IMU_Speed(1),tempPWM,bmi088_real_data.temp);
 }
 
 /**
@@ -416,7 +436,7 @@ void gyro_offset_calc(fp32 gyro_offset[3], fp32 gyro[3], uint16_t *offset_time_c
   */
 void INS_cali_gyro(fp32 cali_scale[3], fp32 cali_offset[3], uint16_t *time_count)
 {
-    if( *time_count == 0)
+    if (*time_count == 0)
     {
         gyro_offset[0] = gyro_cali_offset[0];
         gyro_offset[1] = gyro_cali_offset[1];
@@ -484,6 +504,10 @@ const fp32 *get_INS_angle_point(void)
     return INS_angle;
 }
 
+const fp32 *get_INS_complementry_angle_point(void)
+{
+    return INS_angle_complementry;
+}
 /**
   * @brief          get the rotation speed, 0:x-axis, 1:y-axis, 2:roll-axis,unit rad/s
   * @param[in]      none
@@ -527,11 +551,13 @@ extern const fp32 *get_accel_fliter_data_point(void)
     return accel_fliter_3;
 }
 
-float getIMUTemp(void){
+float getIMUTemp(void)
+{
     return bmi088_real_data.temp;
 }
 
-bmi088_real_data_t* getBMI088RealData(void){
+bmi088_real_data_t *getBMI088RealData(void)
+{
     return &bmi088_real_data;
 }
 /**
@@ -552,31 +578,38 @@ extern const fp32 *get_mag_data_point(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-    if(GPIO_Pin == INT1_ACCEL_Pin)
+    if (GPIO_Pin == INT1_ACCEL_Pin)
     {
-//        detect_hook(BOARD_ACCEL_TOE);
         accel_update_flag |= 1 << IMU_DR_SHFITS;
         accel_temp_update_flag |= 1 << IMU_DR_SHFITS;
-        if(imu_start_dma_flag)
+        if (imu_start_dma_flag)
         {
             imu_cmd_spi_dma();
         }
     }
-    else if(GPIO_Pin == INT1_GYRO_Pin)
+    else if (GPIO_Pin == INT1_GYRO_Pin)
     {
-//        detect_hook(BOARD_GYRO_TOE);
         gyro_update_flag |= 1 << IMU_DR_SHFITS;
-        if(imu_start_dma_flag)
+        if (imu_start_dma_flag)
         {
             imu_cmd_spi_dma();
         }
     }
-    else if(GPIO_Pin == DRDY_IST8310_Pin)
+    else if (GPIO_Pin == DRDY_IST8310_Pin)
     {
-//        detect_hook(BOARD_MAG_TOE);
         mag_update_flag |= 1 << IMU_DR_SHFITS;
+        /**
+         * 开启磁力计
+         */
+//        if (mag_update_flag &= 1 << IMU_DR_SHFITS)
+//        {
+//            mag_update_flag &= ~(1 << IMU_DR_SHFITS);
+//            mag_update_flag |= (1 << IMU_SPI_SHFITS);
+//
+//            ist8310_read_mag(ist8310_real_data.mag);
+//        }
     }
-    else if(GPIO_Pin == GPIO_PIN_0)
+    else if (GPIO_Pin == GPIO_PIN_0)
     {
 
         //wake up the task
@@ -609,55 +642,103 @@ static void imu_cmd_spi_dma(void)
     uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();
 
     //开启陀螺仪的DMA传输
-    if( (gyro_update_flag & (1 << IMU_DR_SHFITS) ) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
+    if ((gyro_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
         && !(accel_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_temp_update_flag & (1 << IMU_SPI_SHFITS)))
     {
         gyro_update_flag &= ~(1 << IMU_DR_SHFITS);
         gyro_update_flag |= (1 << IMU_SPI_SHFITS);
 
         HAL_GPIO_WritePin(CS1_GYRO_GPIO_Port, CS1_GYRO_Pin, GPIO_PIN_RESET);
-        SPI1_DMA_enable((uint32_t)gyro_dma_tx_buf, (uint32_t)gyro_dma_rx_buf, SPI_DMA_GYRO_LENGHT);
+        SPI1_DMA_enable((uint32_t) gyro_dma_tx_buf, (uint32_t) gyro_dma_rx_buf, SPI_DMA_GYRO_LENGHT);
         taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
         return;
     }
     //开启加速度计的DMA传输
-    if((accel_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
-       && !(gyro_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_temp_update_flag & (1 << IMU_SPI_SHFITS)))
+    if ((accel_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
+        && !(gyro_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_temp_update_flag & (1 << IMU_SPI_SHFITS)))
     {
         accel_update_flag &= ~(1 << IMU_DR_SHFITS);
         accel_update_flag |= (1 << IMU_SPI_SHFITS);
 
         HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_RESET);
-        SPI1_DMA_enable((uint32_t)accel_dma_tx_buf, (uint32_t)accel_dma_rx_buf, SPI_DMA_ACCEL_LENGHT);
+        SPI1_DMA_enable((uint32_t) accel_dma_tx_buf, (uint32_t) accel_dma_rx_buf, SPI_DMA_ACCEL_LENGHT);
         taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
         return;
     }
 
-    if((accel_temp_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
-       && !(gyro_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_update_flag & (1 << IMU_SPI_SHFITS)))
+
+    if ((accel_temp_update_flag & (1 << IMU_DR_SHFITS)) && !(hspi1.hdmatx->Instance->CR & DMA_SxCR_EN) && !(hspi1.hdmarx->Instance->CR & DMA_SxCR_EN)
+        && !(gyro_update_flag & (1 << IMU_SPI_SHFITS)) && !(accel_update_flag & (1 << IMU_SPI_SHFITS)))
     {
         accel_temp_update_flag &= ~(1 << IMU_DR_SHFITS);
         accel_temp_update_flag |= (1 << IMU_SPI_SHFITS);
 
         HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_RESET);
-        SPI1_DMA_enable((uint32_t)accel_temp_dma_tx_buf, (uint32_t)accel_temp_dma_rx_buf, SPI_DMA_ACCEL_TEMP_LENGHT);
+        SPI1_DMA_enable((uint32_t) accel_temp_dma_tx_buf, (uint32_t) accel_temp_dma_rx_buf, SPI_DMA_ACCEL_TEMP_LENGHT);
         taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
         return;
     }
     taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
 }
 
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)
+{
+    /* Prevent unused argument(s) compilation warning */
+    //gyro read over
+    //陀螺仪读取完毕
+    if (gyro_update_flag & (1 << IMU_SPI_SHFITS))
+    {
+        gyro_update_flag &= ~(1 << IMU_SPI_SHFITS);
+        gyro_update_flag |= (1 << IMU_UPDATE_SHFITS);
+
+        HAL_GPIO_WritePin(CS1_GYRO_GPIO_Port, CS1_GYRO_Pin, GPIO_PIN_SET);
+
+    }
+
+    //accel read over
+    //加速度计读取完毕
+    if (accel_update_flag & (1 << IMU_SPI_SHFITS))
+    {
+        accel_update_flag &= ~(1 << IMU_SPI_SHFITS);
+        accel_update_flag |= (1 << IMU_UPDATE_SHFITS);
+
+        HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_SET);
+    }
+    //temperature read over
+    //温度读取完毕
+    if (accel_temp_update_flag & (1 << IMU_SPI_SHFITS))
+    {
+        accel_temp_update_flag &= ~(1 << IMU_SPI_SHFITS);
+        accel_temp_update_flag |= (1 << IMU_UPDATE_SHFITS);
+
+        HAL_GPIO_WritePin(CS1_ACCEL_GPIO_Port, CS1_ACCEL_Pin, GPIO_PIN_SET);
+    }
+
+    imu_cmd_spi_dma();
+
+    if (gyro_update_flag & (1 << IMU_UPDATE_SHFITS))
+    {
+        gyro_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
+        gyro_update_flag |= (1 << IMU_NOTIFY_SHFITS);
+        __HAL_GPIO_EXTI_GENERATE_SWIT(GPIO_PIN_0);
+    }
+
+    /* NOTE : This function should not be modified, when the callback is needed,
+              the HAL_SPI_RxCpltCallback should be implemented in the user file
+     */
+}
+
 //原名称：void DMA2_Stream2_IRQHandler(void) 创建一个函数，在这里调用
 void SPI_RxCallBack(void)
 {
 
-    if(__HAL_DMA_GET_FLAG(hspi1.hdmarx, __HAL_DMA_GET_TC_FLAG_INDEX(hspi1.hdmarx)) != RESET)
+    if (__HAL_DMA_GET_FLAG(hspi1.hdmarx, __HAL_DMA_GET_TC_FLAG_INDEX(hspi1.hdmarx)) != RESET)
     {
         __HAL_DMA_CLEAR_FLAG(hspi1.hdmarx, __HAL_DMA_GET_TC_FLAG_INDEX(hspi1.hdmarx));
 
         //gyro read over
         //陀螺仪读取完毕
-        if(gyro_update_flag & (1 << IMU_SPI_SHFITS))
+        if (gyro_update_flag & (1 << IMU_SPI_SHFITS))
         {
             gyro_update_flag &= ~(1 << IMU_SPI_SHFITS);
             gyro_update_flag |= (1 << IMU_UPDATE_SHFITS);
@@ -668,7 +749,7 @@ void SPI_RxCallBack(void)
 
         //accel read over
         //加速度计读取完毕
-        if(accel_update_flag & (1 << IMU_SPI_SHFITS))
+        if (accel_update_flag & (1 << IMU_SPI_SHFITS))
         {
             accel_update_flag &= ~(1 << IMU_SPI_SHFITS);
             accel_update_flag |= (1 << IMU_UPDATE_SHFITS);
@@ -677,7 +758,7 @@ void SPI_RxCallBack(void)
         }
         //temperature read over
         //温度读取完毕
-        if(accel_temp_update_flag & (1 << IMU_SPI_SHFITS))
+        if (accel_temp_update_flag & (1 << IMU_SPI_SHFITS))
         {
             accel_temp_update_flag &= ~(1 << IMU_SPI_SHFITS);
             accel_temp_update_flag |= (1 << IMU_UPDATE_SHFITS);
@@ -687,7 +768,7 @@ void SPI_RxCallBack(void)
 
         imu_cmd_spi_dma();
 
-        if(gyro_update_flag & (1 << IMU_UPDATE_SHFITS))
+        if (gyro_update_flag & (1 << IMU_UPDATE_SHFITS))
         {
             gyro_update_flag &= ~(1 << IMU_UPDATE_SHFITS);
             gyro_update_flag |= (1 << IMU_NOTIFY_SHFITS);

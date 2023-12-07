@@ -114,15 +114,15 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of GimbalControl */
-  osThreadDef(GimbalControl, GimbalControlTask, osPriorityRealtime, 0, 1024);
+  osThreadDef(GimbalControl, GimbalControlTask, osPriorityHigh, 0, 1024);
   GimbalControlHandle = osThreadCreate(osThread(GimbalControl), NULL);
 
   /* definition and creation of VisionCom */
-  osThreadDef(VisionCom, VisionComTask, osPriorityHigh, 0, 512);
+  osThreadDef(VisionCom, VisionComTask, osPriorityAboveNormal, 0, 512);
   VisionComHandle = osThreadCreate(osThread(VisionCom), NULL);
 
   /* definition and creation of PrintControl */
@@ -130,7 +130,7 @@ void MX_FREERTOS_Init(void) {
   PrintControlHandle = osThreadCreate(osThread(PrintControl), NULL);
 
   /* definition and creation of imuTask */
-  osThreadStaticDef(imuTask, INS_task, osPriorityNormal, 0, 2048, imuTaskBuffer, &imuTaskControlBlock);
+  osThreadStaticDef(imuTask, INS_task, osPriorityRealtime, 0, 2048, imuTaskBuffer, &imuTaskControlBlock);
   imuTaskHandle = osThreadCreate(osThread(imuTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
