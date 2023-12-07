@@ -309,17 +309,22 @@ void cGimbal::Gimbal_SpeedC()
     }
 
     //摩擦轮与拨弹轮发电流
-    switch(motors[ShootLMotor].Algorithm)
+    if(count_time_send==3)
     {
-        case NORMAL:
+        switch (motors[ShootLMotor].Algorithm)
         {
-            shoot.Shoot_SendCurrent(motors_pid[ShootSpdL].PID_Out,motors_pid[ShootSpdR].PID_Out,motors_pid[ShootSpdU].PID_Out,motors_pid[RamSpd].PID_Out);
-            break;
-        }
-        case ADRC:
-        {
-            shoot.Shoot_SendCurrent(shoot.ShootLOUT_ADRC,shoot.ShootROUT_ADRC,shoot.ShootUOUT_ADRC,motors_pid[RamSpd].PID_Out);
-            break;
+            case NORMAL:
+            {
+                shoot.Shoot_SendCurrent(motors_pid[ShootSpdL].PID_Out, motors_pid[ShootSpdR].PID_Out,
+                                        motors_pid[ShootSpdU].PID_Out, motors_pid[RamSpd].PID_Out);
+                break;
+            }
+            case ADRC:
+            {
+                shoot.Shoot_SendCurrent(shoot.ShootLOUT_ADRC, shoot.ShootROUT_ADRC, shoot.ShootUOUT_ADRC,
+                                        motors_pid[RamSpd].PID_Out);
+                break;
+            }
         }
     }
 }
@@ -404,7 +409,7 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 0.4;
+            Pid_In.YawP_P = 1;
             Pid_In.YawP_I = 0;
             Pid_In.YawP_D = 0.3;
             Pid_In.YawP_N = 100;
@@ -531,7 +536,7 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -549,8 +554,8 @@ void cGimbal::Printf_Test()
 //                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,
 //                 shoot.ShootUOUT_ADRC,motors[ShootUMotor].RealSpeed);
     //拨弹轮打印//
-    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-                 motors[RamMotor].RealAngle_Ecd,ShootMode);
+//    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+//                 motors[RamMotor].RealAngle_Ecd,ShootMode);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget,motors[YawMotor].RealAngle_Imu
 //    ,vision_pkt.offset_pitch,PihTarget,motors[PihMotor].RealAngle_Imu);

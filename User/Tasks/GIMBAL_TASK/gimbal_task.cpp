@@ -21,9 +21,10 @@ void GimbalControlTask(void const * argument)
     for (;;)
     {
         gimbal.count_time_send++;
-        if(gimbal.count_time_send > 2) gimbal.count_time_send = 0;
+        if(gimbal.count_time_send > 3) gimbal.count_time_send = 0;
         CurrentTime = xTaskGetTickCount();
         gimbal.Gimbal_ControlLoop();
+        gimbal.Printf_Test();
 
         vTaskDelayUntil(&CurrentTime, 5/portTICK_RATE_MS);
     }

@@ -18,7 +18,7 @@ void PrintControlTask(void const* argument)
     for (;;)
     {
         CurrentTime = xTaskGetTickCount();
-        gimbal.Printf_Test();
+//        gimbal.Printf_Test();
 
         if(count_number % 100 ==0)
         {

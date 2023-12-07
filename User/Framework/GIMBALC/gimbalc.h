@@ -63,8 +63,10 @@
 
 //切换新旧英雄判断
 extern bool GIMBAL;
+
 #define OLD_HERO 0
 #define NEW_HERO 1
+
 extern ExtU rtU;
 extern ExtY rtY;
 #define Pid_In rtU
