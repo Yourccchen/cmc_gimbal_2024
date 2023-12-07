@@ -22,10 +22,27 @@ void cShoot::Shoot_ControlLoop()
 void cShoot::Shoot_PosC()
 {
     portSetRammer();//拨弹轮设置目标值
+
+    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>200)
+        gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
+
     if(rammer_flag)
     {
-        gimbal.setMotorPos(RamPos,gimbal.motors_pid[RamPos].PID_Target+72);
+        switch(GIMBAL)
+        {
+            case OLD_HERO:
+            {
+                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 72);
+                break;
+            }
+            case NEW_HERO:
+            {
+                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 45.0* 7.0/25.0);
+                break;
+            }
+        }
     }
+
     rammer_flag=0;
 
     float RamOut=gimbal.motors_pid[RamPos].PID_GetPositionPID(gimbal.motors[RamMotor].RealAngle_Ecd);
@@ -142,7 +159,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(7,0,0.1); //空转时，3稳定;负载时，7稳定
+    gimbal.motors_pid[RamPos].SetKpid(9,0,0.1); //空转时，3稳定;负载时，7稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);

@@ -5,7 +5,7 @@
 #include "gimbalc.h"
 #include "imuc.h"
 #include "CyberGear.h"
-
+bool GIMBAL=0;
 cGimbal gimbal; //定义云台总类
 extern ReceivePacket vision_pkt;
 
@@ -541,15 +541,16 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
     //摩擦轮打印//
-    usart_printf("%f,%f,%f,%f\r\n",
-                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed);
+//    usart_printf("%f,%f,%f,%f\r\n",
+//                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
+//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed);
     //ADRC打印//
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,
 //                 shoot.ShootUOUT_ADRC,motors[ShootUMotor].RealSpeed);
     //拨弹轮打印//
-//    usart_printf("%f,%f,%f\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,motors[RamMotor].RealAngle_Ecd);
+    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+                 motors[RamMotor].RealAngle_Ecd,ShootMode);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget,motors[YawMotor].RealAngle_Imu
 //    ,vision_pkt.offset_pitch,PihTarget,motors[PihMotor].RealAngle_Imu);

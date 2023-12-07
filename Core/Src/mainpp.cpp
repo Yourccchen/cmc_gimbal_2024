@@ -35,6 +35,7 @@ void BSP_Init(void)
 
 void User_Init()
 {
+    GIMBAL=OLD_HERO;           //切换新旧英雄
     DEBUGC_UartInit();         //使能串口UART1中断
 //    Power_on();                //电源打开
     REMOTEC_Init();            //遥控器初始化
