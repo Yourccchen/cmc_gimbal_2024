@@ -3,13 +3,15 @@
 //
 
 #include "laser.h"
+#include "gpio.h"
+
 //激光模块
 void Laser_On(void)
 {
-    HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(Laser_GPIO_Port, Laser_Pin, GPIO_PIN_SET);
 }
 
 void Laser_Off(void)
 {
-    HAL_GPIO_WritePin(GPIOG, GPIO_PIN_13, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(Laser_GPIO_Port, Laser_Pin, GPIO_PIN_RESET);
 }

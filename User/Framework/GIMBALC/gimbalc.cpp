@@ -541,14 +541,15 @@ void cGimbal::Printf_Test()
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",PihTarget-46,mi_motor[0].Angle,mi_motor[0].Speed);
+//    usart_printf("%f,%f,%f\r\n",PihTarget-46,mi_motor[0].Angle,mi_motor[0].Speed);
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
     //摩擦轮打印//
-//    usart_printf("%f,%f,%f,%f\r\n",
-//                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed);
+    usart_printf("%f,%f,%f,%f,%d\r\n",
+                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
+                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
+                 gimbal.motors[RamMotor].RawTorqueCurrent);
     //ADRC打印//
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,

@@ -13,7 +13,7 @@ void cShoot::Shoot_ControlLoop()
 {
     Shoot_SpdChoose();
     Shoot_ParamChoose();
-//    Stuck_Check();
+    Stuck_Check();
 }
 
 /**
@@ -23,7 +23,7 @@ void cShoot::Shoot_PosC()
 {
     portSetRammer();//拨弹轮设置目标值
 
-    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>100)
+    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>200)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
     if(rammer_flag)
@@ -131,8 +131,8 @@ void cShoot::Stuck_Check()
         gimbal.motors[RamMotor].RawAngle=0;
         gimbal.motors[RamMotor].AllAngle=0;
         gimbal.motors[RamMotor].RealAngle_Ecd=0;
-
-        gimbal.setMotorSpeed(RamSpd,-100);
+        Shoot_SendCurrent(0,0,0,-8000);
+//        gimbal.setMotorSpeed(RamSpd,-100);
         rammer_flag=0;
         reverse_time++;
     }

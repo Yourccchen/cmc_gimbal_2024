@@ -20,18 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 重新换回了IMU的融合滤波算法">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 解决了小米电机断电后再启动后无法再动的问题（实在不行换按键RST解决）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/gpio.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/gpio.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/LASER/laser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/LASER/laser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +93,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -157,7 +159,7 @@
       <workItem from="1704337078390" duration="6000" />
       <workItem from="1704439082178" duration="9113000" />
       <workItem from="1704521623700" duration="609000" />
-      <workItem from="1704620034428" duration="6562000" />
+      <workItem from="1704620034428" duration="11107000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -299,7 +301,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701958971349</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix: 解决了小米电机断电后再启动后无法再动的问题（实在不行换按键RST解决）">
+      <created>1704631405424</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1704631405424</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,6 +349,7 @@
     <MESSAGE value="fix: 修改了摩擦轮反向的低级问题" />
     <MESSAGE value="feat: 增加了拨弹轮目标值与当前值偏差过大时疯转的问题" />
     <MESSAGE value="feat: 重新换回了IMU的融合滤波算法" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 重新换回了IMU的融合滤波算法" />
+    <MESSAGE value="fix: 解决了小米电机断电后再启动后无法再动的问题（实在不行换按键RST解决）" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 解决了小米电机断电后再启动后无法再动的问题（实在不行换按键RST解决）" />
   </component>
 </project>
