@@ -12,7 +12,7 @@
 ///掉线检测
 uint16_t isRecvShoot; //摩擦轮掉线检测
 uint16_t isRecvYaw;   //Yaw掉线检测
-uint16_t isRecvPih;   //Pih掉线检测
+uint16_t isRecvPih = 0;   //Pih掉线检测
 
 
 /**
@@ -103,11 +103,12 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
             ///小米电机部分
+            isRecvPih = 1;
 //            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
 //            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
 //            {
 //                case 0x7F:
-//                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模 式
+//                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模式
                         Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
 //                    else
 //                        mi_motor[0].MCU_ID = recvData[0];

@@ -26,4 +26,5 @@
 #include "i2c.h"
 #include "bsp_delay.h"
 #include "CyberGear.h"
+#include "bsp_can.h"
 #endif //CMC_GIMBAL_2024_BSP_H

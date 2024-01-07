@@ -1,7 +1,6 @@
 //
 // Created by DELL on 2023/9/23.
 //
-
 #ifndef HERO_TEST_GIMBALC_H
 #define HERO_TEST_GIMBALC_H
 #include "stm32f4xx_hal.h"
@@ -20,7 +19,6 @@
 #include "packet.hpp"
 #include "ADRC.h"
 #include "filters.h"
-
 #define RAMPSTEP 100
 #define SHOOT_RAMPSTEP 20
 //反馈模式选择

@@ -103,7 +103,6 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
                 ChassisYawTarget -= 360;            //加减2π
             if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
                 ChassisYawTarget += 360;
-//            vz=0;
             vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
             break;
         }
@@ -285,6 +284,7 @@ void cGimbal::Gimbal_SpeedC()
             case MATLAB:
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
+//                CAN_YawSendCurrent(Debug_Param().pos_targetAngle);
                 break;
             }
         }
@@ -304,7 +304,7 @@ void cGimbal::Gimbal_SpeedC()
         }
         case CYBERGEAR:
         {
-            motor_controlmode(&mi_motor[0],0,PihTarget-46,0,9,0.4);
+            motor_controlmode(&mi_motor[0],0,PihTarget-46,0,80,3.5);
         }
     }
 
@@ -409,15 +409,15 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 1;
+            Pid_In.YawP_P = 1.2;
             Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.3;
-            Pid_In.YawP_N = 100;
+            Pid_In.YawP_D = 0.4;
+            Pid_In.YawP_N = 175;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.005;
+            Pid_In.Yaw_Dif_Gain = 0.05;
 
-            Pid_In.YawS_P = 800;
-            Pid_In.YawS_I = 1000;
+            Pid_In.YawS_P = 700;
+            Pid_In.YawS_I = 900;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 25192;
@@ -536,12 +536,12 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%d,%d\r\n",Debug_Param().pos_targetAngle,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
-//    usart_printf("%f,%f\r\n",mi_motor[0].Angle,mi_motor[0].Speed);
+    usart_printf("%f,%f,%f\r\n",PihTarget-46,mi_motor[0].Angle,mi_motor[0].Speed);
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);

@@ -70,9 +70,6 @@ void cShoot::Shoot_SpeedC()
     ShootUOUT_ADRC=gimbal.adrc.ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootUMotor].RealSpeed);
 
     //普通PID的摩擦轮、拨弹轮计算
-//    gimbal.motors_pid[ShootSpdL].PID_GetIncrementalPID(gimbal.motors[ShootLMotor].RealSpeed);
-//    gimbal.motors_pid[ShootSpdR].PID_GetIncrementalPID(gimbal.motors[ShootRMotor].RealSpeed);
-//    gimbal.motors_pid[ShootSpdU].PID_GetIncrementalPID(gimbal.motors[ShootUMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdL].PID_GetPositionPID(gimbal.motors[ShootLMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdR].PID_GetPositionPID(gimbal.motors[ShootRMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdU].PID_GetPositionPID(gimbal.motors[ShootUMotor].RealSpeed);
@@ -169,7 +166,4 @@ void cShoot::Shoot_ParamChoose()
     gimbal.motors_pid[ShootSpdL].SetKpid(5,0.1,0);//位置式PID参数
     gimbal.motors_pid[ShootSpdR].SetKpid(5,0.1,0);
     gimbal.motors_pid[ShootSpdU].SetKpid(5,0.1,0);
-//    gimbal.motors_pid[ShootSpdL].SetKpid(20,1,0);//增量式PID参数
-//    gimbal.motors_pid[ShootSpdR].SetKpid(20,1,0);
-//    gimbal.motors_pid[ShootSpdU].SetKpid(20,1,0);
 }

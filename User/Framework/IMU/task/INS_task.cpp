@@ -265,24 +265,26 @@ void INS_task(void const *pvParameters)
 
         //加速度计低通滤波
         //accel low-pass filter
-//        accel_fliter_1[0] = accel_fliter_2[0];
-//        accel_fliter_2[0] = accel_fliter_3[0];
-//
-//        accel_fliter_3[0] = accel_fliter_2[0] * fliter_num[0] + accel_fliter_1[0] * fliter_num[1] + INS_accel[0] * fliter_num[2];
-//
-//        accel_fliter_1[1] = accel_fliter_2[1];
-//        accel_fliter_2[1] = accel_fliter_3[1];
-//
-//        accel_fliter_3[1] = accel_fliter_2[1] * fliter_num[0] + accel_fliter_1[1] * fliter_num[1] + INS_accel[1] * fliter_num[2];
-//
-//        accel_fliter_1[2] = accel_fliter_2[2];
-//        accel_fliter_2[2] = accel_fliter_3[2];
-//
-//        accel_fliter_3[2] = accel_fliter_2[2] * fliter_num[0] + accel_fliter_1[2] * fliter_num[1] + INS_accel[2] * fliter_num[2];
+        accel_fliter_1[0] = accel_fliter_2[0];
+        accel_fliter_2[0] = accel_fliter_3[0];
+
+        accel_fliter_3[0] = accel_fliter_2[0] * fliter_num[0] + accel_fliter_1[0] * fliter_num[1] + INS_accel[0] * fliter_num[2];
+
+        accel_fliter_1[1] = accel_fliter_2[1];
+        accel_fliter_2[1] = accel_fliter_3[1];
+
+        accel_fliter_3[1] = accel_fliter_2[1] * fliter_num[0] + accel_fliter_1[1] * fliter_num[1] + INS_accel[1] * fliter_num[2];
+
+        accel_fliter_1[2] = accel_fliter_2[2];
+        accel_fliter_2[2] = accel_fliter_3[2];
+
+        accel_fliter_3[2] = accel_fliter_2[2] * fliter_num[0] + accel_fliter_1[2] * fliter_num[1] + INS_accel[2] * fliter_num[2];
 
         imu_tool.imuCallback(imumsg);
-//        AHRS_update(INS_quat, timing_time, INS_gyro, accel_fliter_3, INS_mag);
-//        get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET);
+
+        AHRS_update(INS_quat, timing_time, INS_gyro, accel_fliter_3, INS_mag);
+        get_angle(INS_quat, INS_angle + INS_YAW_ADDRESS_OFFSET, INS_angle + INS_PITCH_ADDRESS_OFFSET, INS_angle + INS_ROLL_ADDRESS_OFFSET);
+
         get_angle(imu_tool.quat,
                   INS_angle_complementry + INS_YAW_ADDRESS_OFFSET,
                   INS_angle_complementry + INS_PITCH_ADDRESS_OFFSET,
