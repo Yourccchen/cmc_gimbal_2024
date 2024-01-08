@@ -233,6 +233,8 @@ void cGimbal::Gimbal_PosC()
     setMotorPos(YawPos,YawTarget);
     setMotorPos(ChassisYaw,ChassisYawTarget);
 
+    portSetTurn();//云台反转。如果按下V，云台立马反转180°，如果没有按下，不影响程序运行
+
     //MATLAB的PID数据更新
     Pid_In.PihAngle_set = PihTarget;
 

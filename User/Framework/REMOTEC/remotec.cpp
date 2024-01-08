@@ -475,13 +475,14 @@ int8_t portSetControlMode(void)
 {
     return RC_GetDatas().rc.s[1];//左侧拨杆
 }
-
-
 /**
-  * @brief     按住ctrl则以当前姿态为目标角度
-  * @retval    ctrl的当前状态
+  *@breif   云台反转180°
   */
-uint8_t portSetGimbal(void)
+void portSetTurn(void)
 {
-    return rc_ctrl.key.CONTRL.Now_State;
+    portHandle(&rc_ctrl.key.V);//非连续键值处理 即上一次是0，本次是1，判断为按了一次
+    if(rc_ctrl.key.V.Is_Click_Once)
+    {
+        gimbal.YawTarget+=180;
+    }
 }

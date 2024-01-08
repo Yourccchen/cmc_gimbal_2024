@@ -114,4 +114,5 @@ int8_t portSetCarMode(void);
 int8_t portSetShootMode(void);
 int8_t portSetControlMode(void);
 void portSetRammer(void);
+void portSetTurn(void);
 #endif//HERO_TEST_REMOTEC_H
