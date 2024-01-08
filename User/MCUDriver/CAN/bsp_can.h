@@ -54,5 +54,4 @@ void CAN_ChasisSendSpd(int16_t vx, int16_t vy, int16_t vz, int8_t car_mode, int8
 void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t fric_status, int8_t rammer_status,
                        int8_t redraw_status);
 void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc, int16_t  ramc);
-extern uint16_t isRecvPih;  //Pih掉线检测
 #endif //HERO_TEST_BSP_CAN_H

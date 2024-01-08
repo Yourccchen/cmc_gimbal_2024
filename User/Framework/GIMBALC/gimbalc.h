@@ -59,6 +59,10 @@
 #define SHOOT_FORBID 0
 #define SHOOT_PERMIT 1
 
+//摩擦轮当前状态(热量限制有关)
+#define FRIC_ON 0
+#define FRIC_OFF 1
+
 //切换新旧英雄判断
 extern bool GIMBAL;
 

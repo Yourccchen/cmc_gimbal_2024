@@ -11,9 +11,10 @@
   */
 void cShoot::Shoot_ControlLoop()
 {
-    Shoot_SpdChoose();
-    Shoot_ParamChoose();
-    Stuck_Check();
+    Shoot_SpdChoose();//速度选择
+    Shoot_ParamChoose();//参数设置
+    Stuck_Check();//堵转检测
+    Heat_Protect();//热量保护
 }
 
 /**
@@ -26,23 +27,28 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>200)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if(rammer_flag)
+    if(rammer_flag)//0为不转，1为转一次。无其他数值可能
     {
-        switch(GIMBAL)
+        switch(GIMBAL)//切换新旧英雄
         {
             case OLD_HERO:
             {
-                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 72);
+                if(shoot_permit==SHOOT_PERMIT)
+                {
+                    gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 72);
+                }
                 break;
             }
             case NEW_HERO:
             {
-                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 45.0* 28.0/100.0);
+                if(shoot_permit==SHOOT_PERMIT)
+                {
+                    gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 45.0* 28.0/100.0);
+                }
                 break;
             }
         }
     }
-
     rammer_flag=0;
 
     float RamOut=gimbal.motors_pid[RamPos].PID_GetPositionPID(gimbal.motors[RamMotor].RealAngle_Ecd);
@@ -64,16 +70,17 @@ void cShoot::Shoot_SpeedC()
         gimbal.setMotorSpeed(ShootSpdR,SHOOT_SPEED);
         gimbal.setMotorSpeed(ShootSpdU,1.01*SHOOT_SPEED);
     }
-    //ADRC摩擦轮计算
+    ///ADRC摩擦轮计算
     ShootLOUT_ADRC=gimbal.adrc.ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootLMotor].RealSpeed);
     ShootROUT_ADRC=gimbal.adrc.ADRC_Calc(-SHOOT_SPEED,gimbal.motors[ShootRMotor].RealSpeed);
     ShootUOUT_ADRC=gimbal.adrc.ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootUMotor].RealSpeed);
 
-    //普通PID的摩擦轮、拨弹轮计算
+    ///PID摩擦轮计算
     gimbal.motors_pid[ShootSpdL].PID_GetPositionPID(gimbal.motors[ShootLMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdR].PID_GetPositionPID(gimbal.motors[ShootRMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdU].PID_GetPositionPID(gimbal.motors[ShootUMotor].RealSpeed);
 
+    ///拨弹轮计算
     gimbal.motors_pid[RamSpd].PID_GetPositionPID(gimbal.motors[RamMotor].RealSpeed);
 }
 /**
@@ -85,10 +92,11 @@ void cShoot::Shoot_SendCurrent(float LOut,float ROut,float UOut,float RamOut)
 }
 
 /**
-  *@brief   摩擦轮拨弹轮速度清值清零
+  *@brief   摩擦轮、拨弹轮速度清值清零
   */
 void cShoot::ShootSpeedClean()
 {
+    //目标值清零
     gimbal.motors_pid[ShootSpdL].PID_Target=0;
     gimbal.motors_pid[ShootSpdR].PID_Target=0;
     gimbal.motors_pid[ShootSpdU].PID_Target=0;
@@ -108,6 +116,7 @@ void cShoot::ShootSpeedClean()
     //摩擦轮关闭情况下，让目标值始终等于当前编码值，防止开启摩擦轮时偏差过大导致疯转
     gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
+    ///ADRC相关
     ShootLOUT_ADRC=0;
     ShootROUT_ADRC=0;
     ShootUOUT_ADRC=0;
@@ -131,8 +140,7 @@ void cShoot::Stuck_Check()
         gimbal.motors[RamMotor].RawAngle=0;
         gimbal.motors[RamMotor].AllAngle=0;
         gimbal.motors[RamMotor].RealAngle_Ecd=0;
-        Shoot_SendCurrent(0,0,0,-8000);
-//        gimbal.setMotorSpeed(RamSpd,-100);
+        Shoot_SendCurrent(0,0,0,-5000);
         rammer_flag=0;
         reverse_time++;
     }
@@ -141,6 +149,65 @@ void cShoot::Stuck_Check()
         reverse_time=0;
         stuck_time=0;
     }
+}
+/**
+  *@brief   自行计算的当前热量（与裁判系统传回的热量同时比较，取大的作为标准）
+  */
+int cShoot::Heat_Cal()
+{
+    if(fric_flag==OPENFRIC && abs(SHOOT_SPEED - gimbal.motors[ShootSpdL].RealSpeed) < 200 && shootspd_reach == 0)
+    {//如果现在摩擦轮打开，并且速度与目标值只差200
+        shootspd_reach=1;
+    }
+    if(fric_flag==CLOSEFRIC)
+    {
+        shootspd_reach=0;
+        shootspd_drop=0;
+    }
+    if(shootspd_reach == 1 && (abs(gimbal.motors[ShootSpdL].RealSpeed) < SHOOT_SPEED*0.9) && shootspd_drop == 0)
+    {//开摩擦轮检测到掉速
+        shootspd_reach = 0;
+        shootspd_drop = 1;//掉速标志位置1
+    }
+    if(shootspd_drop == 1)
+    {
+        heat_now_user += 100;  //100是一发大弹丸热量
+        shootspd_drop = 0;
+    }
+    heat_now_user-=(float)cool_spd/200; //周期是5ms
+    if(heat_now_user<0)
+    {
+        heat_now_user=0;
+    }
+    return (heat_now_user>heat_now) ? heat_now_user : heat_now ;//返回较大的值作为当前热量标准
+}
+
+/**
+  *@brief   热量保护
+  */
+void  cShoot::Heat_Protect()
+{
+    //如果热量限制减去当前热量大于等于100，允许发弹，其余情况均不允许发弹
+   if(heat_limit-Heat_Cal()>=100)
+   {
+       shoot_permit=SHOOT_PERMIT;
+   }
+   else
+       shoot_permit=SHOOT_FORBID;
+
+}
+/**
+  *@brief  返回摩擦轮当前状态
+  *@retval 如果摩擦轮正在转动，返回FRIC_ON，即1；否则返回FRIC_OFF，即0
+  */
+int8_t cShoot::GetFricStatus(void)
+{
+    if (abs(gimbal.motors[ShootSpdL].RealSpeed) > 2000 && abs(gimbal.motors[ShootSpdR].RealSpeed) > 2000)
+    {
+        return FRIC_ON;
+    }
+    else
+        return FRIC_OFF;
 }
 /**
   *@brief   摩擦轮的速度选择
@@ -156,7 +223,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(3,0,0.1); //空转时，3稳定;负载时，7稳定
+    gimbal.motors_pid[RamPos].SetKpid(4,0,0.1); //空转时，3稳定;负载时，7稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);
