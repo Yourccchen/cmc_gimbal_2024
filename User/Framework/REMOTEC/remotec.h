@@ -113,6 +113,7 @@ uint8_t portIsZimiao(void);
 int8_t portSetCarMode(void);
 int8_t portSetShootMode(void);
 int8_t portSetControlMode(void);
+void portSetScope();
 void portSetRammer(void);
 void portSetTurn(void);
 #endif//HERO_TEST_REMOTEC_H

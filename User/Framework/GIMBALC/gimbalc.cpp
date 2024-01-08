@@ -24,7 +24,7 @@ void cGimbal::Gimbal_ControlLoop()
     //遥控器控制云台(顺序不可换!)
     Gimbal_ControlWithRC();
 
-    //速度环
+    //速度环（发电流用）
     Gimbal_SpeedC();
 }
 
@@ -228,10 +228,13 @@ void cGimbal::Gimbal_PosC()
             break;
     }
 
-    //通过遥控器设置Pih轴和Yaw轴的位置环目标值
+    portSetScope();//倍镜角度控制
+    //通过遥控器设置Pih轴、Yaw轴、底盘跟随的目标值
     setMotorPos(PihPos,PihTarget);
     setMotorPos(YawPos,YawTarget);
     setMotorPos(ChassisYaw,ChassisYawTarget);
+    //开镜电机的位置环目标值
+    setMotorPos(ScopeUPos,ScopeUTarget);
 
     portSetTurn();//云台反转。如果按下V，云台立马反转180°，如果没有按下，不影响程序运行
 
@@ -249,21 +252,26 @@ void cGimbal::Gimbal_PosC()
     //计算Pih轴和Yaw轴的位置环输出
     float Pihout=motors_pid[PihPos].PID_GetPositionPID(motors[PihMotor].RealAngle_Imu);
     float YawOut=motors_pid[YawPos].PID_GetPositionPID(motors[YawMotor].RealAngle_Imu);
+    float ScopeUOut=motors_pid[ScopeUPos].PID_GetPositionPID(motors[ScopeUMotor].RealAngle_Ecd);
 
     //计算出底盘Yaw的PID_Out,赋值给vz
     motors_pid[ChassisYaw].PID_GetPositionPID(motors[YawMotor].RealAngle_Ecd);
 
     //Pih轴的前馈补偿
-    motors_pid[PihPos].PID_LastTarget=motors_pid[PihPos].PID_Target;
-    setMotorSpeed(PihSpd,Pihout+Pid_In.Pih_Dif_Gain * (motors_pid[PihPos].PID_Target - motors_pid[PihPos].PID_LastTarget));
+//    motors_pid[PihPos].PID_LastTarget=motors_pid[PihPos].PID_Target;
+//    setMotorSpeed(PihSpd,Pihout+Pid_In.Pih_Dif_Gain * (motors_pid[PihPos].PID_Target - motors_pid[PihPos].PID_LastTarget));
 
     //串级PID，位置环的输出是速度环的目标值
-//    setMotorSpeed(PihSpd,Pihout);
+    setMotorSpeed(PihSpd,Pihout);
     setMotorSpeed(YawSpd,YawOut);
+    setMotorSpeed(ScopeUSpd,ScopeUOut);
 
     //计算Pih轴和Yaw轴的速度环输出
     motors_pid[YawSpd].PID_GetPositionPID((float)(motors[YawMotor].RealSpeed));
     motors_pid[PihSpd].PID_GetPositionPID((float)(motors[PihMotor].RealSpeed));
+
+    //计算开镜电机速度环输出
+    motors_pid[ScopeUSpd].PID_GetPositionPID((float)(motors[PihMotor].RealSpeed));
 
     //拨弹轮、摩擦轮的位置环和速度环
     shoot.Shoot_PosC();
@@ -272,8 +280,6 @@ void cGimbal::Gimbal_PosC()
 ///电机速度环
 void cGimbal::Gimbal_SpeedC()
 {
-
-
     //根据算法发送电流
     //Yaw轴算法选择
     if(count_time_send==2)
@@ -331,6 +337,11 @@ void cGimbal::Gimbal_SpeedC()
             }
         }
     }
+    //开镜电机发电流
+    if(count_time_send==4)
+    {
+        CAN_ScopeSendCurrent((int16_t)motors_pid[ScopeUSpd].PID_Out);
+    }
 }
 
 /**
@@ -339,10 +350,7 @@ void cGimbal::Gimbal_SpeedC()
   */
 void cGimbal::setMotorSpeed(int WhichMotorPid, float spd)
 {
-    if(WhichMotorPid==PihSpd||WhichMotorPid==YawSpd)
-        motors_pid[WhichMotorPid].PID_SetTarget(spd);
-    else
-        motors_pid[WhichMotorPid].PID_SetTarget(spd);
+    motors_pid[WhichMotorPid].PID_SetTarget(spd);
 }
 
 /**
@@ -351,10 +359,7 @@ void cGimbal::setMotorSpeed(int WhichMotorPid, float spd)
   */
 void cGimbal::setMotorPos(int WhichMotorPid,float angle)
 {
-    if(WhichMotorPid==PihPos||WhichMotorPid==YawPos||WhichMotorPid==ChassisYaw)
-        motors_pid[WhichMotorPid].PID_SetTarget(angle);
-    else
-        motors_pid[WhichMotorPid].PID_SetTarget(angle);
+    motors_pid[WhichMotorPid].PID_SetTarget(angle);
 }
 
 ///Pitch轴的编码器限幅

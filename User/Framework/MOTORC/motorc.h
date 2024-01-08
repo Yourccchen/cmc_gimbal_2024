@@ -41,7 +41,6 @@ public:
     uint16_t LastAngle;          //上次的原始角度
     int16_t IncreAngle;          //经角度连续化处理后得到的增量角度
 
-
     double RealAngle_Ecd;
     double RealAngle_Imu;
     float RealSpeed;

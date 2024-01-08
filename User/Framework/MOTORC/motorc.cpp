@@ -66,6 +66,16 @@ void cMotor::UpdateMotorInfo()
 
                 RealAngle_Ecd = ((float) AllAngle * ENCODER_TO_ANGLE); //实际角度，用于计算
             }
+            else if(MotorType == M2006)
+            {
+                RealSpeed = (float) (RawSpeed / M2006_RATION); //实际速度，用于计算
+                LastAngle = NowAngle;
+                NowAngle = RawAngle;
+                IncreAngle = GetEncoderContinueAngel(LastAngle, NowAngle);
+                AllAngle += IncreAngle; //转子角度
+
+                RealAngle_Ecd = ((float) AllAngle * ENCODER_TO_ANGLE) / M2006_RATION; //实际角度，用于计算
+            }
             break;
         case IMU_MODE:
             if(Which_Angle==PIH_ANGLE)

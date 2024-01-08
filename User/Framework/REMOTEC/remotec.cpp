@@ -344,7 +344,7 @@ uint8_t portIsZimiao(void)
 {
     if (rc_ctrl.mouse.press_r.Now_State)
         return 0x01;  //带数字的自瞄
-    else if (rc_ctrl.key.E.Now_State) //打幅，默认小幅，大符会在外面判断
+    else if (rc_ctrl.key.R.Now_State) //打幅，默认小幅，大符会在外面判断
         return 0xbb;
     else
         return 0;
@@ -398,16 +398,16 @@ int8_t portSetCarMode(void)
   */
 int8_t portSetShootMode(void)
 {
-    portHandle(&rc_ctrl.key.Q);//非连续键值处理 即上一次是0，本次是1，判断为按了一次
+    portHandle(&rc_ctrl.key.F);//非连续键值处理 即上一次是0，本次是1，判断为按了一次
     switch(gimbal.ControlMode)
     {
         case KEY_MODE:
         {
-            if(rc_ctrl.key.Q.Is_Click_Once && gimbal.shoot.fric_flag== CLOSEFRIC)
+            if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag== CLOSEFRIC)
             {
                 gimbal.shoot.fric_flag=OPENFRIC;
             }
-            else if(rc_ctrl.key.Q.Is_Click_Once && gimbal.shoot.fric_flag==OPENFRIC)
+            else if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag==OPENFRIC)
             {
                 gimbal.shoot.fric_flag=CLOSEFRIC;
             }
@@ -466,7 +466,14 @@ void portSetRammer(void)
         }
     }
 }
-
+/**
+  *@breif   倍镜角度控制
+  */
+void portSetScope()
+{
+    gimbal.ScopeUTarget+=rc_ctrl.key.Q.Now_State*1.0f;
+    gimbal.ScopeUTarget-=rc_ctrl.key.E.Now_State*1.0f;
+}
 /**
   *@breif   控制模式切换
   *@retval  ControlMode模式的参数（有KEY_MODE,RC_MODE,ZIMIAO三种）

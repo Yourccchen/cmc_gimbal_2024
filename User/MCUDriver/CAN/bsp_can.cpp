@@ -102,8 +102,17 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
+            //回调函数
+//            if (RxMeg.StdId == CAN_PIH_RCV_ID)
+//            {
+//                gimbal.motors[PihMotor].Connected = 1;
+//                gimbal.motors[PihMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
+//                gimbal.motors[PihMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
+//                gimbal.motors[PihMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
+//                gimbal.motors[PihMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
+//                gimbal.motors[PihMotor].Null = (int16_t)(recvData[7]);
+//            }
             ///小米电机部分
-            isRecvPih = 1;
 //            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
 //            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
 //            {
@@ -124,18 +133,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
-            //回调函数
-//            if (RxMeg.StdId == CAN_PIH_RCV_ID)
-//            {
-//                gimbal.motors[PihMotor].Connected = 1;
-//                gimbal.motors[PihMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
-//                gimbal.motors[PihMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
-//                gimbal.motors[PihMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
-//                gimbal.motors[PihMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
-//                gimbal.motors[PihMotor].Null = (int16_t)(recvData[7]);
-//            }
+
             if (RxMeg.StdId == CAN_SHOOT_LEFT_ID)
-            {
+            {//左摩擦轮
                 gimbal.motors[ShootLMotor].Connected = 1;
                 gimbal.motors[ShootLMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     // 0~8191
                 gimbal.motors[ShootLMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     // rpm
@@ -144,7 +144,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ShootLMotor].Null = (int16_t)(recvData[7]);
             }
             if (RxMeg.StdId == CAN_SHOOT_RIGHT_ID)
-            {
+            {//右摩擦轮
                 gimbal.motors[ShootRMotor].Connected = 1;
                 gimbal.motors[ShootRMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
                 gimbal.motors[ShootRMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
@@ -152,17 +152,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ShootRMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[ShootRMotor].Null = (int16_t)(recvData[7]);
             }
-//            if (RxMeg.StdId == CAN_SHOOT_UP_ID)
-//            {
-//                gimbal.motors[ShootUMotor].Connected = 1;
-//                gimbal.motors[ShootUMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
-//                gimbal.motors[ShootUMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
-//                gimbal.motors[ShootUMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
-//                gimbal.motors[ShootUMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
-//                gimbal.motors[ShootUMotor].Null = (int16_t)(recvData[7]);
-//            }
             if (RxMeg.StdId == CAN_RAMC_ID)
-            {
+            {//拨弹轮
                 gimbal.motors[RamMotor].Connected = 1;
                 gimbal.motors[RamMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
                 gimbal.motors[RamMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
@@ -170,8 +161,18 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[RamMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[RamMotor].Null = (int16_t)(recvData[7]);
             }
+            if (RxMeg.StdId == CAN_SHOOT_UP_ID)
+            {//上摩擦轮
+                gimbal.motors[ShootUMotor].Connected = 1;
+                gimbal.motors[ShootUMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
+                gimbal.motors[ShootUMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
+                gimbal.motors[ShootUMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
+                gimbal.motors[ShootUMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
+                gimbal.motors[ShootUMotor].Null = (int16_t)(recvData[7]);
+            }
+
             if (RxMeg.StdId == CAN_YAW_RCV_ID)
-            {
+            {//Yaw轴
                 gimbal.motors[YawMotor].Connected = 1;
                 gimbal.motors[YawMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
                 gimbal.motors[YawMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
@@ -179,31 +180,29 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[YawMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[YawMotor].Null = (int16_t)(recvData[7]);
             }
-
+            if (RxMeg.StdId == CAN_SCOPE_UP_ID)
+            {//开镜上电机
+                gimbal.motors[ScopeUMotor].Connected = 1;
+                gimbal.motors[ScopeUMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
+                gimbal.motors[ScopeUMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
+                gimbal.motors[ScopeUMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
+                gimbal.motors[ScopeUMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
+                gimbal.motors[ScopeUMotor].Null = (int16_t)(recvData[7]);
+            }
             if (RxMeg.StdId == CAN_JUDGE_BARREL_ID)
-            {
+            {//枪管信息
                 gimbal.shoot.heat_limit = (uint16_t)(recvData[0] << 8 | recvData[1]);
                 gimbal.shoot.cool_spd = (uint16_t)(recvData[2] << 8 | recvData[3]);
                 gimbal.shoot.heat_now = (uint16_t)(recvData[4] << 8 | recvData[5]);
             }
             if (RxMeg.StdId == CAN_JUDGE_PARAM_ID)   //裁判系统信息的补充
-            {
+            {//判断信息
                 memcpy(&(gimbal.shoot.shoot_spd_now), recvData, 4);
                 gimbal.shoot.shoot_spd_max = (uint16_t)((recvData)[4] << 8 | recvData[5]);
                 gimbal.shoot.color = (uint8_t)recvData[6];
                 gimbal.shoot.smallORbig = (uint8_t)recvData[7];
             }
-            if (RxMeg.StdId == CAN_RAMC_ID) //拨弹轮
-            {
-                gimbal.motors[RamMotor].Connected = 1;
-                gimbal.motors[RamMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);            //0~8191
-                gimbal.motors[RamMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);            //rpm
-                gimbal.motors[RamMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
-                gimbal.motors[RamMotor].RawTemperature = (int16_t)(recvData[6]);                         //温度
-                gimbal.motors[RamMotor].Null = (int16_t)(recvData[7]);
-            }
             Vision_JudgeUpdate(gimbal.shoot.shoot_spd_now,  gimbal.shoot.color, gimbal.shoot.smallORbig);
-//            Shoot_JudgeUpdate(shoot_spd_max, heat_limit, heat_now); //更新裁判系统
         }
     }
 
@@ -335,6 +334,25 @@ void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc , int16_t 
     send_data[6] = (friUc >> 8);
     send_data[7] = friUc;
 
-//    HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
+    HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
+}
+/**
+  *@breif   CAN发送电流给开镜电机
+  *@param   none
+  *@retval  none
+  */
+void CAN_ScopeSendCurrent(int16_t scopeu)
+{
+    CAN_TxHeaderTypeDef tx_msg;
+    uint32_t send_mail_box = 0;
+    uint8_t send_data[8];
+    tx_msg.StdId = CAN_SCOPE_SEND_ID;
+    tx_msg.IDE = CAN_ID_STD;
+    tx_msg.RTR = CAN_RTR_DATA;
+    tx_msg.DLC = 0x08;
+
+    send_data[2] = (scopeu >> 8);
+    send_data[3] = scopeu;
+
     HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
 }

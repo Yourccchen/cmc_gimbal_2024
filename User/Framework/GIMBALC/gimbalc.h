@@ -28,7 +28,7 @@
 //选择是哪个角
 #define PIH_ANGLE 1  //Pitch轴角度
 #define YAW_ANGLE 2  //Yaw轴角度
-#define ROLL_ANGLE 3
+#define ROLL_ANGLE 3 //倍镜电机，Roll轴
 #define RAM_ANGLE 4  //拨弹轮角度
 #define NO_ANGLE  5  //只用到速度环的电机，如摩擦轮
 
@@ -86,7 +86,9 @@ typedef enum
     ShootSpdL=6,
     ShootSpdR=7,
     ShootSpdU=8,
-    ChassisYaw=9
+    ChassisYaw=9,
+    ScopeUSpd=10,
+    ScopeUPos=11
 }eMotorsPid;
 
 ///电机枚举类型
@@ -97,15 +99,16 @@ typedef enum
     RamMotor=2,
     ShootLMotor=3,
     ShootRMotor=4,
-    ShootUMotor=5
+    ShootUMotor=5,
+    ScopeUMotor=6
 }eMotors;
 
 class cGimbal
 {
 public:
-    cPID motors_pid[10];
+    cPID motors_pid[12];
 
-    cMotor motors[6];
+    cMotor motors[7];
 
     cShoot shoot;
 
@@ -116,16 +119,18 @@ public:
     cGimbal():
         motors_pid
                 {
-/*PihSpeedPid*/     {6,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
-/*PihPosPid*/       {0.5,0,0    ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
-/*YawSpeedPid*/     {40,40,0    ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
-/*YawPosPid*/       {1,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
-/*RamSpeedPid*/     {20,0,0     ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
-/*RamPosPid*/       {3,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
-/*ShootSpeedPidL*/  {7,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ShootSpeedPidR*/  {7,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ShootSpeedPidU*/  {7,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ChassisYawPid*/   {2,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
+/*PihSpeedPid*/     {6,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
+/*PihPosPid*/       {0.5,0,0     ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
+/*YawSpeedPid*/     {40,40,0     ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
+/*YawPosPid*/       {1,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
+/*RamSpeedPid*/     {20,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
+/*RamPosPid*/       {3,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
+/*ShootSpeedPidL*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
+/*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
+/*ShootSpeedPidU*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
+/*ChassisYawPid*/   {2,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
+/*ScopeUSpeedPid*/  {3,0.2,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
+/*ScopeUPosPid*/    {3,0,0.2      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
                 },
          motors
                 {
@@ -135,6 +140,7 @@ public:
     /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
     /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
     /*ShootUMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
+    /*ScopeUMotor*/     {M2006,ECD_MODE,ROLL_ANGLE,NORMAL},
                 }
                 {}
 
@@ -177,6 +183,7 @@ public:
     float MousePih,MouseYaw;
     float ChassisYawTarget=90;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
+    float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY;//定义一个卡尔曼滤波器结构体
 
     ///射击控制变量//

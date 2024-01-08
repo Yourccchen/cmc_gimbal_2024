@@ -31,10 +31,10 @@ typedef enum
     CAN_CHASSIS_VAL_ID = 0x401, //x轴速度 y轴速度 z轴速度 模式
     CAN_CHASSIS_YAW_ID = 0x402, //yaw轴角度 pitch轴角度 状态标志位 车间标志位
 
-    CAN_SHOOT_LEFT_ID = 0x201,  //英雄左摩擦轮
-    CAN_SHOOT_RIGHT_ID = 0x202, //英雄右摩擦轮
-    CAN_RAMC_ID = 0X203,        //英雄拨弹轮
-    CAN_SHOOT_UP_ID = 0X204,    //英雄上摩擦轮
+    CAN_SHOOT_LEFT_ID = 0x201,  //英雄左摩擦轮,ID为1
+    CAN_SHOOT_RIGHT_ID = 0x202, //英雄右摩擦轮,ID为2
+    CAN_RAMC_ID = 0X203,        //英雄拨弹轮,ID为3
+    CAN_SHOOT_UP_ID = 0X204,    //英雄上摩擦轮,ID为4
     CAN_SCOPE_UP_ID=0x206,
     CAN_SCOPE_DOWN_ID=0x207,
 
@@ -54,4 +54,5 @@ void CAN_ChasisSendSpd(int16_t vx, int16_t vy, int16_t vz, int8_t car_mode, int8
 void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t fric_status, int8_t rammer_status,
                        int8_t redraw_status);
 void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc, int16_t  ramc);
+void CAN_ScopeSendCurrent(int16_t scopeu);
 #endif //HERO_TEST_BSP_CAN_H
