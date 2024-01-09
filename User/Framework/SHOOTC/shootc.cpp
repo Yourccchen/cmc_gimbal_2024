@@ -33,18 +33,18 @@ void cShoot::Shoot_PosC()
         {
             case OLD_HERO:
             {
-                if(shoot_permit==SHOOT_PERMIT)
-                {
+//                if(shoot_permit==SHOOT_PERMIT)
+//                {
                     gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 72);
-                }
+//                }
                 break;
             }
             case NEW_HERO:
             {
-                if(shoot_permit==SHOOT_PERMIT)
-                {
+//                if(shoot_permit==SHOOT_PERMIT)
+//                {
                     gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 45.0* 28.0/100.0);
-                }
+//                }
                 break;
             }
         }
@@ -223,7 +223,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(4,0,0.1); //空转时，3稳定;负载时，7稳定
+    gimbal.motors_pid[RamPos].SetKpid(2,0,0.1); //目前满载时2稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);
