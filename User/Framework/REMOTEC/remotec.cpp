@@ -239,7 +239,10 @@ float portSetYawSpeed(void)
     {
         case KEY_MODE:
         {
-            yaw_tarpos = -rc_ctrl.mouse.x * 2; //这儿后期加等级分档位
+//            if (abs(rc_ctrl.mouse.x) < 50)
+//                yaw_tarpos = -rc_ctrl.mouse.x * 0.5; //这儿后期加等级分档位
+//            else
+                yaw_tarpos = -rc_ctrl.mouse.x * 2.0; //这儿后期加等级分档位
             break;
         }
         case RC_MODE:
@@ -263,7 +266,10 @@ float portSetPihSpeed(void)
     {
         case KEY_MODE:
         {
-            pih_tarpos = -rc_ctrl.mouse.y * 1.5; //这儿后期加等级分档位
+//            if (abs(rc_ctrl.mouse.y) < 50)
+                pih_tarpos = -rc_ctrl.mouse.y * 1.5; //这儿后期加等级分档位
+//            else
+//                pih_tarpos = -rc_ctrl.mouse.y * 1.5; //这儿后期加等级分档位
             break;
         }
         case RC_MODE:
@@ -471,8 +477,8 @@ void portSetRammer(void)
   */
 void portSetScope()
 {
-    gimbal.ScopeUTarget+=rc_ctrl.key.Q.Now_State*1.0f;
-    gimbal.ScopeUTarget-=rc_ctrl.key.E.Now_State*1.0f;
+    gimbal.ScopeUTarget+=rc_ctrl.key.Q.Now_State*0.1f;
+    gimbal.ScopeUTarget-=rc_ctrl.key.E.Now_State*0.1f;
 }
 /**
   *@breif   控制模式切换

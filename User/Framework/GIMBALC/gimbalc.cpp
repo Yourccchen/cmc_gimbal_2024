@@ -420,13 +420,13 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             ///Yaw轴的MATLAB_PID参数///
             Pid_In.YawP_P = 1;
             Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.13;
-            Pid_In.YawP_N = 175;
+            Pid_In.YawP_D = 0.1;
+            Pid_In.YawP_N = 120;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.03;
+            Pid_In.Yaw_Dif_Gain = 0;
 
-            Pid_In.YawS_P = 1300;
-            Pid_In.YawS_I = 1500;
+            Pid_In.YawS_P = 2000;
+            Pid_In.YawS_I = 2000;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 25192;
@@ -581,4 +581,6 @@ void cGimbal::Printf_Test()
     //遥控器打印//
 //    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
+    //倍镜打印//
+//    usart_printf("%f,%f,%f\r\n",ScopeUTarget,motors[ScopeUMotor].RealAngle_Ecd,motors_pid[ScopeUSpd].PID_Out);
 }

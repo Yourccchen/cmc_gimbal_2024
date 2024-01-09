@@ -20,9 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 优化了拨弹参数，暂时先把热量控制相关部分注释了">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 优化了Yaw轴参数">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,7 +328,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704769860761</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="perf: 优化了Yaw轴参数">
+      <created>1704781839039</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1704781839039</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -373,6 +381,7 @@
     <MESSAGE value="feat: 增加了热量保护部分代码（暂未测试）" />
     <MESSAGE value="feat: 增加了按键V云台反转功能" />
     <MESSAGE value="perf: 优化了拨弹参数，暂时先把热量控制相关部分注释了" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 优化了拨弹参数，暂时先把热量控制相关部分注释了" />
+    <MESSAGE value="perf: 优化了Yaw轴参数" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 优化了Yaw轴参数" />
   </component>
 </project>
