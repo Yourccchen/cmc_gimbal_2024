@@ -314,7 +314,7 @@ void cGimbal::Gimbal_SpeedC()
         }
         case CYBERGEAR:
         {
-            motor_controlmode(&mi_motor[0],0,PihTarget-46,0,80,3.5);
+            motor_controlmode(&mi_motor[0],0,PihTarget-46,0,80,3);
         }
     }
 

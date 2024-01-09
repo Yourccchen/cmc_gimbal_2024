@@ -14,7 +14,7 @@ void cShoot::Shoot_ControlLoop()
     Shoot_SpdChoose();//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
-    Heat_Protect();//热量保护
+//    Heat_Protect();//热量保护
 }
 
 /**
