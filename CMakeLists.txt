@@ -59,14 +59,6 @@ include_directories(
         User/Tasks/GIMBAL_TASK User/Tasks/PRINT_TASK User/Tasks/VISIONCOM_TASK
         )
 include_directories(
-        User/Framework/IMU/algorithm
-        User/Framework/IMU/algorithm/Include
-        User/Framework/IMU/controller
-        User/Framework/IMU/devices
-        User/Framework/IMU/bsp
-        User/Framework/IMU/task
-        User/Framework/IMU/filter
-        User/Framework/IMU
         User/Framework/IMU_WIT
 )
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx)
@@ -97,7 +89,7 @@ add_link_options(-T ${LINKER_SCRIPT})
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
 # target link ahrs.lib
-target_link_libraries(${PROJECT_NAME}.elf ${PROJECT_SOURCE_DIR}/User/Framework/IMU/algorithm/AHRS.lib)
+#target_link_libraries(${PROJECT_NAME}.elf ${PROJECT_SOURCE_DIR}/User/Framework/IMU/algorithm/AHRS.lib)
 
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)
 set(BIN_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.bin)

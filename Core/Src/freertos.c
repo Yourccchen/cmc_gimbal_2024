@@ -26,7 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "debugc.h"
-#include "INS_task.h"
+//#include "INS_task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,7 +65,7 @@ void StartDefaultTask(void const * argument);
 void GimbalControlTask(void const * argument);
 void VisionComTask(void const * argument);
 void PrintControlTask(void const * argument);
-void INS_task(void const * argument);
+//void INS_task(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */

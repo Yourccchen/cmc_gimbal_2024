@@ -7,7 +7,7 @@
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
 #include "gimbalc.h"
-#include "INS_task.h"
+//#include "INS_task.h"
 
 void PrintControlTask(void const* argument)
 {

@@ -24,8 +24,8 @@ void cShoot::Shoot_PosC()
 {
     portSetRammer();//拨弹轮设置目标值
 
-    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>200)
-        gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
+//    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>200)
+//        gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
     if(rammer_flag)//0为不转，1为转一次。无其他数值可能
     {
@@ -132,14 +132,12 @@ void cShoot::Stuck_Check()
     {
         stuck_time++;
     }
-    if(stuck_time>160)//堵转超过800ms
+    if(stuck_time>100)//堵转超过500ms
     {
         gimbal.motors_pid[RamSpd].PID_ErrAll=0;
         gimbal.motors_pid[RamPos].PID_ErrAll=0;
 
-        gimbal.motors[RamMotor].RawAngle=0;
-        gimbal.motors[RamMotor].AllAngle=0;
-        gimbal.motors[RamMotor].RealAngle_Ecd=0;
+        gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
         Shoot_SendCurrent(0,0,0,-3000);
         rammer_flag=0;
         reverse_time++;

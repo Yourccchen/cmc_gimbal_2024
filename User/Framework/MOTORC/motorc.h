@@ -28,7 +28,7 @@ public:
 
 
     /**从电机获得的原始数据(会实时被CAN反馈改变，除ECD_MODE外不要用此处的变量进行计算）**/
-    uint16_t RawAngle;          //电机总角度
+    uint16_t RawAngle;          //电机原始角度
     int16_t  RawSpeed;          //电机速度
     int16_t  RawTorqueCurrent;  //电机转矩电流
     uint8_t  RawTemperature;    //电机温度

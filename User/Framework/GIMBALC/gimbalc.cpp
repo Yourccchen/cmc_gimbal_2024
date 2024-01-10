@@ -296,7 +296,7 @@ void cGimbal::Gimbal_SpeedC()
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
 //                CAN_YawSendCurrent((int16_t)YawSpeedPID_Y.YawCurrent);
-//                     CAN_YawSendCurrent(Debug_Param().pos_maxIntegral);
+//                CAN_YawSendCurrent(Debug_Param().pos_maxIntegral);
                 break;
             }
         }
@@ -434,7 +434,7 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawP_P = 1.4;
             Pid_In.YawP_I = 0;
             Pid_In.YawP_D = 0.02;
-            Pid_In.YawP_N = 120;
+            Pid_In.YawP_N = 175;
             Pid_In.YawP_MO = 300;
             Pid_In.Yaw_Dif_Gain = 0.13;
 
@@ -471,15 +471,16 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         }
         case ECD_MODE://编码器反馈模式
         {
-            Pid_In.YawP_P = 1;
+            ///Yaw轴的MATLAB_PID参数///
+            Pid_In.YawP_P = 0.3;
             Pid_In.YawP_I = 0;
             Pid_In.YawP_D = 0;
             Pid_In.YawP_N = 180;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.12;
+            Pid_In.Yaw_Dif_Gain = 0;
 
-            Pid_In.YawS_P = 600;
-            Pid_In.YawS_I = 1000;
+            Pid_In.YawS_P = 400;
+            Pid_In.YawS_I = 400;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 28000;
@@ -557,8 +558,8 @@ void cGimbal::Online_Check()
 void cGimbal::Printf_Test()
 {
     //Yaw打印//
-//    usart_printf("%f,%f,%f,%f\r\n",PihTarget,motors[PihMotor].RealAngle_Imu,YawTarget,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Ecd);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
 //    usart_printf("%f,%f,%f\r\n",YawSpeedPID_Y.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealSpeed);
     //Pih打印//
@@ -569,17 +570,16 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
     //摩擦轮打印//
-//    usart_printf("%f,%f,%f,%f,%d\r\n",
+//    usart_printf("%f,%f,%f,%f\r\n",
 //                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
-//                 gimbal.motors[RamMotor].RawTorqueCurrent);
+//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed);
     //ADRC打印//
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,
 //                 shoot.ShootUOUT_ADRC,motors[ShootUMotor].RealSpeed);
     //拨弹轮打印//
-//    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-//                 motors[RamMotor].RealAngle_Ecd,ShootMode);
+    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+                 motors[RamMotor].RealAngle_Ecd,ShootMode);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget,motors[YawMotor].RealAngle_Imu
 //    ,vision_pkt.offset_pitch,PihTarget,motors[PihMotor].RealAngle_Imu);

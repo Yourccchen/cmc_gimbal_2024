@@ -20,23 +20,58 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1">
-      <change afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/witreg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/usart.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/usart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/freertos.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/freertos.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS.lib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS_middleware.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS_middleware.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_common_tables.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_const_structs.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_math.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/core_sc000.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/core_sc300.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_delay.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_delay.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_flash.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_flash.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_imu_pwm.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_imu_pwm.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/controller/pid_imu.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/controller/pid_imu.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088Middleware.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088Middleware.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088driver.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088driver.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088reg.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver_middleware.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver_middleware.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/filtter.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/filtter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/imu_tool.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/imu_tool.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/struct_typedef.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +87,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -172,7 +206,7 @@
       <workItem from="1704620034428" duration="13352000" />
       <workItem from="1704691785316" duration="13790000" />
       <workItem from="1704768589717" duration="1000" />
-      <workItem from="1704863888887" duration="8843000" />
+      <workItem from="1704863888887" duration="18304000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -370,7 +404,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704864565096</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了">
+      <created>1704874370250</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1704874370250</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,7 +433,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: 解决了任务无法进入的问题" />
     <MESSAGE value="feat: C板内置IMU可以正常接收到数据" />
     <MESSAGE value="feat: 增加了IMU角度连续化部分" />
     <MESSAGE value="fix: 接收遥控器数据正常" />
@@ -417,6 +457,7 @@
     <MESSAGE value="perf: 优化了Yaw轴参数" />
     <MESSAGE value="perf: 优化了Yaw轴参数_2" />
     <MESSAGE value="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1" />
+    <MESSAGE value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
   </component>
 </project>

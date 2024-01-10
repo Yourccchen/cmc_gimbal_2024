@@ -242,7 +242,7 @@ float portSetYawSpeed(void)
 //            if (abs(rc_ctrl.mouse.x) < 50)
 //                yaw_tarpos = -rc_ctrl.mouse.x * 0.5; //这儿后期加等级分档位
 //            else
-                yaw_tarpos = -rc_ctrl.mouse.x * 2.0; //这儿后期加等级分档位
+                yaw_tarpos = -rc_ctrl.mouse.x * 1.0; //这儿后期加等级分档位
             break;
         }
         case RC_MODE:

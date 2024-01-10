@@ -26,7 +26,7 @@ void BSP_Init(void)
     MX_SPI1_Init();
     MX_I2C3_Init();
 
-    delay_init();
+//    delay_init();
 
 }
 
