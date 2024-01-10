@@ -20,10 +20,25 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 优化了Yaw轴参数">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 优化了Yaw轴参数_2">
+      <change afterPath="$PROJECT_DIR$/YawSpeedPID_stm32/YawSpeedPID.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YawSpeedPID_stm32/YawSpeedPID.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YawSpeedPID_stm32/YawSpeedPID_External_Functions.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YawSpeedPID_stm32/YawSpeedPID_private.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YawSpeedPID_stm32/YawSpeedPID_types.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/YawSpeedPID_stm32/rtwtypes.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/FreeRTOSConfig.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/FreeRTOSConfig.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/stm32f4xx_it.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/stm32f4xx_it.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/tim.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/tim.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/TIM5/TIM5.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/TIM5/TIM5.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +79,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024/User/Framework/IMU/task&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -77,10 +92,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024" />
+      <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\YawSpeedPID" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework\IMU\task" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework\IMU\fliter" />
-      <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\MCUDriver" />
@@ -88,6 +104,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -152,6 +173,7 @@
       <workItem from="1704620034428" duration="13352000" />
       <workItem from="1704691785316" duration="13790000" />
       <workItem from="1704768589717" duration="1000" />
+      <workItem from="1704863888887" duration="360000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -335,7 +357,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704781839039</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="perf: 优化了Yaw轴参数_2">
+      <created>1704787319449</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1704787319449</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -357,7 +386,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="build: 建立英雄云台C板工程" />
     <MESSAGE value="feat: 移植C盘陀螺仪文件" />
     <MESSAGE value="fix: 解决了任务无法进入的问题" />
     <MESSAGE value="feat: C板内置IMU可以正常接收到数据" />
@@ -382,6 +410,7 @@
     <MESSAGE value="feat: 增加了按键V云台反转功能" />
     <MESSAGE value="perf: 优化了拨弹参数，暂时先把热量控制相关部分注释了" />
     <MESSAGE value="perf: 优化了Yaw轴参数" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 优化了Yaw轴参数" />
+    <MESSAGE value="perf: 优化了Yaw轴参数_2" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 优化了Yaw轴参数_2" />
   </component>
 </project>

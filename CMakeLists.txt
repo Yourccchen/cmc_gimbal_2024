@@ -55,6 +55,7 @@ include_directories(
         User/Framework/PID User/Framework/GIMBALC User/Framework/DEBUG User/Framework/MOTORC User/Framework/SHOOTC User/Framework/REMOTEC User/Framework/FILTERS User/Framework/IMUC User/Framework/VISION User/Framework/ADRC  User/Framework/CYBERGEAR
         USB_DEVICE/App USB_DEVICE/Target
         PID_stm32
+        YawSpeedPID_stm32
         User/Tasks/GIMBAL_TASK User/Tasks/PRINT_TASK User/Tasks/VISIONCOM_TASK
         )
 include_directories(
@@ -69,7 +70,7 @@ include_directories(
 )
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx)
 
-file(GLOB_RECURSE SOURCES "Library/*.*" "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*" "User/*.*" "PID_stm32/*.*")
+file(GLOB_RECURSE SOURCES "Library/*.*" "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*" "User/*.*" "PID_stm32/*.*" "YawSpeedPID_stm32/*.*")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F407IGHX_FLASH.ld)
 

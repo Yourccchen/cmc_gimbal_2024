@@ -140,11 +140,11 @@ void cShoot::Stuck_Check()
         gimbal.motors[RamMotor].RawAngle=0;
         gimbal.motors[RamMotor].AllAngle=0;
         gimbal.motors[RamMotor].RealAngle_Ecd=0;
-        Shoot_SendCurrent(0,0,0,-5000);
+        Shoot_SendCurrent(0,0,0,-3000);
         rammer_flag=0;
         reverse_time++;
     }
-    if(reverse_time>200)//反转1s
+    if(reverse_time>100)//反转0.5s
     {
         reverse_time=0;
         stuck_time=0;
@@ -223,7 +223,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(2,0,0.1); //目前满载时2稳定
+    gimbal.motors_pid[RamPos].SetKpid(3,0,0.1); //目前满载时2稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);

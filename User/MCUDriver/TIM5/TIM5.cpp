@@ -15,13 +15,13 @@ extern TIM_HandleTypeDef htim1;
   *@param   none
   *@retval  none
   */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-    if(htim == &htim5)
-    {
-//        gimbal.GimbalControlLoop();
-  }
-}
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+//{
+//    if(htim == &htim5)
+//    {
+////        gimbal.GimbalControlLoop();
+//  }
+//}
 
 /**
   *@brief   开启TIM5的中断

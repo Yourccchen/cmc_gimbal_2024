@@ -19,6 +19,12 @@
 #include "packet.hpp"
 #include "ADRC.h"
 #include "filters.h"
+
+extern "C"
+{
+#include "YawSpeedPID.h"
+}
+
 #define RAMPSTEP 100
 #define SHOOT_RAMPSTEP 20
 //反馈模式选择
@@ -73,6 +79,10 @@ extern ExtU rtU;
 extern ExtY rtY;
 #define Pid_In rtU
 #define Pid_Out rtY //matlab生成的PID
+
+//系统辨识Yaw轴生成的
+extern ExtU_YawSpeedPID YawSpeedPID_U;
+extern ExtY_YawSpeedPID YawSpeedPID_Y;
 
 ///电机PID计算枚举类型
 typedef enum
@@ -159,6 +169,7 @@ public:
     void setMotorSpeed(int WhichMotorPid,float spd);
     void setMotorPos(int WhichMotorPid,float angle);
 
+    void MatlabPID_ParamSet();
     void Pitch_EcdLimit(float & Target);
     void Pitch_ImuLimit(float& Target);
     void Pitch_MILimit(float& Target);
