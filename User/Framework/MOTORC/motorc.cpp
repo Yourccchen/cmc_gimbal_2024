@@ -5,7 +5,7 @@
 #include "motorc.h"
 #include "debugc.h"
 #include "gimbalc.h"
-#include "imuc.h"
+#include "imu_wit.h"
 /**
   *@brief   M3508角度连续化,并判断方向
   *@param   编码值读到的上次角度Last和当前角度Now
@@ -81,15 +81,15 @@ void cMotor::UpdateMotorInfo()
             if(Which_Angle==PIH_ANGLE)
             {
                 ///英雄的Pih反向!!!!!!!!!///
-                RealAngle_Imu=IMU_Angle(PIH_ANGLE); //IMU读取到的角度，直接进行计算
+                RealAngle_Imu=IMU_Angle_Wit(PIH_ANGLE); //IMU读取到的角度，直接进行计算
                 RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
-                RealSpeed=IMU_Speed(PIH_ANGLE);     //IMU读取到的速度，直接进行计算
+                RealSpeed=IMU_Speed_Wit(PIH_ANGLE);     //IMU读取到的速度，直接进行计算
             }
             else if(Which_Angle==YAW_ANGLE)
             {
-                RealAngle_Imu=IMU_Angle(YAW_ANGLE);
+                RealAngle_Imu=IMU_Angle_Wit(YAW_ANGLE);
                 RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
-                RealSpeed=IMU_Speed(YAW_ANGLE);
+                RealSpeed=IMU_Speed_Wit(YAW_ANGLE);
             }
     }
 }

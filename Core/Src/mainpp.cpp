@@ -40,7 +40,7 @@ void User_Init()
 
     gimbal.Gimbal_KalmanInit();//云台的卡尔曼算法初始函数
     Laser_On();
-//    TIM5_IT_Init();          //TIM5中断打开
+    IMU_UartInit();
     HAL_Delay(1000);
     init_cybergear(&mi_motor[0],0x7F,Motion_mode);          //小米电机初始化
 

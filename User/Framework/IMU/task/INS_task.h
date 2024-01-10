@@ -30,18 +30,14 @@ extern "C" {
 #include "struct_typedef.h"
 #include "BMI088driver.h"
 
-
-
 #define SPI_DMA_GYRO_LENGHT       8
 #define SPI_DMA_ACCEL_LENGHT      9
 #define SPI_DMA_ACCEL_TEMP_LENGHT 4
-
 
 #define IMU_DR_SHFITS        0
 #define IMU_SPI_SHFITS       1
 #define IMU_UPDATE_SHFITS    2
 #define IMU_NOTIFY_SHFITS    3
-
 
 #define BMI088_GYRO_RX_BUF_DATA_OFFSET  1
 #define BMI088_ACCEL_RX_BUF_DATA_OFFSET 2
@@ -60,7 +56,7 @@ extern "C" {
 #define MPU6500_TEMP_PWM_MAX 5000 //mpu6500控制温度的设置TIM的重载值，即给PWM最大为 MPU6500_TEMP_PWM_MAX - 1
 
 
-#define INS_TASK_INIT_TIME 5//任务开始初期 delay 一段时间
+#define INS_TASK_INIT_TIME 7 //任务开始初期 delay 一段时间
 
 #define INS_YAW_ADDRESS_OFFSET    0
 #define INS_PITCH_ADDRESS_OFFSET  1
@@ -83,6 +79,8 @@ typedef struct
 {
     uint8_t self_id;            // the "SELF_ID"
     uint16_t firmware_version;  // set to the "FIRMWARE_VERSION"
+    //'temperature' and 'latitude' should not be in the head_cali, because don't want to create a new sensor
+    //'temperature' and 'latitude'不应该在head_cali,因为不想创建一个新的设备就放这了
     int8_t temperature;         // imu control temperature
     fp32 latitude;              // latitude
 } head_cali_t;
@@ -179,7 +177,6 @@ extern const fp32 *get_gyro_data_point(void);
   * @retval         INS_gyro的指针
   */
 extern const fp32 *get_accel_data_point(void);
-
 extern const fp32 *get_accel_fliter_data_point(void);
 /**
   * @brief          get mag, 0:x-axis, 1:y-axis, 2:roll-axis unit ut
@@ -191,16 +188,8 @@ extern const fp32 *get_accel_fliter_data_point(void);
   * @param[in]      none
   * @retval         INS_mag的指针
   */
-extern fp32 INS_angle[3];
-
 extern const fp32 *get_mag_data_point(void);
-
-const fp32 *get_INS_complementry_angle_point(void);
-
 float getIMUTemp(void);
-
-void SPI_RxCallBack(void);
-
 bmi088_real_data_t* getBMI088RealData(void);
 #ifdef __cplusplus
 }

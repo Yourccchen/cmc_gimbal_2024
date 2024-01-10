@@ -27,4 +27,5 @@
 #include "bsp_delay.h"
 #include "CyberGear.h"
 #include "bsp_can.h"
+#include "imu_wit.h"
 #endif //CMC_GIMBAL_2024_BSP_H
