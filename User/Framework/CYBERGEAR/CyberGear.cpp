@@ -257,5 +257,6 @@ void motor_controlmode(MI_Motor *Motor,float torque, float MechPosition, float s
     tx_data[7]=float_to_uint(kd,KD_MIN,KD_MAX,16);
 
     txMsg.ExtId = Communication_Type_MotionControl<<24|float_to_uint(torque,T_MIN,T_MAX,16)<<8|Motor->CAN_ID;//装填扩展帧数据
+
     HAL_CAN_AddTxMessage(&hcan1, &txMsg, tx_data, &Send_mail_box);
 }

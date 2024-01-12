@@ -20,58 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 删除了C板IMU例程，优化了拨弹的反转问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/freertos.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/freertos.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS.lib" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS_middleware.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/AHRS_middleware.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_common_tables.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_const_structs.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/arm_math.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/core_sc000.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/Include/core_sc300.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_delay.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_delay.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_flash.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_flash.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_imu_pwm.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_imu_pwm.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/controller/pid_imu.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/controller/pid_imu.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088Middleware.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088Middleware.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088driver.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088driver.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/BMI088reg.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver_middleware.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/devices/ist8310driver_middleware.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/filtter.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/filtter.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/imu_tool.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/filter/imu_tool.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/imuc.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/INS_task.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU/task/struct_typedef.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,25 +58,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "last_opened_file_path": "D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024/User/Framework",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "structure.view.defaults.are.configured": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024/User/Framework&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework" />
@@ -137,11 +91,6 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -206,7 +155,9 @@
       <workItem from="1704620034428" duration="13352000" />
       <workItem from="1704691785316" duration="13790000" />
       <workItem from="1704768589717" duration="1000" />
-      <workItem from="1704863888887" duration="18304000" />
+      <workItem from="1704863888887" duration="21023000" />
+      <workItem from="1704942717136" duration="1255000" />
+      <workItem from="1705027365489" duration="2895000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -411,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1704874370250</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="fix: 删除了C板IMU例程，优化了拨弹的反转问题">
+      <created>1704892819262</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1704892819262</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -433,7 +391,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: C板内置IMU可以正常接收到数据" />
     <MESSAGE value="feat: 增加了IMU角度连续化部分" />
     <MESSAGE value="fix: 接收遥控器数据正常" />
     <MESSAGE value="fix: CAN收发数据正常" />
@@ -458,6 +415,7 @@
     <MESSAGE value="perf: 优化了Yaw轴参数_2" />
     <MESSAGE value="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1" />
     <MESSAGE value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
+    <MESSAGE value="fix: 删除了C板IMU例程，优化了拨弹的反转问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 删除了C板IMU例程，优化了拨弹的反转问题" />
   </component>
 </project>

@@ -132,7 +132,7 @@ void cShoot::Stuck_Check()
     {
         stuck_time++;
     }
-    if(stuck_time>100)//堵转超过500ms
+    if(stuck_time>75)//堵转超过375ms
     {
         gimbal.motors_pid[RamSpd].PID_ErrAll=0;
         gimbal.motors_pid[RamPos].PID_ErrAll=0;

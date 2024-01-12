@@ -191,7 +191,7 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     ///遥控器控制变量///
-    float MousePih,MouseYaw;
+    float MousePih,MouseYaw,RCPih,RCYaw;
     float ChassisYawTarget=90;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;

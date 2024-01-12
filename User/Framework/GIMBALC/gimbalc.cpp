@@ -38,8 +38,17 @@ void cGimbal::Gimbal_ControlWithRC(void)
     MousePih= KalmanFilter(&Gimbal_MouseX,portSetPihSpeed());
     MouseYaw= KalmanFilter(&Gimbal_MouseY,portSetYawSpeed());
 
+    RCPih=KalmanFilter(&Gimbal_PihAngle,portSetPihSpeed());
+    RCYaw=KalmanFilter(&Gimbal_YawAngle,portSetYawSpeed());
     //将遥控器数据转换为Yaw、Pih目标值
-    if(CarMode!=PROTECT && ControlMode!=ZIMIAO && ProtectFlag!=OFFLINE)
+    if(CarMode!=PROTECT && ControlMode!=ZIMIAO && ProtectFlag!=OFFLINE && ControlMode==RC_MODE)
+    {
+        //保护模式和自瞄模式下不允许读取遥控器键值，防止回到正常时疯转
+        PihTarget += RCPih * 2 / 1000;
+        YawTarget += RCYaw * 5 / 1000;
+    }
+
+    if(CarMode!=PROTECT && ControlMode!=ZIMIAO && ProtectFlag!=OFFLINE && ControlMode==KEY_MODE)
     {
         //保护模式和自瞄模式下不允许读取遥控器键值，防止回到正常时疯转
         PihTarget += MousePih * 2 / 1000;
@@ -88,6 +97,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             //YAW轴输出为0
             motors_pid[YawSpd].PID_Out=0;
             Pid_Out.YawCurrent = 0;
+            YawTarget=motors[YawMotor].RealAngle_Imu;
             //PIH轴输出为0
             motors_pid[PihPos].PID_Out=0;
             motors_pid[PihSpd].PID_Out=0;
@@ -403,10 +413,10 @@ void cGimbal::Pitch_MILimit(float& Target)
 ///云台的卡尔曼滤波算法初始函数
 void cGimbal::Gimbal_KalmanInit(void)
 {
-    KalmanCreate(&Gimbal_YawAngle, 1, 40);      //初始化该滤波器的Q=1 R=40参数
-    KalmanCreate(&Gimbal_PihAngle, 1, 40);      //初始化该滤波器的Q=1 R=40参数
-    KalmanCreate(&Gimbal_MouseX, 40, 200);      //初始化该滤波器的Q=1 R=40参数
-    KalmanCreate(&Gimbal_MouseY, 40, 200);      //初始化该滤波器的Q=1 R=40参数
+    KalmanCreate(&Gimbal_YawAngle, 30, 200);      //初始化该滤波器的Q=1 R=40参数
+    KalmanCreate(&Gimbal_PihAngle, 30, 200);      //初始化该滤波器的Q=1 R=40参数
+    KalmanCreate(&Gimbal_MouseX, 30, 200);      //初始化该滤波器的Q=1 R=40参数
+    KalmanCreate(&Gimbal_MouseY, 30, 200);      //初始化该滤波器的Q=1 R=40参数
 }
 ///设置MATLAB的PID参数
 void cGimbal::MatlabPID_ParamSet()
@@ -431,18 +441,18 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 1.4;
+            Pid_In.YawP_P = 1.15;
             Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.02;
-            Pid_In.YawP_N = 175;
+            Pid_In.YawP_D = 0.01;
+            Pid_In.YawP_N = 150;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.13;
+            Pid_In.Yaw_Dif_Gain = 0.15;
 
-            Pid_In.YawS_P = 1300;
-            Pid_In.YawS_I = 1700;
+            Pid_In.YawS_P = 1800;
+            Pid_In.YawS_I = 2300;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
-            Pid_In.YawS_MO = 25192;
+            Pid_In.YawS_MO = 28192;
 
             ///Pih轴的MATLAB_PID参数///
             Pid_In.PihP_P = 0.7;
@@ -559,7 +569,7 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Ecd);
-//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
 //    usart_printf("%f,%f,%f\r\n",YawSpeedPID_Y.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealSpeed);
     //Pih打印//
@@ -578,8 +588,8 @@ void cGimbal::Printf_Test()
 //                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,
 //                 shoot.ShootUOUT_ADRC,motors[ShootUMotor].RealSpeed);
     //拨弹轮打印//
-    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-                 motors[RamMotor].RealAngle_Ecd,ShootMode);
+//    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+//                 motors[RamMotor].RealAngle_Ecd,ShootMode);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget,motors[YawMotor].RealAngle_Imu
 //    ,vision_pkt.offset_pitch,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -595,6 +605,7 @@ void cGimbal::Printf_Test()
     //遥控器打印//
 //    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
+//    usart_printf("%f,%f,%f,%f\r\n",portSetYawSpeed(),MouseYaw,portSetPihSpeed(),MousePih);
     //倍镜打印//
 //    usart_printf("%f,%f,%f\r\n",ScopeUTarget,motors[ScopeUMotor].RealAngle_Ecd,motors_pid[ScopeUSpd].PID_Out);
 }
