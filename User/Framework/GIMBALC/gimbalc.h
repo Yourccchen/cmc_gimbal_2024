@@ -19,7 +19,7 @@
 #include "packet.hpp"
 #include "ADRC.h"
 #include "filters.h"
-
+#include "iwdgc.h"
 extern "C"
 {
 #include "YawSpeedPID.h"
@@ -138,7 +138,7 @@ public:
 /*ShootSpeedPidL*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidU*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ChassisYawPid*/   {2,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
+/*ChassisYawPid*/   {2.4,0,2       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
 /*ScopeUSpeedPid*/  {3,0.2,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
 /*ScopeUPosPid*/    {3,0,0.2      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
                 },
@@ -192,8 +192,8 @@ public:
 
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=90;//随动模式下正方向的角度
-    float vx, vy, vz, PihTarget, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
+    float ChassisYawTarget=205;//随动模式下正方向的角度
+    float vx, vy, vz, PihTarget=-46, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY;//定义一个卡尔曼滤波器结构体
 
@@ -215,7 +215,7 @@ private:
     float _Pitch_ImuLowLimit=-20;
 
     float _Pitch_MIUpLimit=40;
-    float _Pitch_MILowLimit=-40;
+    float _Pitch_MILowLimit=-100;
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
