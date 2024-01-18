@@ -105,6 +105,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             motors_pid[PihPos].PID_Out=0;
             motors_pid[PihSpd].PID_Out=0;
             Pid_Out.PihCurrent=0;
+            PihTarget=mi_motor[0].Angle;
             //底盘目标值给0
             vx=vy=vz=0;
             break;
@@ -149,10 +150,11 @@ void cGimbal::Gimbal_ControlMode(int8_t control_mode)
         {
             if (vision_pkt.packet_id != Last_ID)
             {
-                lowfilter.Init(30,0.005);//低通滤波器，设置截止频率和采样周期
-                PihTarget = vision_pkt.offset_pitch
+                lowfilter.Init(20,0.005);//低通滤波器，设置截止频率和采样周期
+
+                PihTarget =-lowfilter.Filter(vision_pkt.offset_pitch)
                         +mi_motor[0].Angle;
-                YawTarget = lowfilter.Filter(vision_pkt.offset_yaw)
+                YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
                             + motors[YawMotor].RealAngle_Imu;
                 Last_ID = vision_pkt.packet_id;
             }
@@ -237,7 +239,7 @@ void cGimbal::Gimbal_PosC()
             Pitch_ImuLimit(PihTarget); //陀螺仪
             break;
         case CYBERGEAR:
-            Pitch_MILimit(PihTarget); //小米电机
+//            Pitch_MILimit(PihTarget); //小米电机
             break;
     }
 
@@ -330,11 +332,11 @@ void cGimbal::Gimbal_SpeedC()
         case CYBERGEAR:
         {
             if(ControlMode==ZIMIAO)
-                motor_controlmode(&mi_motor[0],0,PihTarget,0,10,3);
+                motor_controlmode(&mi_motor[0],0,PihTarget,0,90,3);
             else if(CarMode==PROTECT || ProtectFlag==OFFLINE)
                 motor_controlmode(&mi_motor[0],0,PihTarget,0,0,0);
             else
-                motor_controlmode(&mi_motor[0],0,PihTarget,0,80,3);
+                motor_controlmode(&mi_motor[0],0,PihTarget,0,90,3);
 
         }
     }
@@ -421,11 +423,13 @@ void cGimbal::Pitch_MILimit(float& Target)
 }
 ///云台的卡尔曼滤波算法初始函数
 void cGimbal::Gimbal_KalmanInit(void)
-{
-    KalmanCreate(&Gimbal_YawAngle, 40, 200);      //初始化该滤波器的Q=1 R=40参数
-    KalmanCreate(&Gimbal_PihAngle, 40, 200);      //初始化该滤波器的Q=1 R=40参数
-    KalmanCreate(&Gimbal_MouseX, 30, 200);      //初始化该滤波器的Q=1 R=40参数
-    KalmanCreate(&Gimbal_MouseY, 30, 200);      //初始化该滤波器的Q=1 R=40参数
+{   //初始化该滤波器的Q=1 R=40参数
+    KalmanCreate(&Gimbal_YawAngle, 40, 200);
+    KalmanCreate(&Gimbal_PihAngle, 40, 200);
+    KalmanCreate(&Gimbal_MouseX, 30, 200);
+    KalmanCreate(&Gimbal_MouseY, 30, 200);
+    KalmanCreate(&ZIMIAO_Yaw, 30, 200);
+    KalmanCreate(&ZIMIAO_Pih, 30, 200); //暂时没用
 }
 ///设置MATLAB的PID参数
 void cGimbal::MatlabPID_ParamSet()
@@ -443,22 +447,24 @@ void cGimbal::MatlabPID_ParamSet()
 ///选择各种模式下的PID参数、ADRC参数
 void cGimbal::Gimbal_ParamChoose(int8_t mode)
 {
-    adrc.ADRCParamInit();
+    adrc[0].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
+    adrc[1].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
+    adrc[2].ADRCParamInit(1500, 0.05, 5, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
 
     switch (mode)
     {
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 1.2;
+            Pid_In.YawP_P = 0.8;
             Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.002;
+            Pid_In.YawP_D = 0.00;
             Pid_In.YawP_N = 150;
             Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.05;
+            Pid_In.Yaw_Dif_Gain = 0.08;
 
-            Pid_In.YawS_P = 2500;
-            Pid_In.YawS_I = 2500;
+            Pid_In.YawS_P = 2000;
+            Pid_In.YawS_I = 1800;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 30000;
@@ -518,15 +524,15 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case ZIMIAO://自瞄模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 2;
+            Pid_In.YawP_P = 1.5;
             Pid_In.YawP_I = 0;
             Pid_In.YawP_D = 0.01;
             Pid_In.YawP_N = 175;
             Pid_In.YawP_MO = 300;
             Pid_In.Yaw_Dif_Gain = 0; //前馈一阶差分增益
 
-            Pid_In.YawS_P = 3500;
-            Pid_In.YawS_I = 3500;
+            Pid_In.YawS_P = 1500;
+            Pid_In.YawS_I = 1500;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 28000;
@@ -584,24 +590,24 @@ void cGimbal::Printf_Test()
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n",PihTarget-46,mi_motor[0].Angle,mi_motor[0].Speed);
+//    usart_printf("%f,%f,%f\r\n",PihTarget,mi_motor[0].Angle,mi_motor[0].Speed);
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
     //摩擦轮打印//
-    usart_printf("%f,%f,%f,%f\r\n",
-                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed);
+//    usart_printf("%f,%f,%f,%f,%f\r\n",
+//                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
+//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,gimbal.motors_pid[ShootSpdR].PID_Out);
     //ADRC打印//
-//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
-//                 shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed,
-//                 shoot.ShootUOUT_ADRC,motors[ShootUMotor].RealSpeed);
+//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
+//                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
     //拨弹轮打印//
 //    usart_printf("%f,%f,%f,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
 //                 motors[RamMotor].RealAngle_Ecd,ShootMode);
     //自瞄打印
-//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget,motors[YawMotor].RealAngle_Imu
-//    ,vision_pkt.offset_pitch,PihTarget,mi_motor[0].Angle);
+    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget,motors[YawMotor].RealAngle_Imu
+    ,vision_pkt.offset_pitch,PihTarget,mi_motor[0].Angle);
+//    usart_printf("%f,%f\r\n",vision_pkt.offset_yaw,KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw));
     //滤波打印//
 //    lowfilter.Init(50,0.005);
 //    usart_printf("%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,lowfilter.Filter(vision_pkt.offset_yaw)

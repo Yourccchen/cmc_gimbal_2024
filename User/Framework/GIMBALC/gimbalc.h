@@ -122,7 +122,7 @@ public:
 
     cShoot shoot;
 
-    cADRC adrc;
+    cADRC adrc[3];
 
     cLowPassFilter lowfilter;
 
@@ -144,13 +144,13 @@ public:
                 },
          motors
                 {
-    /*PihMotor*/        {GM6020,CYBERGEAR,PIH_ANGLE,CYBERGEAR},
-    /*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,MATLAB},
-    /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
-    /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
-    /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
-    /*ShootUMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
-    /*ScopeUMotor*/     {M2006,ECD_MODE,ROLL_ANGLE,NORMAL},
+/*PihMotor*/        {GM6020,CYBERGEAR,PIH_ANGLE,CYBERGEAR},
+/*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,MATLAB},
+/*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
+/*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
+/*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
+/*ShootUMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
+/*ScopeUMotor*/     {M2006,ECD_MODE,ROLL_ANGLE,NORMAL},
                 }
                 {}
 
@@ -195,7 +195,7 @@ public:
     float ChassisYawTarget=205;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=-46, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
-    extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY;//定义一个卡尔曼滤波器结构体
+    extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
 
     ///射击控制变量//
     int8_t RammerStatus;
@@ -214,7 +214,7 @@ private:
     float _Pitch_ImuUpLimit = 15;
     float _Pitch_ImuLowLimit=-20;
 
-    float _Pitch_MIUpLimit=40;
+    float _Pitch_MIUpLimit=-200;
     float _Pitch_MILowLimit=-100;
 
     //遥控器接收到的上次数据

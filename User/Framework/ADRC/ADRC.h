@@ -5,6 +5,14 @@
 class cADRC
 {
 public:
+///类初始化
+//    cADRC(float r, float h,float b,float delta,
+//          float beta01, float beta02, float beta03,
+//          float alpha1 ,float alpha2,float betac1,float betac2) :
+//            r(r) ,h(h) ,b(b), delta(delta),
+//            beta01(beta01),beta02(beta02), beta03(beta03),
+//            alpha1(alpha1), alpha2(alpha2), betac1(betac1),betac2(betac2)
+//    {}
     //TD的两个输出
     float x1;
     float x2;
@@ -48,8 +56,13 @@ public:
     void  ADRC_ESO();
     void  ADRC_NonLinerFeedBack();
 
-    void  ADRCParamInit();
+    void ADRCParamInit(float _r,float _h,float _b,float _delta,
+                              float _beta01,float _betal02,float _betal03,
+                              float _alpha1,float _alpha2,float _betac1,float _betac2);
+
     float ADRC_Calc(float target, float feedback);
+
+
 };
 
 #endif //HERO_TEST_ADRC_H

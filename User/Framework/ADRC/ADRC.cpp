@@ -142,7 +142,9 @@ void cADRC::ADRC_NonLinerFeedBack()
  * ADRC参数初始化
  * @param which
  */
-void cADRC::ADRCParamInit()
+void cADRC::ADRCParamInit(float _r,float _h,float _b,float _delta,
+                          float _beta01,float _betal02,float _betal03,
+                          float _alpha1,float _alpha2,float _betac1,float _betac2)
 {
     x1 = 0;//跟踪输入
     x2 = 0;//跟踪输入的微分
@@ -158,26 +160,25 @@ void cADRC::ADRCParamInit()
     u = 0;//最终输出值
 
     //TD
-    r = 1500;//r与跟踪速度呈正相关，然而，随之带来的是噪声放大的副作用。
-    h = 0.05;//h与滤波效果呈正相关，但当h增大时，跟踪信号的相位损失也会随之增加。
+    r = _r;//r与跟踪速度呈正相关，然而，随之带来的是噪声放大的副作用。
+    h = _h;//h与滤波效果呈正相关，但当h增大时，跟踪信号的相位损失也会随之增加。
 
     //ESO
-    b = 5;
-    beta01 = 1;
-    beta02 = 1000;
-    beta03 = 10;
-    delta = 0.05;// 5*h<=delta<=10*h
+    b = _b;
+    beta01 = _beta01;
+    beta02 = _betal02;
+    beta03 = _betal03;
+    delta = _delta;// 5*h<=delta<=10*h
 
     //NLSEF
-    alpha1 = 0.5;// 0<alpha1<1<alpha2
-    alpha2 = 1.25;
-    betac1 = 80;
-    betac2 = 1;
+    alpha1 = _alpha1;// 0<alpha1<1<alpha2
+    alpha2 = _alpha2;
+    betac1 = _betac1;
+    betac2 = _betac2;
 }
 
 /**
  * ADRC执行过程
- * @param which
  * @param target    目标值
  * @param feedback  反馈值
  * @return 计算出来的输出值

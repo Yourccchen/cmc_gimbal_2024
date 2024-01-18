@@ -71,9 +71,9 @@ void cShoot::Shoot_SpeedC()
         gimbal.setMotorSpeed(ShootSpdU,1.01*SHOOT_SPEED);
     }
     ///ADRC摩擦轮计算
-    ShootLOUT_ADRC=gimbal.adrc.ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootLMotor].RealSpeed);
-    ShootROUT_ADRC=gimbal.adrc.ADRC_Calc(-SHOOT_SPEED,gimbal.motors[ShootRMotor].RealSpeed);
-    ShootUOUT_ADRC=gimbal.adrc.ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootUMotor].RealSpeed);
+    ShootLOUT_ADRC=gimbal.adrc[0].ADRC_Calc(-SHOOT_SPEED,gimbal.motors[ShootLMotor].RealSpeed);
+    ShootROUT_ADRC=gimbal.adrc[1].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootRMotor].RealSpeed);
+    ShootUOUT_ADRC=gimbal.adrc[2].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootUMotor].RealSpeed);
 
     ///PID摩擦轮计算
     gimbal.motors_pid[ShootSpdL].PID_GetPositionPID(gimbal.motors[ShootLMotor].RealSpeed);
@@ -96,30 +96,37 @@ void cShoot::Shoot_SendCurrent(float LOut,float ROut,float UOut,float RamOut)
   */
 void cShoot::ShootSpeedClean()
 {
-    //目标值清零
+    ///PID目标值清零
     gimbal.motors_pid[ShootSpdL].PID_Target=0;
     gimbal.motors_pid[ShootSpdR].PID_Target=0;
     gimbal.motors_pid[ShootSpdU].PID_Target=0;
+
     gimbal.motors_pid[RamSpd].PID_Target=0;
 
+    ///ADRC目标值清零
+    gimbal.adrc[0].Target=0;
+    gimbal.adrc[1].Target=0;
+    gimbal.adrc[2].Target=0;
     //清除漏电流，防止关闭摩擦轮后电机仍以小速度旋转
     if(abs(gimbal.motors[ShootLMotor].RealSpeed)<100
      ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100
      ||abs(gimbal.motors[ShootUMotor].RealSpeed)<100)
     {
+        ///PID相关
         gimbal.motors_pid[ShootSpdL].PID_Out=0;
         gimbal.motors_pid[ShootSpdR].PID_Out=0;
         gimbal.motors_pid[ShootSpdU].PID_Out=0;
+
+        ///ADRC相关
+        ShootLOUT_ADRC=0;
+        ShootROUT_ADRC=0;
+        ShootUOUT_ADRC=0;
     }
+
     gimbal.motors_pid[RamSpd].PID_Out=0;
 
     //摩擦轮关闭情况下，让目标值始终等于当前编码值，防止开启摩擦轮时偏差过大导致疯转
     gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
-
-    ///ADRC相关
-    ShootLOUT_ADRC=0;
-    ShootROUT_ADRC=0;
-    ShootUOUT_ADRC=0;
 }
 
 /**
@@ -132,7 +139,7 @@ void cShoot::Stuck_Check()
     {
         stuck_time++;
     }
-    if(stuck_time>75)//堵转超过375ms
+    if(stuck_time>50)//堵转超过250ms
     {
         gimbal.motors_pid[RamSpd].PID_ErrAll=0;
         gimbal.motors_pid[RamPos].PID_ErrAll=0;
@@ -212,7 +219,7 @@ int8_t cShoot::GetFricStatus(void)
   */
 void cShoot::Shoot_SpdChoose()
 {
-    SHOOT_SPEED=6000;
+    SHOOT_SPEED=6200;
 }
 
 /**
@@ -221,7 +228,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(3,0,0.1); //目前满载时2稳定
+    gimbal.motors_pid[RamPos].SetKpid(2.5,0,0.1); //目前满载时2稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);

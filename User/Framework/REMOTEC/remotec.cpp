@@ -239,9 +239,9 @@ float portSetYawSpeed(void)
     {
         case KEY_MODE:
         {
-            if (abs(rc_ctrl.mouse.x) < 100)
-                yaw_tarpos = -rc_ctrl.mouse.x * 0.5; //这儿后期加等级分档位
-            else
+//            if (abs(rc_ctrl.mouse.x) < 100)
+//                yaw_tarpos = -rc_ctrl.mouse.x * 0.5; //这儿后期加等级分档位
+//            else
                 yaw_tarpos = -rc_ctrl.mouse.x * 1.5; //这儿后期加等级分档位
             break;
         }
@@ -405,10 +405,9 @@ int8_t portSetCarMode(void)
 int8_t portSetShootMode(void)
 {
     portHandle(&rc_ctrl.key.F);//非连续键值处理 即上一次是0，本次是1，判断为按了一次
-    switch(gimbal.ControlMode)
+    if(gimbal.ControlMode==KEY_MODE)
     {
-        case KEY_MODE:
-        {
+
             if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag== CLOSEFRIC)
             {
                 gimbal.shoot.fric_flag=OPENFRIC;
@@ -417,27 +416,25 @@ int8_t portSetShootMode(void)
             {
                 gimbal.shoot.fric_flag=CLOSEFRIC;
             }
-            break;
-        }
-        case RC_MODE:
+    }
+    if(gimbal.ControlMode==RC_MODE || ZIMIAO)
+    {
+        if(RC_GetDatas().rc.ch[4]<-550)
         {
-            if(RC_GetDatas().rc.ch[4]<-550)
+            gimbal.shoot.fric_count++;
+            if( ((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==CLOSEFRIC)) )
             {
-                gimbal.shoot.fric_count++;
-                if( ((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==CLOSEFRIC)) )
-                {
-                    gimbal.shoot.fric_count=0;
-                    gimbal.shoot.fric_flag=OPENFRIC;
-                }
-                if(((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==OPENFRIC)) )
-                {
-                    gimbal.shoot.fric_count=0;
-                    gimbal.shoot.fric_flag=CLOSEFRIC;
-                }
+                gimbal.shoot.fric_count=0;
+                gimbal.shoot.fric_flag=OPENFRIC;
             }
-            break;
+            if(((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==OPENFRIC)) )
+            {
+                gimbal.shoot.fric_count=0;
+                gimbal.shoot.fric_flag=CLOSEFRIC;
+            }
         }
     }
+
     return gimbal.shoot.fric_flag;
 }
 
@@ -447,28 +444,23 @@ int8_t portSetShootMode(void)
 void portSetRammer(void)
 {
     portHandle(&rc_ctrl.mouse.press_l);//非连续化处理
-    switch(gimbal.ControlMode)
+    if(gimbal.ControlMode==RC_MODE || ZIMIAO)
     {
-        case RC_MODE:
+        if (RC_GetDatas().rc.ch[4] == 660)
         {
-            if(RC_GetDatas().rc.ch[4]==660)
+            gimbal.shoot.rammer_count++;
+            if (gimbal.shoot.rammer_count > 100)
             {
-                gimbal.shoot.rammer_count++;
-                if(gimbal.shoot.rammer_count>100)
-                {
-                    gimbal.shoot.rammer_count=0;
-                    gimbal.shoot.rammer_flag++;
-                }
-            }
-            break;
-        }
-        case KEY_MODE:
-        {
-            if(rc_ctrl.mouse.press_l.Is_Click_Once)
-            {
+                gimbal.shoot.rammer_count = 0;
                 gimbal.shoot.rammer_flag++;
             }
-            break;
+        }
+    }
+    if (gimbal.ControlMode == KEY_MODE)
+    {
+        if (rc_ctrl.mouse.press_l.Is_Click_Once)
+        {
+            gimbal.shoot.rammer_flag++;
         }
     }
 }
