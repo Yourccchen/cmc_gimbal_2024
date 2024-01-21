@@ -1,29 +1,34 @@
 #include "ADRC.h"
 #include "debugc.h"
 /**ADRC算法参数记录
- * ESO共有b、delta、belta01、belta02、belta03共5个参数，其中delta取值范围在5h<=delta<=10h,h为ADRC控制周期。
- * 参数整定可以先将b定下来，比如取1或者2（最好还是能够知道你的二阶系统系数）
- * 然后先后调整belta01、belta02、belta03
- * 观测z1能不能够很好的跟随反馈y，如果是，那么大概参数就调好了；
- * 如果不是，可以改动一下b，还是不行的话就得认认真真的检测一下反馈y是不是出了什么问题，
- * 比如变量数据类型转换有没有做好。如果懂得自己在输出中加入随机数（白噪声），注意幅值不能过大，
- * 观测一下z3是不是能够很好的观测到随机扰动。若以上两个条件都成立，那么ADRC就几乎被整定好了。
- * NLSEF参数有alpha1，alpha2，belta1，belta2四个，其中0<alpha1<1<alpha2。
- * belta1和belta2则视效果而定，通常ESO和NLSEF一起调，在整定ESO参数时，可以先把delta1和delta2定为1，
- * 再调ESO，待ESO有一定效果后，反复调整ESO参数无果，可以加入NLSEF参数整定，取得更好的效果。
+ESO共有b、delta、belta01、belta02、belta03共5个参数，其中delta取值范围在5h<=delta<=10h,h为ADRC控制周期。
+参数整定可以先将b定下来，比如取1或者2（最好还是能够知道你的二阶系统系数）
+然后先后调整belta01、belta02、belta03
+观测z1能不能够很好的跟随反馈y，如果是，那么大概参数就调好了；
+如果不是，可以改动一下b，还是不行的话就得认认真真的检测一下反馈y是不是出了什么问题，
+比如变量数据类型转换有没有做好。如果懂得自己在输出中加入随机数（白噪声），注意幅值不能过大，
+观测一下z3是不是能够很好的观测到随机扰动。若以上两个条件都成立，那么ADRC就几乎被整定好了。
+NLSEF参数有alpha1，alpha2，belta1，belta2四个，其中0<alpha1<1<alpha2。
+belta1和belta2则视效果而定，通常ESO和NLSEF一起调，在整定ESO参数时，可以先把delta1和delta2定为1，
+再调ESO，待ESO有一定效果后，反复调整ESO参数无果，可以加入NLSEF参数整定，取得更好的效果。
+
+ * ADRC参数整定经验
+TD:有两个参数r、h
+r越大，快速性越好，但是容易超调和引发振荡
+h越大，静态误差越小，刚开始带来的“超调”越小，初始的误差越小；但会导致上升过慢，快速性不好
+
+ESO:有6个参数bata01;beta02;beta03;b;T=0.0015;alpha1;alpha2;delta_Eso;
+一般alpha1=0.5;alpha2=0.25;delta_Eso=0.01;是固定参数，只需要调节其他三个参数：
+bata01和1/h是同一个数量级，过大会带来振荡甚至发散;
+beta02过小会带来发散，过大会产生高频噪声;
+beta03过大会产生振荡；过小会降低跟踪速度;
+
+Nonlinear_PD:三个参数：Kp、Kd、delta
+Kp越大，会减少误差，但是会降低快速性
+Kd越大，增加快速性，但是过大会产生振荡
+delta的值基本不影响输出，但是一般在0.01~0.1之间选取，过大会产生振荡
 
  * 调参顺序:TD -> NONLINER FEEDBACK <--> ESO（ ESO 和 NONLINER FEEDBACK 联调）
- *      ADRC_motor.r = 200;
-        ADRC_motor.h = 0.05;
-        ADRC_motor.delta = 0.5;
-        ADRC_motor.b = 5;
-        ADRC_motor.beta01 = 1;
-        ADRC_motor.beta02 = 300;
-        ADRC_motor.beta03 = 5;
-        ADRC_motor.alpha1 = 0.5;
-        ADRC_motor.alpha2 = 1.25;
-        ADRC_motor.betac1 = 80;
-        ADRC_motor.betac2 = 1;
  */
 
 /**

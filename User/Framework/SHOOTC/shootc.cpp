@@ -24,8 +24,8 @@ void cShoot::Shoot_PosC()
 {
     portSetRammer();//拨弹轮设置目标值
 
-//    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>200)
-//        gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
+    if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
+        gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
     if(rammer_flag)//0为不转，1为转一次。无其他数值可能
     {
@@ -228,7 +228,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(2.5,0,0.1); //目前满载时2稳定
+    gimbal.motors_pid[RamPos].SetKpid(4,0,0.1); //目前满载时2稳定
     gimbal.motors_pid[RamPos].PID_OutMax=500;
 
     gimbal.motors_pid[RamSpd].SetKpid(50,2,0);

@@ -22,7 +22,7 @@ extern CAN_HandleTypeDef hcan2;
 typedef enum
 {
     CAN_YAW_RCV_ID = 0x209,   //0x204+5,ID为5
-    CAN_PIH_RCV_ID = 0x206,
+//    CAN_PIH_RCV_ID = 0x206,
 
     CAN_YAW_SEND_ID = 0x2FF,
     CAN_PIH_SEND_ID = 0x1FF,
@@ -39,7 +39,7 @@ typedef enum
     CAN_SCOPE_DOWN_ID=0x207,
 
     CAN_SHOOT_SEND_ID = 0x200,
-    CAN_SCOPE_SEND_ID =0x1FF,
+    CAN_SCOPE_SEND_ID = 0x1FF,
 
     CAN_JUDGE_BARREL_ID = 0x405, //枪管热量限制 枪管冷却速度 枪管当前热量 机动枪管当前热量（双枪步兵用）
     CAN_JUDGE_PARAM_ID = 0x407   //当前弹速 弹速限制 队伍颜色 能量机关状态
