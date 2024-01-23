@@ -13,8 +13,7 @@ GetQuaternion quaternion = { 0, 0, 0, 0 };
 GetNaiveAngle NaiveAngle = { 0, 0, 0 }; //陀螺仪原始数据，通信用
 
 static float Yaw_Angle, Yaw_Speed, Pih_Angle, Pih_Speed;
-static float last_angle;
-static int32_t rotate_times;
+
 
 uint8_t IMU_RxBuf[IMU_DATASIZE - 1] = { 0 };
 
@@ -105,6 +104,8 @@ void IMU_Data_Handler(void)
 */
 float IMU_AngleIncreLoop(float angle_now)
 {
+    static float last_angle=0;
+    static int32_t rotate_times=0;
 	float this_angle;
 	this_angle = angle_now;
 	if ((this_angle - last_angle) > 300)
@@ -114,6 +115,27 @@ float IMU_AngleIncreLoop(float angle_now)
 	angle_now = this_angle + rotate_times * 360.0f;
 	last_angle = this_angle;
 	return angle_now;
+}
+
+/**
+	* @name   IMU_AngleIncreLoop
+	* @brief  IMU角度连续化处理
+	* @param  angle_now 当前IMU反馈角度
+	* @retval angle_now 连续化后的IMU反馈角度
+*/
+float IMU_AngleIncreLoop1(float angle_now)
+{
+    static float last_angle=0;
+    static int32_t rotate_times=0;
+    float this_angle;
+    this_angle = angle_now;
+    if ((this_angle - last_angle) > 300)
+        rotate_times--;
+    if ((this_angle - last_angle) < -300)
+        rotate_times++;
+    angle_now = this_angle + rotate_times * 360.0f;
+    last_angle = this_angle;
+    return angle_now;
 }
 /**
 	* @name   IMU_Angle_Wit

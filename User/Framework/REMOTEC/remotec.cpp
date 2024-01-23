@@ -348,12 +348,22 @@ float portSetVy(void)
   */
 uint8_t portIsZimiao(void)
 {
-    if (rc_ctrl.mouse.press_r.Now_State)
-        return 0x01;  //带数字的自瞄
-    else if (rc_ctrl.key.R.Now_State) //打幅，默认小幅，大符会在外面判断
-        return 0xbb;
-    else
-        return 0;
+//    if (rc_ctrl.mouse.press_r.Now_State)
+//        return 0x01;  //带数字的自瞄
+//    else if (rc_ctrl.key.R.Now_State) //打幅，默认小幅，大符会在外面判断
+//        return 0xbb;
+//    else
+//        return 0;
+    portHandle(&rc_ctrl.key.R);
+    if (rc_ctrl.key.R.Is_Click_Once && gimbal.ZimiaoFlag==CLOSEZIMIAO)
+    {
+        gimbal.ZimiaoFlag=OPENZIMIAO;
+    }
+    else if(rc_ctrl.key.R.Is_Click_Once && gimbal.ZimiaoFlag==OPENZIMIAO)
+    {
+        gimbal.ZimiaoFlag=CLOSEZIMIAO;
+    }
+    return gimbal.ZimiaoFlag;
 }
 /**
   *@breif   车体模式切换：保护、随动、小陀螺

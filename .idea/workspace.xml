@@ -20,12 +20,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="test: 调好了自瞄参数，中期测评全部录完">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="test: 换了新的Yaw轴电机（带减速箱）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/ADRC/ADRC.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/ADRC/ADRC.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +172,10 @@
       <workItem from="1705650759010" duration="63000" />
       <workItem from="1705653439660" duration="4849000" />
       <workItem from="1705720188748" duration="1012000" />
-      <workItem from="1705814034632" duration="15037000" />
+      <workItem from="1705814034632" duration="15388000" />
+      <workItem from="1705908903229" duration="6480000" />
+      <workItem from="1705986170269" duration="1324000" />
+      <workItem from="1706000923430" duration="2976000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -403,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705579041844</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="test: 换了新的Yaw轴电机（带减速箱）">
+      <created>1705841074964</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1705841074964</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +437,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: YAW轴现在效果还行" />
     <MESSAGE value="perf: YAW轴跟随效果现在不错" />
     <MESSAGE value="perf: PIH轴现在效果能看" />
     <MESSAGE value="perf: 云台回来了（虽然效果还没达到之前的高度）" />
@@ -450,7 +461,8 @@
     <MESSAGE value="perf: 优化Yaw轴参数，同时分开计算键鼠操作和遥控器操作的卡尔曼滤波值" />
     <MESSAGE value="perf: 加上随动更改Yaw参数，增加了Pitch保护，找到了小米电机上电-46度解决办法" />
     <MESSAGE value="test: 调好了自瞄参数，中期测评全部录完" />
-    <option name="LAST_COMMIT_MESSAGE" value="test: 调好了自瞄参数，中期测评全部录完" />
+    <MESSAGE value="test: 换了新的Yaw轴电机（带减速箱）" />
+    <option name="LAST_COMMIT_MESSAGE" value="test: 换了新的Yaw轴电机（带减速箱）" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

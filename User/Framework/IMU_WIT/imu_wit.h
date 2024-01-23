@@ -28,6 +28,7 @@ void IMU_Data_Handler(void);
 float IMU_Angle_Wit(int8_t Witch_angle);
 float IMU_Speed_Wit(int8_t Witch_angle);
 float IMU_AngleIncreLoop(float angle_now);
+float IMU_AngleIncreLoop1(float angle_now);
 GetQuaternion IMU_Quaternion(void);
 GetNaiveAngle IMU_NaiveAngle(void);
 
