@@ -52,6 +52,7 @@ void REMOTEC_UartIrqHandler(void);
 void DEBUGC_UartIrqHandler(UART_HandleTypeDef *huart);
 void DEBUGC_UartIdleCallback(UART_HandleTypeDef *huart);
 void DEBUGC_UartInit(void);
+void CH100_IMU_Receive_Data();
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

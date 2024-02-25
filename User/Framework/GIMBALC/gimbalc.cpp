@@ -4,6 +4,7 @@
 
 #include "gimbalc.h"
 #include "imu_wit.h"
+//#include "CH100.h"
 #include "CyberGear.h"
 bool GIMBAL=0;
 cGimbal gimbal; //定义云台总类
@@ -73,6 +74,8 @@ void cGimbal::Gimbal_ControlWithRC(void)
     Gimbal_ControlMode(ControlMode);
     //射击模式设置
     Gimbal_ShootMode(ShootMode);
+
+//    vz = 0;
     //底盘通信循环
     Chassis_ComLoop(vx,vy,vz,CarMode,AimbotMode);
 }
@@ -470,18 +473,18 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 0.9;
-            Pid_In.YawP_I = 0;
-            Pid_In.YawP_D = 0.05;
-            Pid_In.YawP_N = 150;
-            Pid_In.YawP_MO = 300;
-            Pid_In.Yaw_Dif_Gain = 0.25;
+            Pid_In.YawP_P = 2.5;
+            Pid_In.YawP_I = 0.00;
+            Pid_In.YawP_D = 0.0;
+            Pid_In.YawP_N = 175;
+            Pid_In.YawP_MO = 270;
+            Pid_In.Yaw_Dif_Gain = 0.1;
 
-            Pid_In.YawS_P = 450;
-            Pid_In.YawS_I = 200;
+            Pid_In.YawS_P = 1500;
+            Pid_In.YawS_I = 100;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
-            Pid_In.YawS_MO = 28000;
+            Pid_In.YawS_MO = 30192;
 
             ///Pih轴的MATLAB_PID参数///
             Pid_In.PihP_P = 0.7;
@@ -598,7 +601,7 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Ecd);
-    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealAngle_Ecd);
+//    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealAngle_Ecd);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
 //    usart_printf("%f,%f,%f\r\n",YawSpeedPID_Y.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealSpeed);
     //Pih打印//
@@ -637,4 +640,5 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f\r\n",portSetYawSpeed(),MouseYaw,portSetPihSpeed(),MousePih);
     //倍镜打印//
 //    usart_printf("%f,%f,%f\r\n",ScopeUTarget,motors[ScopeUMotor].RealAngle_Ecd,motors_pid[ScopeUSpd].PID_Out);
+//    usart_printf("%f,%f,%f\r\n", CH100_IMU_Angle(0), CH100_IMU_Angle(1), CH100_IMU_Angle(2));
 }

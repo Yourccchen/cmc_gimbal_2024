@@ -194,7 +194,7 @@ public:
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=-35;//随动模式下正方向的角度
+    float ChassisYawTarget=240;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=-46, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
