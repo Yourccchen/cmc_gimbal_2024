@@ -286,6 +286,7 @@ void USART1_IRQHandler(void)
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
     IMU_Receive_Data();
+//    CH100_IMU_Receive_Data();
   /* USER CODE END USART1_IRQn 1 */
 }
 

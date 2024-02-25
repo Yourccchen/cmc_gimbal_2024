@@ -60,9 +60,6 @@ include_directories(
         YawSpeedPID_stm32
         User/Tasks/GIMBAL_TASK User/Tasks/PRINT_TASK User/Tasks/VISIONCOM_TASK
         )
-include_directories(
-        User/Framework/IMU_WIT
-)
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx)
 
 file(GLOB_RECURSE SOURCES "Library/*.*" "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*" "User/*.*" "PID_stm32/*.*" "YawSpeedPID_stm32/*.*")

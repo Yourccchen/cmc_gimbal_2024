@@ -20,14 +20,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="test: 换了新的Yaw轴电机（带减速箱）">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/usart.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/usart.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +97,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -175,7 +184,13 @@
       <workItem from="1705814034632" duration="15388000" />
       <workItem from="1705908903229" duration="6480000" />
       <workItem from="1705986170269" duration="1324000" />
-      <workItem from="1706000923430" duration="2976000" />
+      <workItem from="1706000923430" duration="7367000" />
+      <workItem from="1706184819545" duration="21000" />
+      <workItem from="1706188950109" duration="218000" />
+      <workItem from="1706189295308" duration="9000" />
+      <workItem from="1708675428640" duration="522000" />
+      <workItem from="1708832448086" duration="7641000" />
+      <workItem from="1708856534338" duration="1840000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -415,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705841074964</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R">
+      <created>1706010312963</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1706010312963</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +459,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: YAW轴跟随效果现在不错" />
     <MESSAGE value="perf: PIH轴现在效果能看" />
     <MESSAGE value="perf: 云台回来了（虽然效果还没达到之前的高度）" />
     <MESSAGE value="perf: 移植好了融合滤波IMU算法，效果非常好" />
@@ -462,7 +483,8 @@
     <MESSAGE value="perf: 加上随动更改Yaw参数，增加了Pitch保护，找到了小米电机上电-46度解决办法" />
     <MESSAGE value="test: 调好了自瞄参数，中期测评全部录完" />
     <MESSAGE value="test: 换了新的Yaw轴电机（带减速箱）" />
-    <option name="LAST_COMMIT_MESSAGE" value="test: 换了新的Yaw轴电机（带减速箱）" />
+    <MESSAGE value="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R" />
+    <option name="LAST_COMMIT_MESSAGE" value="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
