@@ -20,11 +20,25 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: IMU换成了CH100，现在可以正常控制，效果还需优化">
+      <change afterPath="$PROJECT_DIR$/User/Framework/CH100/CH100.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/CH100/CH100.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/CH100/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/freertos.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/freertos.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/usart.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/usart.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/witreg.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,9 +109,9 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
@@ -189,6 +203,8 @@
       <workItem from="1708675428640" duration="522000" />
       <workItem from="1708832448086" duration="7641000" />
       <workItem from="1708856534338" duration="1840000" />
+      <workItem from="1708953596504" duration="761000" />
+      <workItem from="1709034640763" duration="7412000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -435,7 +451,21 @@
       <option name="project" value="LOCAL" />
       <updated>1706010312963</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="perf: 学期开始，留一个版本（只有参数改动）">
+      <created>1708951403333</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1708951403333</updated>
+    </task>
+    <task id="LOCAL-00037" summary="fix: 之前git出问题，现在是正常版本">
+      <created>1708951616623</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1708951616623</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -457,9 +487,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: PIH轴现在效果能看" />
-    <MESSAGE value="perf: 云台回来了（虽然效果还没达到之前的高度）" />
-    <MESSAGE value="perf: 移植好了融合滤波IMU算法，效果非常好" />
     <MESSAGE value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
     <MESSAGE value="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决" />
     <MESSAGE value="feat: 解决了小米电机启动时需要硬件先自启动的问题" />
@@ -482,7 +509,10 @@
     <MESSAGE value="test: 调好了自瞄参数，中期测评全部录完" />
     <MESSAGE value="test: 换了新的Yaw轴电机（带减速箱）" />
     <MESSAGE value="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R" />
-    <option name="LAST_COMMIT_MESSAGE" value="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R" />
+    <MESSAGE value="perf: 学期开始，留一个版本（只有参数改动）" />
+    <MESSAGE value="fix: 之前git出问题，现在是正常版本" />
+    <MESSAGE value="feat: IMU换成了CH100，现在可以正常控制，效果还需优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: IMU换成了CH100，现在可以正常控制，效果还需优化" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
