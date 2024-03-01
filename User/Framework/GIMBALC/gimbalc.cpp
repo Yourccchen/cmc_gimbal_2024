@@ -472,7 +472,7 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 6.5;
+            Pid_In.YawP_P = 7;
             Pid_In.YawP_I = 0.00;
             Pid_In.YawP_D = 0.1;
             Pid_In.YawP_N = 175;

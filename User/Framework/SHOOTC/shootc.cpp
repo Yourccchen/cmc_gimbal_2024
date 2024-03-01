@@ -229,7 +229,7 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(1.5,0,0.3); //目前满载时2稳定
+    gimbal.motors_pid[RamPos].SetKpid(2,0,0.3); //目前满载时2稳定
     gimbal.motors_pid[RamPos].PID_OutMax=300;
 
     gimbal.motors_pid[RamSpd].SetKpid(150,7,0);
