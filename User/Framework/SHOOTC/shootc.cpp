@@ -29,25 +29,7 @@ void cShoot::Shoot_PosC()
 
     if(rammer_flag)//0为不转，1为转一次。无其他数值可能
     {
-        switch(GIMBAL)//切换新旧英雄
-        {
-            case OLD_HERO:
-            {
-//                if(shoot_permit==SHOOT_PERMIT)
-//                {
-                    gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 75);
-//                }
-                break;
-            }
-            case NEW_HERO:
-            {
-//                if(shoot_permit==SHOOT_PERMIT)
-//                {
-                    gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 45.0* 28.0/100.0);
-//                }
-                break;
-            }
-        }
+        gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 75);
     }
 
     rammer_flag=0;
@@ -69,17 +51,17 @@ void cShoot::Shoot_SpeedC()
     {
         gimbal.setMotorSpeed(ShootSpdL,-SHOOT_SPEED);
         gimbal.setMotorSpeed(ShootSpdR,SHOOT_SPEED);
-        gimbal.setMotorSpeed(ShootSpdU,1.01*SHOOT_SPEED);
+//        gimbal.setMotorSpeed(ShootSpdU,1.01*SHOOT_SPEED);
     }
     ///ADRC摩擦轮计算
     ShootLOUT_ADRC=gimbal.adrc[0].ADRC_Calc(-SHOOT_SPEED,gimbal.motors[ShootLMotor].RealSpeed);
     ShootROUT_ADRC=gimbal.adrc[1].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootRMotor].RealSpeed);
-    ShootUOUT_ADRC=gimbal.adrc[2].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootUMotor].RealSpeed);
+//    ShootUOUT_ADRC=gimbal.adrc[2].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootUMotor].RealSpeed);
 
     ///PID摩擦轮计算
     gimbal.motors_pid[ShootSpdL].PID_GetPositionPID(gimbal.motors[ShootLMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdR].PID_GetPositionPID(gimbal.motors[ShootRMotor].RealSpeed);
-    gimbal.motors_pid[ShootSpdU].PID_GetPositionPID(gimbal.motors[ShootUMotor].RealSpeed);
+//    gimbal.motors_pid[ShootSpdU].PID_GetPositionPID(gimbal.motors[ShootUMotor].RealSpeed);
 
     ///拨弹轮计算
     gimbal.motors_pid[RamSpd].PID_GetPositionPID(gimbal.motors[RamMotor].RealSpeed);
@@ -100,28 +82,27 @@ void cShoot::ShootSpeedClean()
     ///PID目标值清零
     gimbal.motors_pid[ShootSpdL].PID_Target=0;
     gimbal.motors_pid[ShootSpdR].PID_Target=0;
-    gimbal.motors_pid[ShootSpdU].PID_Target=0;
+//    gimbal.motors_pid[ShootSpdU].PID_Target=0;
 
     gimbal.motors_pid[RamSpd].PID_Target=0;
 
     ///ADRC目标值清零
     gimbal.adrc[0].Target=0;
     gimbal.adrc[1].Target=0;
-    gimbal.adrc[2].Target=0;
+//    gimbal.adrc[2].Target=0;
     //清除漏电流，防止关闭摩擦轮后电机仍以小速度旋转
     if(abs(gimbal.motors[ShootLMotor].RealSpeed)<100
-     ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100
-     ||abs(gimbal.motors[ShootUMotor].RealSpeed)<100)
+     ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100)
     {
         ///PID相关
         gimbal.motors_pid[ShootSpdL].PID_Out=0;
         gimbal.motors_pid[ShootSpdR].PID_Out=0;
-        gimbal.motors_pid[ShootSpdU].PID_Out=0;
+//        gimbal.motors_pid[ShootSpdU].PID_Out=0;
 
         ///ADRC相关
         ShootLOUT_ADRC=0;
         ShootROUT_ADRC=0;
-        ShootUOUT_ADRC=0;
+//        ShootUOUT_ADRC=0;
     }
 
     gimbal.motors_pid[RamSpd].PID_Out=0;

@@ -74,7 +74,6 @@ void cGimbal::Gimbal_ControlWithRC(void)
     //射击模式设置
     Gimbal_ShootMode(ShootMode);
 
-//    vz = 0;
     //底盘通信循环
     Chassis_ComLoop(vx,vy,vz,CarMode,AimbotMode);
 }
@@ -183,6 +182,7 @@ void cGimbal::Gimbal_ControlMode(int8_t control_mode)
   */
 void cGimbal::Gimbal_ShootMode(int8_t shoot_mode)
 {
+//    usart_printf("%d\r\n",shoot_mode);
     switch(shoot_mode)
     {
         case CLOSEFRIC:
@@ -585,7 +585,7 @@ void cGimbal::Online_Check()
 void cGimbal::Printf_Test()
 {
     //Yaw打印//
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealAngle_Ecd);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
 //    usart_printf("%f,%f,%f\r\n",YawSpeedPID_Y.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealSpeed);
@@ -597,9 +597,10 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
     //摩擦轮打印//
-//    usart_printf("%f,%f,%f,%f,%f\r\n",
-//                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,gimbal.motors_pid[ShootSpdR].PID_Out);
+    usart_printf("%f,%f,%f,%f,%f,%f\r\n",
+                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
+                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
+                 gimbal.motors_pid[ShootSpdL].PID_Out,gimbal.motors_pid[ShootSpdR].PID_Out);
     //ADRC打印//
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
