@@ -235,22 +235,19 @@ void portHandle(Key_State* port)
 float portSetYawSpeed(void)
 {
     float yaw_tarpos;
-    switch (gimbal.ControlMode)
+    if (gimbal.ControlMode==KEY_MODE)
     {
-        case KEY_MODE:
-        {
 //            if (abs(rc_ctrl.mouse.x) < 100)
 //                yaw_tarpos = -rc_ctrl.mouse.x * 0.5; //这儿后期加等级分档位
 //            else
-                yaw_tarpos = -rc_ctrl.mouse.x * 1.5; //这儿后期加等级分档位
-            break;
-        }
-        case RC_MODE:
-        {
-            yaw_tarpos = -RC_GetDatas().rc.ch[0] * 360 / 660.0f;
-            break;
-        }
+        yaw_tarpos = -rc_ctrl.mouse.x * 1.5; //这儿后期加等级分档位
     }
+
+    else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
+    {
+        yaw_tarpos = -RC_GetDatas().rc.ch[0] * 360 / 660.0f;
+    }
+
     return yaw_tarpos;
 }
 
@@ -262,22 +259,18 @@ float portSetYawSpeed(void)
 float portSetPihSpeed(void)
 {
     float pih_tarpos;
-    switch (gimbal.ControlMode)
+    if (gimbal.ControlMode==KEY_MODE)
     {
-        case KEY_MODE:
-        {
 //            if (abs(rc_ctrl.mouse.y) < 50)
                 pih_tarpos = -rc_ctrl.mouse.y * 1.5; //这儿后期加等级分档位
 //            else
 //                pih_tarpos = -rc_ctrl.mouse.y * 1.5; //这儿后期加等级分档位
-            break;
-        }
-        case RC_MODE:
-        {
-            pih_tarpos = RC_GetDatas().rc.ch[1] * 360 / 660.0f;
-            break;
-        }
     }
+    else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
+    {
+        pih_tarpos = RC_GetDatas().rc.ch[1] * 360 / 660.0f;
+    }
+
     return pih_tarpos;
 }
 
@@ -289,26 +282,17 @@ float portSetPihSpeed(void)
 float portSetVx(void)
 {
     float vx;
-    switch (gimbal.ControlMode)
+    if (gimbal.ControlMode==KEY_MODE)
     {
-        case KEY_MODE:
-        {
-            vx = (rc_ctrl.key.D.Now_State - rc_ctrl.key.A.Now_State) * 80.0; //这儿后期加等级分档位
-            if (rc_ctrl.key.SHIFT.Now_State == 1)
-                vx *= 2.4; //按住shift加速
-            break;
-        }
-        case RC_MODE:
-        {
-            vx = RC_GetDatas().rc.ch[2] * 200.0f / 660.0f;
-            break;
-        }
-        case ZIMIAO:
-        {
-            vx = RC_GetDatas().rc.ch[2] * 200.0f / 660.0f;
-            break;
-        }
+        vx = (rc_ctrl.key.D.Now_State - rc_ctrl.key.A.Now_State) * 80.0; //这儿后期加等级分档位
+        if (rc_ctrl.key.SHIFT.Now_State == 1)
+            vx *= 2.4; //按住shift加速
     }
+    else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
+    {
+        vx = RC_GetDatas().rc.ch[2] * 200.0f / 660.0f;
+    }
+
     return vx;
 }
 /**
@@ -319,26 +303,18 @@ float portSetVx(void)
 float portSetVy(void)
 {
     float vy;
-    switch (gimbal.ControlMode)
+    if (gimbal.ControlMode==KEY_MODE)
     {
-        case KEY_MODE:
-        {
-            vy = (rc_ctrl.key.W.Now_State - rc_ctrl.key.S.Now_State) * 80.0;
-            if (rc_ctrl.key.SHIFT.Now_State == 1)
-                vy *= 2.4; //按住shift加速
-            break;
-        }
-        case RC_MODE:
-        {
-            vy = RC_GetDatas().rc.ch[3] * 200.0f / 660.0f;
-            break;
-        }
-        case ZIMIAO:
-        {
-            vy = RC_GetDatas().rc.ch[3] * 200.0f / 660.0f;
-            break;
-        }
+        vy = (rc_ctrl.key.W.Now_State - rc_ctrl.key.S.Now_State) * 80.0;
+        if (rc_ctrl.key.SHIFT.Now_State == 1)
+            vy *= 2.4; //按住shift加速
     }
+
+    else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
+    {
+        vy = RC_GetDatas().rc.ch[3] * 200.0f / 660.0f;
+    }
+
     return vy;
 }
 /**
@@ -366,7 +342,7 @@ uint8_t portIsZimiao(void)
     return gimbal.ZimiaoFlag;
 }
 /**
-  *@breif   车体模式切换：保护、随动、小陀螺
+  *@breif   车体模式切换：小陀螺、随动、自瞄
   *@param   none
   *@retval  当前的车体模式
   */
@@ -375,38 +351,42 @@ int8_t portSetCarMode(void)
     //非连续键值处理 即上一次是0，本次是1，判断为按了一次
     portHandle(&rc_ctrl.key.X);
     portHandle(&rc_ctrl.key.G);
-    switch (gimbal.ControlMode)
+    if(gimbal.ControlMode==KEY_MODE)
     {
         //Z小陀螺 X随动 G保护
-        case KEY_MODE:
+        if (rc_ctrl.key.X.Is_Click_Once && gimbal.CarMode==SUIDONG)
         {
-            if (rc_ctrl.key.X.Is_Click_Once && gimbal.CarMode==SUIDONG)
-            {
-                gimbal.CarMode = TUOLUO;
-            }
-            else if (rc_ctrl.key.X.Is_Click_Once && (gimbal.CarMode==TUOLUO|| gimbal.CarMode==PROTECT))
-            {
-                gimbal.CarMode = SUIDONG;
-            }
-            else if (rc_ctrl.key.G.Is_Click_Once)
-            {
-                gimbal.CarMode = PROTECT;
-            }
-            else
-                gimbal.CarMode = gimbal.Last_CarMode;
-            break;
+            gimbal.CarMode = TUOLUO;
         }
-        case RC_MODE:
+        else if (rc_ctrl.key.X.Is_Click_Once && (gimbal.CarMode==TUOLUO|| gimbal.CarMode==PROTECT))
         {
-            gimbal.CarMode = rc_ctrl.rc.s[0]; //右侧拨杆
-            break;
+            gimbal.CarMode = SUIDONG;
         }
+        else if (rc_ctrl.key.G.Is_Click_Once)
+        {
+            gimbal.CarMode = PROTECT;
+        }
+        else
+            gimbal.CarMode = gimbal.Last_CarMode;
+    }
+
+    else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
+    {
+        gimbal.CarMode = rc_ctrl.rc.s[0]; //右侧拨杆
     }
 
     gimbal.Last_CarMode = gimbal.CarMode;
     return gimbal.CarMode;
 }
 
+/**
+  *@breif   控制模式切换：开摩擦轮、关摩擦轮、键鼠模式
+  *@retval  ControlMode模式的参数
+  */
+int8_t portSetControlMode(void)
+{
+    return RC_GetDatas().rc.s[1];//左侧拨杆
+}
 /**
   *@breif   射击模式切换
   *@param   none
@@ -417,32 +397,23 @@ int8_t portSetShootMode(void)
     portHandle(&rc_ctrl.key.F);//非连续键值处理 即上一次是0，本次是1，判断为按了一次
     if(gimbal.ControlMode==KEY_MODE)
     {
-
-            if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag== CLOSEFRIC)
-            {
-                gimbal.shoot.fric_flag=OPENFRIC;
-            }
-            else if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag==OPENFRIC)
-            {
-                gimbal.shoot.fric_flag=CLOSEFRIC;
-            }
-    }
-    if(gimbal.ControlMode==RC_MODE || ZIMIAO)
-    {
-        if(RC_GetDatas().rc.ch[4]<-550)
+        if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag== CLOSEFRIC)
         {
-            gimbal.shoot.fric_count++;
-            if( ((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==CLOSEFRIC)) )
-            {
-                gimbal.shoot.fric_count=0;
-                gimbal.shoot.fric_flag=OPENFRIC;
-            }
-            if(((gimbal.shoot.fric_count>50) && (gimbal.shoot.fric_flag==OPENFRIC)) )
-            {
-                gimbal.shoot.fric_count=0;
-                gimbal.shoot.fric_flag=CLOSEFRIC;
-            }
+            gimbal.shoot.fric_flag=OPENFRIC;
         }
+        else if(rc_ctrl.key.F.Is_Click_Once && gimbal.shoot.fric_flag==OPENFRIC)
+        {
+            gimbal.shoot.fric_flag=CLOSEFRIC;
+        }
+    }
+
+    else if(gimbal.ControlMode==OPENFRIC)
+    {
+        gimbal.shoot.fric_flag=OPENFRIC;
+    }
+    else if(gimbal.ControlMode==CLOSEFRIC)
+    {
+        gimbal.shoot.fric_flag=CLOSEFRIC;
     }
 
     return gimbal.shoot.fric_flag;
@@ -454,7 +425,14 @@ int8_t portSetShootMode(void)
 void portSetRammer(void)
 {
     portHandle(&rc_ctrl.mouse.press_l);//非连续化处理
-    if(gimbal.ControlMode==RC_MODE || ZIMIAO)
+    if (gimbal.ControlMode == KEY_MODE)
+    {
+        if (rc_ctrl.mouse.press_l.Is_Click_Once)
+        {
+            gimbal.shoot.rammer_flag++;
+        }
+    }
+    if(gimbal.ControlMode == OPENFRIC)
     {
         if (RC_GetDatas().rc.ch[4] == 660)
         {
@@ -466,13 +444,6 @@ void portSetRammer(void)
             }
         }
     }
-    if (gimbal.ControlMode == KEY_MODE)
-    {
-        if (rc_ctrl.mouse.press_l.Is_Click_Once)
-        {
-            gimbal.shoot.rammer_flag++;
-        }
-    }
 }
 /**
   *@breif   倍镜角度控制
@@ -482,14 +453,7 @@ void portSetScope()
     gimbal.ScopeUTarget+=rc_ctrl.key.Q.Now_State*0.1f;
     gimbal.ScopeUTarget-=rc_ctrl.key.E.Now_State*0.1f;
 }
-/**
-  *@breif   控制模式切换
-  *@retval  ControlMode模式的参数（有KEY_MODE,RC_MODE,ZIMIAO三种）
-  */
-int8_t portSetControlMode(void)
-{
-    return RC_GetDatas().rc.s[1];//左侧拨杆
-}
+
 /**
   *@breif   云台反转180°
   */

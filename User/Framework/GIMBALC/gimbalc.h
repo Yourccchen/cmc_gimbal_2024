@@ -44,19 +44,20 @@ extern "C"
 #define ADRC 3      //ADRC算法
 #define CYBERGEAR 4 //小米电机自带的运控模式
 //车体模式赋值(右侧拨杆)
-#define PROTECT  1    //保护模式
-#define SUIDONG  3    //随动模式
-#define TUOLUO   2    //小陀螺模式
-
+#define TUOLUO   1     //小陀螺模式
+#define SUIDONG  3     //随动模式
+#define ZIMIAO   2     //自瞄
+#define PROTECT  4     //保护模式
 //控制模式赋值(左侧拨杆)
-#define KEY_MODE 1   //键盘操作
-#define RC_MODE  3   //远程遥控器操作
-#define ZIMIAO   2   //自瞄
+#define OPENFRIC  1    //开启摩擦轮
+#define CLOSEFRIC 3    //关闭摩擦轮
+#define KEY_MODE  2    //键盘操作
+
+
 #define OPENZIMIAO 1
 #define CLOSEZIMIAO 0
 //射击模式赋值
-#define CLOSEFRIC 0   //关闭摩擦轮
-#define OPENFRIC  1   //开启摩擦轮
+
 
 //在线状态赋值(遥控器是否断电有关)
 #define OFFLINE 0
@@ -179,7 +180,7 @@ public:
     void Printf_Test();
 
     ///车体模式变量///
-    int8_t ControlMode=RC_MODE;             //控制模式，左侧拨杆控制
+    int8_t ControlMode;             //控制模式，左侧拨杆控制
     int8_t Last_ControlMode;                //上次的控制模式
 
     int8_t CarMode=SUIDONG;                 //车体模式，右侧拨杆控制
