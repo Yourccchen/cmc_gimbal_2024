@@ -103,15 +103,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
             //回调函数
-//            if (RxMeg.StdId == CAN_PIH_RCV_ID)
-//            {
-//                gimbal.motors[PihMotor].Connected = 1;
-//                gimbal.motors[PihMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
-//                gimbal.motors[PihMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
-//                gimbal.motors[PihMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
-//                gimbal.motors[PihMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
-//                gimbal.motors[PihMotor].Null = (int16_t)(recvData[7]);
-//            }
             ///小米电机部分
 //            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
 //            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
@@ -125,7 +116,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
 //                default:
 //                    break;
 //            }
-
+            can1_rx_callback();
         }
     }
 
@@ -355,4 +346,70 @@ void CAN_ScopeSendCurrent(int16_t scopeu)
     send_data[3] = scopeu;
 
     HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
+}
+
+/**
+************************************************************************
+* @brief:      	canx_bsp_send_data(FDCAN_HandleTypeDef *hfdcan, uint16_t id, uint8_t *data, uint32_t len)
+* @param:       hcan: CAN句柄
+* @param:       id: 	CAN设备ID
+* @param:       data: 发送的数据
+* @param:       len:  发送的数据长度
+* @retval:     	void
+* @details:    	发送数据
+************************************************************************
+**/
+uint8_t canx_bsp_send_data(CAN_HandleTypeDef *hcan, uint16_t id, uint8_t *data, uint32_t len)
+{
+    CAN_TxHeaderTypeDef	tx_header;
+
+    tx_header.StdId = id;
+    tx_header.ExtId = 0;
+    tx_header.IDE   = 0;
+    tx_header.RTR   = 0;
+    tx_header.DLC   = len;
+    /*找到空的发送邮箱，把数据发送出去*/
+    if(HAL_CAN_AddTxMessage(hcan, &tx_header, data, (uint32_t*)CAN_TX_MAILBOX0) != HAL_OK)
+    {
+        if(HAL_CAN_AddTxMessage(hcan, &tx_header, data, (uint32_t*)CAN_TX_MAILBOX1) != HAL_OK)
+        {
+            HAL_CAN_AddTxMessage(hcan, &tx_header, data, (uint32_t*)CAN_TX_MAILBOX2);
+        }
+    }
+    return 0;
+}
+/**
+************************************************************************
+* @brief:      	canx_bsp_receive(CAN_HandleTypeDef *hcan, uint8_t *buf)
+* @param:       hcan: CAN句柄
+* @param[out]:  rec_id: 	接收到数据的CAN设备ID
+* @param:       buf：接收数据缓存
+* @retval:     	接收的数据长度
+* @details:    	接收数据
+************************************************************************
+**/
+uint8_t canx_bsp_receive(hcan_t *hcan, uint16_t *rec_id, uint8_t *buf)
+{
+    CAN_RxHeaderTypeDef rx_header;
+    if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, buf) == HAL_OK)
+    {
+        *rec_id = rx_header.StdId;
+        return rx_header.DLC; //接收数据长度
+    }
+    else
+        return 0;
+}
+
+
+/**
+************************************************************************
+* @brief:      	can1_rx_callback(void)
+* @param:       void
+* @retval:     	void
+* @details:    	供用户调用的接收弱函数
+************************************************************************
+**/
+__weak void can1_rx_callback(void)
+{
+
 }

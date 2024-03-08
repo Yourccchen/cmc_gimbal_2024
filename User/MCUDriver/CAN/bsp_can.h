@@ -21,10 +21,9 @@ extern CAN_HandleTypeDef hcan2;
 //Yaw CAN2
 typedef enum
 {
-    CAN_YAW_RCV_ID = 0x209,   //0x204+5,ID为5
-//    CAN_PIH_RCV_ID = 0x206,
-
+    CAN_YAW_RCV_ID = 0x209,
     CAN_YAW_SEND_ID = 0x2FF,
+
     CAN_PIH_SEND_ID = 0x1FF,
 
     //注释分别对应DATA[i]&[i+1]中的内容
@@ -55,4 +54,10 @@ void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t f
                        int8_t redraw_status);
 void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc, int16_t  ramc);
 void CAN_ScopeSendCurrent(int16_t scopeu);
+
+///以下为达妙电机相关CAN函数
+typedef CAN_HandleTypeDef hcan_t;
+uint8_t canx_bsp_send_data(hcan_t *hcan, uint16_t id, uint8_t *data, uint32_t len);
+uint8_t canx_bsp_receive(hcan_t *hcan, uint16_t *recid, uint8_t *buf);
+void can1_rx_callback(void);
 #endif //HERO_TEST_BSP_CAN_H

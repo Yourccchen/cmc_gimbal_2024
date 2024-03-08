@@ -20,11 +20,9 @@
 #include "ADRC.h"
 #include "filters.h"
 #include "iwdgc.h"
-extern "C"
-{
-#include "YawSpeedPID.h"
-}
-
+#include "CH100.h"
+#include "CyberGear.h"
+#include "dm4310_ctrl.h"
 #define RAMPSTEP 100
 #define SHOOT_RAMPSTEP 20
 //反馈模式选择
@@ -43,6 +41,7 @@ extern "C"
 #define MATLAB 2    //MATLAB算法，自带积分抗饱和(基本上所有兵种的Yaw轴可以用这个算法，Pitch轴需要根据实际情况调整)
 #define ADRC 3      //ADRC算法
 #define CYBERGEAR 4 //小米电机自带的运控模式
+#define DAMIAO 5    //达妙电机的速度模式
 //车体模式赋值(右侧拨杆)
 #define TUOLUO   1     //小陀螺模式
 #define SUIDONG  3     //随动模式
@@ -81,10 +80,6 @@ extern ExtU rtU;
 extern ExtY rtY;
 #define Pid_In rtU
 #define Pid_Out rtY //matlab生成的PID
-
-//系统辨识Yaw轴生成的
-extern ExtU_YawSpeedPID YawSpeedPID_U;
-extern ExtY_YawSpeedPID YawSpeedPID_Y;
 
 ///电机PID计算枚举类型
 typedef enum
@@ -147,7 +142,7 @@ public:
          motors
                 {
 /*PihMotor*/        {GM6020,CYBERGEAR,PIH_ANGLE,CYBERGEAR},
-/*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,MATLAB},
+/*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,DAMIAO},
 /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
 /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
 /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
@@ -171,7 +166,6 @@ public:
     void setMotorSpeed(int WhichMotorPid,float spd);
     void setMotorPos(int WhichMotorPid,float angle);
 
-    void MatlabPID_ParamSet();
     void Pitch_EcdLimit(float & Target);
     void Pitch_ImuLimit(float& Target);
     void Pitch_MILimit(float& Target);

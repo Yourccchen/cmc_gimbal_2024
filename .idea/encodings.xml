@@ -2,6 +2,12 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/USB_DEVICE" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/DAMIAO/bsp/can_bsp.c" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/DAMIAO/driver/can_driver.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/DAMIAO/driver/can_driver.h" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.h" charset="GBK" />
     <file url="file://$PROJECT_DIR$/User/Framework/FILTERS" charset="GBK" />
     <file url="file://$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.c" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.c" charset="GB2312" />

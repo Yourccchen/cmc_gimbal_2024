@@ -53,11 +53,10 @@ include_directories(Core/Inc USB_DEVICE/App USB_DEVICE/Target Drivers/STM32F4xx_
 include_directories(
         User/MCUDriver/CAN User/MCUDriver/LASER User/MCUDriver/LED  User/MCUDriver/POWER User/MCUDriver/REMOTE User/MCUDriver/TIM5
         User/Framework/PID User/Framework/GIMBALC User/Framework/DEBUG User/Framework/MOTORC User/Framework/SHOOTC User/Framework/REMOTEC
-        User/Framework/FILTERS User/Framework/IMU_WIT User/Framework/VISION User/Framework/ADRC  User/Framework/CYBERGEAR User/Framework/IWDG
-        User/Framework/CH100
+        User/Framework/FILTERS User/Framework/IMU_WIT User/Framework/VISION User/Framework/ADRC  User/Framework/CYBERGEAR User/Framework/IWDG User/Framework/CH100
+        User/Framework/DAMIAO/motor User/Framework/DAMIAO/driver
         USB_DEVICE/App USB_DEVICE/Target
         PID_stm32
-        YawSpeedPID_stm32
         User/Tasks/GIMBAL_TASK User/Tasks/PRINT_TASK User/Tasks/VISIONCOM_TASK
         )
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32F407xx)

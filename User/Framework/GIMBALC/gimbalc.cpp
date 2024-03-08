@@ -3,8 +3,7 @@
 //
 
 #include "gimbalc.h"
-#include "CH100.h"
-#include "CyberGear.h"
+
 bool GIMBAL=0;
 cGimbal gimbal; //定义云台总类
 extern ReceivePacket vision_pkt;
@@ -274,14 +273,13 @@ void cGimbal::Gimbal_PosC()
     //计算出底盘Yaw的PID_Out,赋值给vz
     motors_pid[ChassisYaw].PID_GetPositionPID(motors[YawMotor].RealAngle_Ecd);
 
-    //Pih轴的前馈补偿
-//    motors_pid[PihPos].PID_LastTarget=motors_pid[PihPos].PID_Target;
-//    setMotorSpeed(PihSpd,Pihout+Pid_In.Pih_Dif_Gain * (motors_pid[PihPos].PID_Target - motors_pid[PihPos].PID_LastTarget));
-
     //串级PID，位置环的输出是速度环的目标值
     setMotorSpeed(PihSpd,Pihout);
     setMotorSpeed(YawSpd,YawOut);
     setMotorSpeed(ScopeUSpd,ScopeUOut);
+
+    //位置环的结果（速度目标值）赋值给达妙电机速度模式的目标
+    ctrl_velset(YawOut*deg2rad);
 
     //计算Pih轴和Yaw轴的速度环输出
     motors_pid[YawSpd].PID_GetPositionPID(motors[YawMotor].RealSpeed);
@@ -312,9 +310,11 @@ void cGimbal::Gimbal_SpeedC()
             case MATLAB:
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
-//                CAN_YawSendCurrent((int16_t)YawSpeedPID_Y.YawCurrent);
-//                CAN_YawSendCurrent(Debug_Param().pos_maxIntegral);
                 break;
+            }
+            case DAMIAO:
+            {
+                ctrl_send(); //达妙电机的发送can信号
             }
         }
     }
@@ -433,19 +433,7 @@ void cGimbal::Gimbal_KalmanInit(void)
     KalmanCreate(&ZIMIAO_Yaw, 30, 200);
     KalmanCreate(&ZIMIAO_Pih, 30, 200); //暂时没用
 }
-///设置MATLAB的PID参数
-void cGimbal::MatlabPID_ParamSet()
-{
-    YawSpeedPID_U.YawSpeed_set=60;
-    YawSpeedPID_U.YawS_P=67.1092578364175;
-    YawSpeedPID_U.YawS_I=320.667322747758;
-    YawSpeedPID_U.YawS_D=-19.4586782244645;
-    YawSpeedPID_U.YawS_N=1.62427470177782;
-    YawSpeedPID_U.YawS_MO=30000;
-    YawSpeedPID_U.YawS_LO=-YawSpeedPID_U.YawS_MO;
-    YawSpeedPID_U.YawSpeed_Now=motors[YawMotor].RealSpeed;
-    YawSpeedPID_step();
-}
+
 ///选择各种模式下的PID参数、ADRC参数
 void cGimbal::Gimbal_ParamChoose(int8_t mode)
 {

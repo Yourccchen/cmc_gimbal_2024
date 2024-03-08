@@ -16,6 +16,7 @@
 #define M2006             22
 #define GM6020            23
 
+#ifdef __cplusplus//防止C文件调用该文件时报错
 class cMotor
 {
 public:
@@ -56,5 +57,6 @@ public:
 private:
 
 };
+#endif
 
 #endif //HERO_TEST_MOTORC_H
