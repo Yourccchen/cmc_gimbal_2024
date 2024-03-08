@@ -20,11 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: IMU换成了CH100，现在可以正常控制，效果还需优化">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="docs: README更改遥控器内容">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,6 +187,9 @@
       <workItem from="1709121287295" duration="1140000" />
       <workItem from="1709212561482" duration="21000" />
       <workItem from="1709291707243" duration="1606000" />
+      <workItem from="1709730223019" duration="10000" />
+      <workItem from="1709730272902" duration="1684000" />
+      <workItem from="1709896743470" duration="1000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -456,7 +457,21 @@
       <option name="project" value="LOCAL" />
       <updated>1709043230281</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="fix: 解决了关摩擦轮没法立即速度到零的问题,现在遥控器控制正常">
+      <created>1709648136588</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1709648136588</updated>
+    </task>
+    <task id="LOCAL-00040" summary="docs: README更改遥控器内容">
+      <created>1709648410056</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1709648410056</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -478,8 +493,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，" />
-    <MESSAGE value="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决" />
     <MESSAGE value="feat: 解决了小米电机启动时需要硬件先自启动的问题" />
     <MESSAGE value="fix: 解决了小米电机启动时会自转46°的问题" />
     <MESSAGE value="fix: 修改了摩擦轮反向的低级问题" />
@@ -503,7 +516,9 @@
     <MESSAGE value="perf: 学期开始，留一个版本（只有参数改动）" />
     <MESSAGE value="fix: 之前git出问题，现在是正常版本" />
     <MESSAGE value="feat: IMU换成了CH100，现在可以正常控制，效果还需优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: IMU换成了CH100，现在可以正常控制，效果还需优化" />
+    <MESSAGE value="fix: 解决了关摩擦轮没法立即速度到零的问题,现在遥控器控制正常" />
+    <MESSAGE value="docs: README更改遥控器内容" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs: README更改遥控器内容" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
