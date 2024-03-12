@@ -290,7 +290,7 @@ float portSetVx(void)
     }
     else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
     {
-        vx = RC_GetDatas().rc.ch[2] * 200.0f / 660.0f;
+        vx = RC_GetDatas().rc.ch[2] * 100.0f / 660.0f;
     }
 
     return vx;
@@ -312,7 +312,7 @@ float portSetVy(void)
 
     else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
     {
-        vy = RC_GetDatas().rc.ch[3] * 200.0f / 660.0f;
+        vy = RC_GetDatas().rc.ch[3] * 100.0f / 660.0f;
     }
 
     return vy;

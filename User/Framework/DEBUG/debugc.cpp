@@ -10,7 +10,7 @@
 
 extern UART_HandleTypeDef huart6;
 //UART1 printf设置
-#define TX_BUF_SIZE 512
+#define TX_BUF_SIZE 1024
 uint8_t send_buf[TX_BUF_SIZE];
 
 DebugParam debugParam;

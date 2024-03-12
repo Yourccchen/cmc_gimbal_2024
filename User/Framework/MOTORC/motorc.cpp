@@ -88,7 +88,8 @@ void cMotor::UpdateMotorInfo()
             else if(Which_Angle==YAW_ANGLE)
             {
                 RealAngle_Imu=IMU_Angle_CH100(YAW_ANGLE);
-                RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
+//                RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
+                RealAngle_Ecd=motor->para.angle;
                 RealSpeed=IMU_Speed_CH100(YAW_ANGLE);
             }
     }

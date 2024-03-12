@@ -98,6 +98,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     HAL_StatusTypeDef HAL_Status;
     CAN_RxHeaderTypeDef RxMeg; //CAN接受指针结构体
     HAL_Status = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxMeg, recvData);
+
     if (hcan->Instance == CAN1)
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
@@ -116,15 +117,17 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 default:
                     break;
             }
-
         }
     }
-
     if (hcan->Instance == CAN2)
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
-            can1_rx_callback();
+            if (RxMeg.StdId == 0xB)
+            {
+                dm4310_fbdata(&motor[Motor1], recvData);
+//                can2_rx_callback();
+            }
             if (RxMeg.StdId == CAN_SHOOT_LEFT_ID)
             {//左摩擦轮
                 gimbal.motors[ShootLMotor].Connected = 1;
@@ -403,7 +406,7 @@ uint8_t canx_bsp_receive(hcan_t *hcan, uint16_t *rec_id, uint8_t *buf)
 * @details:    	供用户调用的接收弱函数
 ************************************************************************
 **/
-__weak void can1_rx_callback(void)
+__weak void can2_rx_callback(void)
 {
 
 }

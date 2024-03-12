@@ -59,5 +59,5 @@ void CAN_ScopeSendCurrent(int16_t scopeu);
 typedef CAN_HandleTypeDef hcan_t;
 uint8_t canx_bsp_send_data(hcan_t *hcan, uint16_t id, uint8_t *data, uint32_t len);
 uint8_t canx_bsp_receive(hcan_t *hcan, uint16_t *recid, uint8_t *buf);
-void can1_rx_callback(void);
+void can2_rx_callback(void);
 #endif //HERO_TEST_BSP_CAN_H

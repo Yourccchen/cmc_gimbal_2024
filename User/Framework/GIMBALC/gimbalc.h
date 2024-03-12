@@ -46,12 +46,11 @@
 #define TUOLUO   1     //小陀螺模式
 #define SUIDONG  3     //随动模式
 #define ZIMIAO   2     //自瞄
-#define PROTECT  4     //保护模式
+#define PROTECT  5     //保护模式
 //控制模式赋值(左侧拨杆)
 #define OPENFRIC  1    //开启摩擦轮
 #define CLOSEFRIC 3    //关闭摩擦轮
 #define KEY_MODE  2    //键盘操作
-
 
 #define OPENZIMIAO 1
 #define CLOSEZIMIAO 0
@@ -135,7 +134,7 @@ public:
 /*ShootSpeedPidL*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidU*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ChassisYawPid*/   {2.4,0,2       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
+/*ChassisYawPid*/   {1.5,0,2       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
 /*ScopeUSpeedPid*/  {3,0.2,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
 /*ScopeUPosPid*/    {3,0,0.2      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
                 },

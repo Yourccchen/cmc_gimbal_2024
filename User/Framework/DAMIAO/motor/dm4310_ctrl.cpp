@@ -289,20 +289,20 @@ void ctrl_send(void)
 }
 /**
 ************************************************************************
-* @brief:      	can1_rx_callback: CAN1接收回调函数
+* @brief:      	can1_rx_callback: CAN2接收回调函数
 * @param:      	void
 * @retval:     	void
-* @details:    	处理CAN1接收中断回调，根据接收到的ID和数据，执行相应的处理。
+* @details:    	处理CAN2接收中断回调，根据接收到的ID和数据，执行相应的处理。
 *               当接收到ID为0时，调用dm4310_fbdata函数更新Motor的反馈数据。
 ************************************************************************
 **/
-void can1_rx_callback(void)
+void can2_rx_callback(void)
 {
 	uint16_t rec_id;
 	uint8_t rx_data[8] = {0};
 	canx_receive_data(&hcan2, &rec_id, rx_data);
     switch(rec_id)
     {
-        case 0x0B:dm4310_fbdata(&motor[Motor1], rx_data);break;
+        case 0xB:dm4310_fbdata(&motor[Motor1], rx_data);break;
     }
 }

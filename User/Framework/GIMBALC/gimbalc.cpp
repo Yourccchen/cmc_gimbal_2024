@@ -96,7 +96,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
     {
         case TUOLUO:
         {
-            vz=-100.0f;
+            vz=100.0f;
             break;
         }
         case SUIDONG:
@@ -255,20 +255,23 @@ void cGimbal::Gimbal_PosC()
     portSetTurn();//云台反转。如果按下V，云台立马反转180°，如果没有按下，不影响程序运行
 
     //MATLAB的PID数据更新
-    Pid_In.PihAngle_set = PihTarget;
-
-    Pid_In.PihAngle_Now=motors[PihMotor].RealAngle_Imu;
-    Pid_In.PihSpeed_Now=motors[PihMotor].RealSpeed;
-
-    Pid_In.YawAngle_set = YawTarget;
-
-    Pid_In.YawAngle_Now=motors[YawMotor].RealAngle_Imu;
-    Pid_In.YawSpeed_Now=motors[YawMotor].RealSpeed;
+//    Pid_In.PihAngle_set = PihTarget;
+//
+//    Pid_In.PihAngle_Now=motors[PihMotor].RealAngle_Imu;
+//    Pid_In.PihSpeed_Now=motors[PihMotor].RealSpeed;
+//
+//    Pid_In.YawAngle_set = YawTarget;
+//
+//    Pid_In.YawAngle_Now=motors[YawMotor].RealAngle_Imu;
+//    Pid_In.YawSpeed_Now=motors[YawMotor].RealSpeed;
 
     //计算Pih轴和Yaw轴的位置环输出
     float Pihout=motors_pid[PihPos].PID_GetPositionPID(motors[PihMotor].RealAngle_Imu);
     float YawOut=motors_pid[YawPos].PID_GetPositionPID(motors[YawMotor].RealAngle_Imu);
     float ScopeUOut=motors_pid[ScopeUPos].PID_GetPositionPID(motors[ScopeUMotor].RealAngle_Ecd);
+
+    motors_pid[YawPos].PID_LastTarget=motors_pid[YawPos].PID_Target;
+    YawOut=YawOut+Pid_In.Yaw_Dif_Gain* (motors_pid[YawPos].PID_Target - motors_pid[YawPos].PID_LastTarget);
 
     //计算出底盘Yaw的PID_Out,赋值给vz
     motors_pid[ChassisYaw].PID_GetPositionPID(motors[YawMotor].RealAngle_Ecd);
@@ -314,7 +317,8 @@ void cGimbal::Gimbal_SpeedC()
             }
             case DAMIAO:
             {
-                ctrl_send(); //达妙电机的发送can信号
+                if(ControlMode!=PROTECT)
+                    ctrl_send(); //达妙电机的发送can信号
             }
         }
     }
@@ -481,6 +485,7 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             motors_pid[YawSpd].Kp = 100;
             motors_pid[YawSpd].Ki = 10;
             motors_pid[YawSpd].Kd = 0;
+            Pid_In.Yaw_Dif_Gain=0.1;
             break;
         }
         case ECD_MODE://编码器反馈模式
@@ -572,7 +577,7 @@ void cGimbal::Online_Check()
 void cGimbal::Printf_Test()
 {
     //Yaw打印//
-    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,motor[Motor1].para.vel,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,motor[Motor1].para.vel,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealAngle_Ecd);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
 //    usart_printf("%f,%f,%f\r\n",YawSpeedPID_Y.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealSpeed);
@@ -617,4 +622,5 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
 //                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
 //    usart_printf("%f\r\n",vz);
+    usart_printf("%f,%f\r\n",motor[Motor1].para.pos,motor[Motor1].para.angle);
 }

@@ -4,7 +4,7 @@
 #include "can.h"
 #include "bsp_can.h"
 
-#define PI 3.14159265
+#define PI 3.14159265f
 #define rad2deg 180.0f/PI
 #define deg2rad PI/180.0f
 #define rad2rpm 30.0f/PI
@@ -13,8 +13,8 @@
 #define POS_MODE			0x100
 #define SPEED_MODE		0x200
 
-#define P_MIN -12.5f
-#define P_MAX 12.5f
+#define P_MIN -3.14159265f
+#define P_MAX 3.14159265f
 #define V_MIN -30.0f
 #define V_MAX 30.0f
 #define KP_MIN 0.0f
@@ -72,6 +72,7 @@ void dm4310_set(motor_t *motor);
 void dm4310_clear_para(motor_t *motor);
 void dm4310_clear_err(hcan_t* hcan, motor_t *motor);
 void dm4310_fbdata(motor_t *motor, uint8_t *rx_data);
+float Uint_To_Float(int x_int, float x_min, float x_max, int bits);
 
 void enable_motor_mode(hcan_t* hcan, uint16_t motor_id, uint16_t mode_id);
 void disable_motor_mode(hcan_t* hcan, uint16_t motor_id, uint16_t mode_id);

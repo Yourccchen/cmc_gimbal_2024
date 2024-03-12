@@ -179,6 +179,22 @@ void dm4310_clear_err(hcan_t* hcan, motor_t *motor)
 			break;
 	}	
 }
+
+static float IMU_AngleIncreLoop(float angle_now)
+{
+    static float last_angle;
+    static int32_t rotate_times;
+
+    float this_angle;
+    this_angle = angle_now;
+    if ((this_angle - last_angle) > 300)
+        rotate_times--;
+    if ((this_angle - last_angle) < -300)
+        rotate_times++;
+    angle_now = this_angle + rotate_times * 360.0f;
+    last_angle = this_angle;
+    return angle_now;
+}
 /**
 ************************************************************************
 * @brief:      	dm4310_fbdata: 获取DM4310电机反馈数据函数
@@ -196,13 +212,13 @@ void dm4310_fbdata(motor_t *motor, uint8_t *rx_data)
 	motor->para.p_int=(rx_data[1]<<8)|rx_data[2];
 	motor->para.v_int=(rx_data[3]<<4)|(rx_data[4]>>4);
 	motor->para.t_int=((rx_data[4]&0xF)<<8)|rx_data[5];
-	motor->para.pos = Uint_To_Float(motor->para.p_int, P_MIN, P_MAX, 16); // (-12.5,12.5)
+	motor->para.pos = Uint_To_Float(motor->para.p_int, P_MIN, P_MAX, 16);
 	motor->para.vel = Uint_To_Float(motor->para.v_int, V_MIN, V_MAX, 12); // (-45.0,45.0)
 	motor->para.tor = Uint_To_Float(motor->para.t_int, T_MIN, T_MAX, 12);  // (-18.0,18.0)
 	motor->para.Tmos = (float)(rx_data[6]);
 	motor->para.Tcoil = (float)(rx_data[7]);
 
-    motor->para.angle=motor->para.pos*rad2deg;
+    motor->para.angle=IMU_AngleIncreLoop(motor->para.pos*rad2deg);
     motor->para.speed=motor->para.vel*rad2deg;
 }
 
