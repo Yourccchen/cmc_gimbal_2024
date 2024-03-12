@@ -37,7 +37,7 @@ typedef struct
 	float pos;
     float angle; //自定义，连续化后，单位为°
 	float vel;
-    float speed; //自定义，单位为rpm
+    float speed; //自定义，单位为°/s
 	float tor;
 	float Kp;
 	float Kd;

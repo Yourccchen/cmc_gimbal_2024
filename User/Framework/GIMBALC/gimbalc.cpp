@@ -473,15 +473,14 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.PihS_N = 0;
             Pid_In.PihS_MO = 20192;
 
-            ///Pih轴的普通PID参数///
-            motors_pid[PihPos].Kp = 0.1;
-            motors_pid[PihPos].Ki = 0;
-            motors_pid[PihPos].Kd = 0;
+            ///Yaw轴的普通PID参数///
+            motors_pid[YawPos].Kp = 4.5;
+            motors_pid[YawPos].Ki = 0;
+            motors_pid[YawPos].Kd = 0;
 
-            motors_pid[PihSpd].Kp = 100;
-            motors_pid[PihSpd].Ki = 10;
-            motors_pid[PihSpd].Kd = 0;
-            Pid_In.Pih_Dif_Gain = 0;
+            motors_pid[YawSpd].Kp = 100;
+            motors_pid[YawSpd].Ki = 10;
+            motors_pid[YawSpd].Kd = 0;
             break;
         }
         case ECD_MODE://编码器反馈模式
@@ -555,8 +554,8 @@ void cGimbal::Online_Check()
 {
     RC_CheckTimes--;
     if(RC_CheckTimes==0)
-    {   //每2s(40*5ms)一次检测，查看键值以及底盘状态值是否更新，若没有，则断电
-        RC_CheckTimes=40;
+    {   //每1s(20*5ms)一次检测，查看键值以及底盘状态值是否更新，若没有，则断电
+        RC_CheckTimes=20;
         if(RC_UpdateData() == RC_GetLastData)
         {
             ProtectFlag=OFFLINE;
@@ -573,7 +572,7 @@ void cGimbal::Online_Check()
 void cGimbal::Printf_Test()
 {
     //Yaw打印//
-//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,motor[Motor1].para.vel,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealAngle_Ecd);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
 //    usart_printf("%f,%f,%f\r\n",YawSpeedPID_Y.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealSpeed);
@@ -617,5 +616,5 @@ void cGimbal::Printf_Test()
 
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
 //                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
-    usart_printf("%f\r\n",vz);
+//    usart_printf("%f\r\n",vz);
 }

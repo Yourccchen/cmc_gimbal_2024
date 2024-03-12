@@ -24,7 +24,7 @@ void dm4310_motor_init(void)
 //	memset(&motor[Motor3], 0, sizeof(motor[Motor2]));
 
 	// 设置Motor1的电机信息
-	motor[Motor1].id = 1;
+	motor[Motor1].id = 0x0A;
 	motor[Motor1].ctrl.mode = 2;		// 0: MIT模式   1: 位置速度模式   2: 速度模式
 	motor[Motor1].cmd.mode = 2;
 
@@ -137,7 +137,7 @@ void ctrl_enable(void)
 		case 1:
 			// 启用Motor1的电机控制
 			motor[Motor1].start_flag = 1;
-			dm4310_enable(&hcan1, &motor[Motor1]);
+			dm4310_enable(&hcan2, &motor[Motor1]);
 			break;
 	}
 }
@@ -283,7 +283,7 @@ void ctrl_send(void)
 //	{
 //		case 1:
 			 // 向Motor1发送控制命令
-            dm4310_ctrl_send(&hcan1, &motor[Motor1]);
+            dm4310_ctrl_send(&hcan2, &motor[Motor1]);
 //			break;
 //	}
 }
@@ -300,9 +300,9 @@ void can1_rx_callback(void)
 {
 	uint16_t rec_id;
 	uint8_t rx_data[8] = {0};
-	canx_receive_data(&hcan1, &rec_id, rx_data);
-	switch (rec_id)
-	{
- 		case 0: dm4310_fbdata(&motor[Motor1], rx_data); break;
-	}
+	canx_receive_data(&hcan2, &rec_id, rx_data);
+    switch(rec_id)
+    {
+        case 0x0B:dm4310_fbdata(&motor[Motor1], rx_data);break;
+    }
 }

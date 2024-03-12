@@ -216,7 +216,7 @@ private:
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
-    int16_t RC_CheckTimes=40;
+    int16_t RC_CheckTimes=20;
 };
 
 extern cGimbal gimbal;

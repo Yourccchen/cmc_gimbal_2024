@@ -226,9 +226,7 @@ void init_cybergear(MI_Motor *Motor,uint8_t Can_Id, uint8_t mode)
     Motor->CAN_ID=Can_Id;       //ID设置
     set_mode_cybergear(Motor,mode);//设置电机模式
     start_cybergear(Motor);        //使能电机
-    start_cybergear(Motor);        //使能电机
-    start_cybergear(Motor);        //使能电机
-    start_cybergear(Motor);        //使能电机
+
 }
 
 /**

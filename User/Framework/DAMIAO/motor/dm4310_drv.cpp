@@ -203,7 +203,7 @@ void dm4310_fbdata(motor_t *motor, uint8_t *rx_data)
 	motor->para.Tcoil = (float)(rx_data[7]);
 
     motor->para.angle=motor->para.pos*rad2deg;
-    motor->para.speed=motor->para.vel*rad2rpm;
+    motor->para.speed=motor->para.vel*rad2deg;
 }
 
 

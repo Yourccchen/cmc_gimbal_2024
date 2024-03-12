@@ -96,6 +96,7 @@ static float IMU_AngleIncreLoop(float angle_now)
     last_angle = this_angle;
     return angle_now;
 }
+
 float IMU_Angle_CH100(uint8_t which)
 {
     Yaw_Angle=IMU_AngleIncreLoop(angle[2]);
@@ -104,7 +105,7 @@ float IMU_Angle_CH100(uint8_t which)
     switch (which)
     {
         case 1:
-            return -Pih_Angle;
+            return Pih_Angle;
         case 2:
             return Yaw_Angle;
         case 3:
@@ -112,11 +113,12 @@ float IMU_Angle_CH100(uint8_t which)
     }
     return 0;
 }
+
 float IMU_Speed_CH100(uint8_t which){
     switch (which)
     {
         case 1:
-            return -Pih_Speed;
+            return Pih_Speed;
         case 2:
             return Yaw_Speed;
         case 3:

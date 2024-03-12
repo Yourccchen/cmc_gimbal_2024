@@ -104,19 +104,19 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
         {
             //回调函数
             ///小米电机部分
-//            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
-//            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
-//            {
-//                case 0x7F:
-//                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模式
+            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
+            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
+            {
+                case 0x7F:
+                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模式
                         Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
-//                    else
-//                        mi_motor[0].MCU_ID = recvData[0];
-//                    break;
-//                default:
-//                    break;
-//            }
-            can1_rx_callback();
+                    else
+                        mi_motor[0].MCU_ID = recvData[0];
+                    break;
+                default:
+                    break;
+            }
+
         }
     }
 
@@ -124,7 +124,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
-
+            can1_rx_callback();
             if (RxMeg.StdId == CAN_SHOOT_LEFT_ID)
             {//左摩擦轮
                 gimbal.motors[ShootLMotor].Connected = 1;
@@ -362,20 +362,14 @@ void CAN_ScopeSendCurrent(int16_t scopeu)
 uint8_t canx_bsp_send_data(CAN_HandleTypeDef *hcan, uint16_t id, uint8_t *data, uint32_t len)
 {
     CAN_TxHeaderTypeDef	tx_header;
-
+    uint32_t send_mail_box = 0;
     tx_header.StdId = id;
     tx_header.ExtId = 0;
     tx_header.IDE   = 0;
     tx_header.RTR   = 0;
     tx_header.DLC   = len;
     /*找到空的发送邮箱，把数据发送出去*/
-    if(HAL_CAN_AddTxMessage(hcan, &tx_header, data, (uint32_t*)CAN_TX_MAILBOX0) != HAL_OK)
-    {
-        if(HAL_CAN_AddTxMessage(hcan, &tx_header, data, (uint32_t*)CAN_TX_MAILBOX1) != HAL_OK)
-        {
-            HAL_CAN_AddTxMessage(hcan, &tx_header, data, (uint32_t*)CAN_TX_MAILBOX2);
-        }
-    }
+    HAL_CAN_AddTxMessage(hcan, &tx_header, data, &send_mail_box);
     return 0;
 }
 /**
