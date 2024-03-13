@@ -26,7 +26,7 @@ void PrintControlTask(void const* argument)
             count_number = 0;
         }
         count_number++;
-        vTaskDelayUntil(&CurrentTime, 10 / portTICK_RATE_MS);
+        vTaskDelayUntil(&CurrentTime, 5 / portTICK_RATE_MS);
     }
     /* USER CODE END GimbalControlTask */
 }

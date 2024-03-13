@@ -109,7 +109,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
             switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
             {
                 case 0x7F:
-                    if(rxMsg.ExtId>>24!= 0)               //检查是否为广播模式
+                    if(RxMeg.ExtId>>24!= 0)               //检查是否为广播模式
                         Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
                     else
                         mi_motor[0].MCU_ID = recvData[0];

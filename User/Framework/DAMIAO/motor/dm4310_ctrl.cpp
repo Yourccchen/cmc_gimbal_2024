@@ -25,8 +25,8 @@ void dm4310_motor_init(void)
 
 	// 设置Motor1的电机信息
 	motor[Motor1].id = 0x0A;
-	motor[Motor1].ctrl.mode = 2;		// 0: MIT模式   1: 位置速度模式   2: 速度模式
-	motor[Motor1].cmd.mode = 2;
+	motor[Motor1].ctrl.mode = 0;		// 0: MIT模式   1: 位置速度模式   2: 速度模式
+	motor[Motor1].cmd.mode = 0;
 
 //	// 设置Motor2的电机信息
 //	motor[Motor2].id = 1;
@@ -183,15 +183,17 @@ void ctrl_set(void)
 /**
 ************************************************************************
 * @brief:      	ctrl_velset: 设置电机速度函数
-* @param:      	VelSet 要设置的电机速度大小
+* @param:      	VelSet 要设置的电机速度大小与kd大小
 * @retval:     	void
 * @details:    	设置电机速度，以适配位置环的输出更改
 ************************************************************************
 **/
 void ctrl_velset(float VelSet)
 {
+    motor[Motor1].ctrl.kd_set=1;
     motor[Motor1].ctrl.vel_set=VelSet;
 }
+
 /**
 ************************************************************************
 * @brief:      	ctrl_clear_para: 清除电机参数函数

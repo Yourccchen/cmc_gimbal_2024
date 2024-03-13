@@ -21,8 +21,8 @@
 #define KP_MAX 500.0f
 #define KD_MIN 0.0f
 #define KD_MAX 5.0f
-#define T_MIN -10.0f
-#define T_MAX 10.0f
+#define T_MIN -30000.0f
+#define T_MAX 30000.0f
 
 // 电机回传信息结构体
 typedef struct 

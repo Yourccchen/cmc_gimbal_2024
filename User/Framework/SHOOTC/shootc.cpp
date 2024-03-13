@@ -29,7 +29,7 @@ void cShoot::Shoot_PosC()
 
     if(rammer_flag)//0为不转，1为转一次。无其他数值可能
     {
-        gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target + 75);
+        gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0/9.0/31.0*110.0);
     }
 
     rammer_flag=0;
@@ -203,11 +203,12 @@ void cShoot::Shoot_SpdChoose()
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(4,0,0.3); //目前满载时2稳定
-    gimbal.motors_pid[RamPos].PID_OutMax=500;
+    gimbal.motors_pid[RamPos].SetKpid(1.5,0,0.1); //目前满载时2稳定
+    gimbal.motors_pid[RamPos].PID_OutMax=200;
+    gimbal.motors_pid[RamPos].PID_RampStep=5;
 
-    gimbal.motors_pid[RamSpd].SetKpid(50,2,0);
-    gimbal.motors_pid[RamSpd].PID_OutMax=16000;
+    gimbal.motors_pid[RamSpd].SetKpid(75,5,0);
+    gimbal.motors_pid[RamSpd].PID_OutMax=10000;
 
     //摩擦轮PID设置
     gimbal.motors_pid[ShootSpdL].SetKpid(5,0.1,0);//位置式PID参数

@@ -20,17 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 加入达妙电机相关代码，现在可以正常控制">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DEBUG/debugc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -201,7 +199,10 @@
       <workItem from="1709896743470" duration="7178000" />
       <workItem from="1709972563265" duration="9554000" />
       <workItem from="1710132280273" duration="5258000" />
-      <workItem from="1710209352541" duration="6832000" />
+      <workItem from="1710209352541" duration="7380000" />
+      <workItem from="1710249291675" duration="3451000" />
+      <workItem from="1710255080400" duration="1000" />
+      <workItem from="1710292273202" duration="14939000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -504,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710210358437</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化">
+      <created>1710216719551</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1710216719551</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -526,7 +534,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: 增加了拨弹轮目标值与当前值偏差过大时疯转的问题" />
     <MESSAGE value="feat: 重新换回了IMU的融合滤波算法" />
     <MESSAGE value="fix: 解决了小米电机断电后再启动后无法再动的问题（实在不行换按键RST解决）" />
     <MESSAGE value="feat: 增加了拨弹轮堵转时反转的功能（但不够精细，后续优化）" />
@@ -551,7 +558,8 @@
     <MESSAGE value="revert: 加入达妙电机相关代码前，留一个正常版本" />
     <MESSAGE value="feat: 加入达妙电机相关代码，暂未测试" />
     <MESSAGE value="feat: 加入达妙电机相关代码，现在可以正常控制" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 加入达妙电机相关代码，现在可以正常控制" />
+    <MESSAGE value="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
