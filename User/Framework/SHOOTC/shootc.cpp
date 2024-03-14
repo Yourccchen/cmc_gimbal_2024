@@ -110,7 +110,7 @@ void cShoot::ShootSpeedClean()
 void cShoot::Stuck_Check()
 {
     rammer_current=gimbal.motors[RamMotor].RawTorqueCurrent;//读取拨弹轮电机当前的电流值
-    if(rammer_current>15000)
+    if(rammer_current>14000)
     {
         stuck_time++;
     }
@@ -208,7 +208,7 @@ void cShoot::Shoot_ParamChoose()
     gimbal.motors_pid[RamPos].PID_RampStep=5;
 
     gimbal.motors_pid[RamSpd].SetKpid(75,5,0);
-    gimbal.motors_pid[RamSpd].PID_OutMax=10000;
+    gimbal.motors_pid[RamSpd].PID_OutMax=15000;
 
     //摩擦轮PID设置
     gimbal.motors_pid[ShootSpdL].SetKpid(5,0.1,0);//位置式PID参数

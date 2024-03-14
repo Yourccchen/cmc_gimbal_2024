@@ -465,3 +465,11 @@ void portSetTurn(void)
         gimbal.YawTarget+=180;
     }
 }
+
+/**
+  *@breif   返回ctrl键值，按下进入自由模式，松开退出
+  */
+int portSetFree(void)
+{
+    return rc_ctrl.key.CONTRL.Now_State;
+}

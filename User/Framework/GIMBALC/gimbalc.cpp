@@ -59,7 +59,7 @@ void cGimbal::Gimbal_ControlWithRC(void)
 
     ///底盘及车体控制相关部分///
     CarMode=portSetCarMode();                //右侧拨杆控制车体模式，赋值给CarMode
-    ControlMode=portSetControlMode();        //左侧拨杆控制控制模式，赋值给ShootMode
+    ControlMode=portSetControlMode();        //左侧拨杆控制控制模式，赋值给ControlMode
     ShootMode=portSetShootMode();            //左侧拨盘控制射击模式，赋值给ShootMode
     portIsZimiao();
 
@@ -102,12 +102,18 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
         case SUIDONG:
         {
             ///优弧劣弧处理
-            if (ChassisYawTarget - motors[YawMotor].RealAngle_Ecd > 180)
-                ChassisYawTarget -= 360;            //加减2π
-            if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
-                ChassisYawTarget += 360;
-            vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
-//            vz=0;
+            if(portSetFree()==1)//判断是否进入自由模式（按下ctrl）
+            {
+                vz=0;
+            }
+            else
+            {
+                if (ChassisYawTarget - motors[YawMotor].RealAngle_Ecd > 180)
+                    ChassisYawTarget -= 360;            //加减2π
+                if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
+                    ChassisYawTarget += 360;
+                vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
+            }
             break;
         }
         case ZIMIAO:
@@ -467,27 +473,23 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 30000;
-
-            ///Pih轴的MATLAB_PID参数///
-            Pid_In.PihP_P = 0.7;
-            Pid_In.PihP_I = 0;
-            Pid_In.PihP_D = 0.35;
-            Pid_In.PihP_N = 175;
-            Pid_In.PihP_MO = 300;
-            Pid_In.Pih_Dif_Gain = 0.05;
-
-            Pid_In.PihS_P = 1000;
-            Pid_In.PihS_I = 1200;
-            Pid_In.PihS_D = 0;
-            Pid_In.PihS_N = 0;
-            Pid_In.PihS_MO = 20192;
-
             ///Yaw轴的普通PID参数///
-            motors_pid[YawPos].Kp = 4;
-            motors_pid[YawPos].Ki = 0;
-            motors_pid[YawPos].Kd = 500;
-            Pid_In.Yaw_Dif_Gain=0;
-            gimbal.motors_pid[YawPos].PID_OutMax=1000;
+            if(portSetFree()==1)
+            {
+                motors_pid[YawPos].Kp = 5;
+                motors_pid[YawPos].Ki = 0;
+                motors_pid[YawPos].Kd = 0;
+                Pid_In.Yaw_Dif_Gain=0;
+                gimbal.motors_pid[YawPos].PID_OutMax=1000;
+            }
+            else
+            {
+                motors_pid[YawPos].Kp = 5;
+                motors_pid[YawPos].Ki = 0;
+                motors_pid[YawPos].Kd = 150;
+                Pid_In.Yaw_Dif_Gain=0;
+                gimbal.motors_pid[YawPos].PID_OutMax=1000;
+            }
             break;
         }
         case ECD_MODE://编码器反馈模式
@@ -506,15 +508,6 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 28000;
 
-            ///Pih轴的普通PID参数///
-            motors_pid[PihPos].Kp = 0.2;
-            motors_pid[PihPos].Ki = 0;
-            motors_pid[PihPos].Kd = 0;
-
-            motors_pid[PihSpd].Kp = 1;
-            motors_pid[PihSpd].Ki = 5;
-            motors_pid[PihSpd].Kd = 0;
-            Pid_In.Pih_Dif_Gain = 0;
             break;
         }
         case ZIMIAO://自瞄模式
@@ -532,28 +525,12 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 28000;
-
-            ///Pih轴的普通PID参数///
-            motors_pid[PihPos].Kp = 0.3;
-            motors_pid[PihPos].Ki = 0;
-            motors_pid[PihPos].Kd = 1;
-
-            motors_pid[PihSpd].Kp = 25;
-            motors_pid[PihSpd].Ki = 50;
-            motors_pid[PihSpd].Kd = 0;
             break;
         }
     }//switch结束
-    motors_pid[PihPos].SetMax(30,300,5000);
-    motors_pid[PihSpd].SetMax(1000,25000,PID_DEFAULT_OUTPUT_STEP_MAX);
-
     Pid_In.YawP_LO = -Pid_In.YawP_MO;
     Pid_In.YawS_LO = -Pid_In.YawS_MO;
 
-    Pid_In.PihP_LO = -Pid_In.PihP_MO;
-    Pid_In.PihS_LO = -Pid_In.PihS_MO;
-
-    motors_pid[ChassisYaw].PID_OutMax = 400;
 }
 
 ///遥控器在线状态检测
