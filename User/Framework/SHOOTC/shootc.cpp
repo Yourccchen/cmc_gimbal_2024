@@ -27,9 +27,13 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if(rammer_flag)//0为不转，1为转一次。无其他数值可能
+    if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
     {
         gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0/9.0/31.0*110.0);
+    }
+    else if(rammer_flag==-1)
+    {
+        gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0/9.0/31.0*110.0);
     }
 
     rammer_flag=0;

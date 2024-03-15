@@ -288,7 +288,7 @@ void cGimbal::Gimbal_PosC()
 
     //串级PID，位置环的输出是速度环的目标值
     setMotorSpeed(PihSpd,Pihout);
-    setMotorSpeed(YawSpd,YawOut);
+    setMotorSpeed(YawSpd,180);
     setMotorSpeed(ScopeUSpd,ScopeUOut);
 
     //位置环的结果（速度目标值）赋值给达妙电机速度模式的目标
@@ -329,7 +329,7 @@ void cGimbal::Gimbal_SpeedC()
             {
                 if(ControlMode!=PROTECT)
                 {
-                    ctrl_torset(Pid_Out.YawCurrent);
+                    ctrl_torset(-motors_pid[YawSpd].PID_Out);
                     ctrl_send(); //达妙电机的发送can信号
                 }
             }
@@ -470,37 +470,39 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawP_MO = 100;
             Pid_In.Yaw_Dif_Gain = 0;
 
-            Pid_In.YawS_P = 0.01;
-            Pid_In.YawS_I = 0.02;
+            Pid_In.YawS_P = 0.005;
+            Pid_In.YawS_I = 0.005;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 10;
 
-            motors_pid[YawPos].Kp = 50;
+            motors_pid[YawPos].Kp = 0.01;
             motors_pid[YawPos].Ki = 0;
             motors_pid[YawPos].Kd = 0;
-            motors_pid[YawPos].SetMax(3000,30000,200);
-            motors_pid[YawSpd].Kp = 0.5;
-            motors_pid[YawSpd].Ki = 0.5;
+            motors_pid[YawPos].SetMax(50,300,1);
+
+            motors_pid[YawSpd].Kp = 0.02;
+            motors_pid[YawSpd].Ki = 0.005;
             motors_pid[YawSpd].Kd = 0;
-            motors_pid[YawSpd].SetMax(3000,30000,200);
+            motors_pid[YawSpd].SetMax(50,10,5);
+
             ///Yaw轴的普通PID参数///
-            if(portSetFree()==1)
-            {
-                motors_pid[YawPos].Kp = 5;
-                motors_pid[YawPos].Ki = 0;
-                motors_pid[YawPos].Kd = 0;
-                Pid_In.Yaw_Dif_Gain=0;
-                gimbal.motors_pid[YawPos].PID_OutMax=1000;
-            }
-            else
-            {
-                motors_pid[YawPos].Kp = 5;
-                motors_pid[YawPos].Ki = 0;
-                motors_pid[YawPos].Kd = 150;
-                Pid_In.Yaw_Dif_Gain=0;
-                gimbal.motors_pid[YawPos].PID_OutMax=1000;
-            }
+//            if(portSetFree()==1)
+//            {
+//                motors_pid[YawPos].Kp = 5;
+//                motors_pid[YawPos].Ki = 0;
+//                motors_pid[YawPos].Kd = 0;
+//                Pid_In.Yaw_Dif_Gain=0;
+//                gimbal.motors_pid[YawPos].PID_OutMax=1000;
+//            }
+//            else
+//            {
+//                motors_pid[YawPos].Kp = 5;
+//                motors_pid[YawPos].Ki = 0;
+//                motors_pid[YawPos].Kd = 150;
+//                Pid_In.Yaw_Dif_Gain=0;
+//                gimbal.motors_pid[YawPos].PID_OutMax=1000;
+//            }
             break;
         }
         case ECD_MODE://编码器反馈模式
@@ -568,8 +570,8 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,vz,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawSpd].PID_Target,motors[YawMotor].RealSpeed);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);

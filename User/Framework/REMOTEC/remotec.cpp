@@ -429,7 +429,7 @@ void portSetRammer(void)
     {
         if (rc_ctrl.mouse.press_l.Is_Click_Once)
         {
-            gimbal.shoot.rammer_flag++;
+            gimbal.shoot.rammer_flag=1;
         }
     }
     if(gimbal.ControlMode == OPENFRIC)
@@ -440,7 +440,16 @@ void portSetRammer(void)
             if (gimbal.shoot.rammer_count > 100)
             {
                 gimbal.shoot.rammer_count = 0;
-                gimbal.shoot.rammer_flag++;
+                gimbal.shoot.rammer_flag=1;
+            }
+        }
+        else if(RC_GetDatas().rc.ch[4]==-660)
+        {
+            gimbal.shoot.rammer_count++;
+            if (gimbal.shoot.rammer_count > 100)
+            {
+                gimbal.shoot.rammer_count = 0;
+                gimbal.shoot.rammer_flag=-1;
             }
         }
     }
