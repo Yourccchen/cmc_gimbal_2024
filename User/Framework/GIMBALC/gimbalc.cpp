@@ -149,8 +149,6 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             vx=vy=vz=0;
             break;
         }
-
-
     }
 }
 
@@ -288,7 +286,7 @@ void cGimbal::Gimbal_PosC()
 
     //串级PID，位置环的输出是速度环的目标值
     setMotorSpeed(PihSpd,Pihout);
-    setMotorSpeed(YawSpd,180);
+    setMotorSpeed(YawSpd,-YawOut);
     setMotorSpeed(ScopeUSpd,ScopeUOut);
 
     //位置环的结果（速度目标值）赋值给达妙电机速度模式的目标
@@ -470,19 +468,19 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             Pid_In.YawP_MO = 100;
             Pid_In.Yaw_Dif_Gain = 0;
 
-            Pid_In.YawS_P = 0.005;
-            Pid_In.YawS_I = 0.005;
+            Pid_In.YawS_P = 0.02;
+            Pid_In.YawS_I = 0.01;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
             Pid_In.YawS_MO = 10;
 
-            motors_pid[YawPos].Kp = 0.01;
+            motors_pid[YawPos].Kp = 2;
             motors_pid[YawPos].Ki = 0;
             motors_pid[YawPos].Kd = 0;
-            motors_pid[YawPos].SetMax(50,300,1);
+            motors_pid[YawPos].SetMax(50,300,50);
 
-            motors_pid[YawSpd].Kp = 0.02;
-            motors_pid[YawSpd].Ki = 0.005;
+            motors_pid[YawSpd].Kp = 0.025;
+            motors_pid[YawSpd].Ki = 0.007;
             motors_pid[YawSpd].Kd = 0;
             motors_pid[YawSpd].SetMax(50,10,5);
 
@@ -570,8 +568,8 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,vz,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawSpd].PID_Target,motors[YawMotor].RealSpeed);
+    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawSpd].PID_Target,motors[YawMotor].RealSpeed);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
