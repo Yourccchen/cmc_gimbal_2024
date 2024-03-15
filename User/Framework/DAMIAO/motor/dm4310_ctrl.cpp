@@ -190,10 +190,21 @@ void ctrl_set(void)
 **/
 void ctrl_velset(float VelSet)
 {
-    motor[Motor1].ctrl.kd_set=1;
+    motor[Motor1].ctrl.kd_set=0;
     motor[Motor1].ctrl.vel_set=VelSet;
 }
-
+/**
+************************************************************************
+* @brief:      	ctrl_velset: 设置电机力矩函数
+* @param:      	TorSet 要设置的电机转动力矩
+* @retval:     	void
+* @details:    	设置电机力矩
+************************************************************************
+**/
+void ctrl_torset(float TorSet)
+{
+    motor[Motor1].ctrl.tor_set=TorSet;
+}
 /**
 ************************************************************************
 * @brief:      	ctrl_clear_para: 清除电机参数函数

@@ -128,7 +128,7 @@ void dm4310_set(motor_t *motor)
     motor->ctrl.kp_set	= 0;
 	motor->ctrl.kd_set 	= 0;
 	motor->ctrl.pos_set	= 0;
-	motor->ctrl.vel_set	= 12;
+	motor->ctrl.vel_set	= 0;
 	motor->ctrl.tor_set	= 0;
 
 }

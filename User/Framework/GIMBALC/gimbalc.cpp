@@ -112,7 +112,8 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
                     ChassisYawTarget -= 360;            //加减2π
                 if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
                     ChassisYawTarget += 360;
-                vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
+//                vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度
+                vz=0;
             }
             break;
         }
@@ -291,7 +292,7 @@ void cGimbal::Gimbal_PosC()
     setMotorSpeed(ScopeUSpd,ScopeUOut);
 
     //位置环的结果（速度目标值）赋值给达妙电机速度模式的目标
-    ctrl_velset((YawOut*deg2rad));
+//    ctrl_velset((YawOut*deg2rad));
 
     //计算Pih轴和Yaw轴的速度环输出
     motors_pid[YawSpd].PID_GetPositionPID(motors[YawMotor].RealSpeed);
@@ -328,6 +329,7 @@ void cGimbal::Gimbal_SpeedC()
             {
                 if(ControlMode!=PROTECT)
                 {
+                    ctrl_torset(Pid_Out.YawCurrent);
                     ctrl_send(); //达妙电机的发送can信号
                 }
             }
@@ -461,18 +463,27 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
         case IMU_MODE://陀螺仪反馈模式
         {
             ///Yaw轴的MATLAB_PID参数///
-            Pid_In.YawP_P = 1;
+            Pid_In.YawP_P = 0.05;
             Pid_In.YawP_I = 0.00;
-            Pid_In.YawP_D = 0.1;
+            Pid_In.YawP_D = 0;
             Pid_In.YawP_N = 175;
-            Pid_In.YawP_MO = 300;
+            Pid_In.YawP_MO = 100;
             Pid_In.Yaw_Dif_Gain = 0;
 
-            Pid_In.YawS_P = 2;
-            Pid_In.YawS_I = 2;
+            Pid_In.YawS_P = 0.01;
+            Pid_In.YawS_I = 0.02;
             Pid_In.YawS_D = 0;
             Pid_In.YawS_N = 0;
-            Pid_In.YawS_MO = 30000;
+            Pid_In.YawS_MO = 10;
+
+            motors_pid[YawPos].Kp = 50;
+            motors_pid[YawPos].Ki = 0;
+            motors_pid[YawPos].Kd = 0;
+            motors_pid[YawPos].SetMax(3000,30000,200);
+            motors_pid[YawSpd].Kp = 0.5;
+            motors_pid[YawSpd].Ki = 0.5;
+            motors_pid[YawSpd].Kd = 0;
+            motors_pid[YawSpd].SetMax(3000,30000,200);
             ///Yaw轴的普通PID参数///
             if(portSetFree()==1)
             {
@@ -556,8 +567,9 @@ void cGimbal::Online_Check()
 void cGimbal::Printf_Test()
 {
     //Yaw打印//
-    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,vz,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealAngle_Ecd);
+//    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawPos].PID_Out,vz,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
