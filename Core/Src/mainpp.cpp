@@ -41,7 +41,7 @@ void User_Init()
     Laser_On();
     IMU_UartInit();
 
-    HAL_Delay(1000);
+    HAL_Delay(2000);
     init_cybergear(&mi_motor[0],0x7F,Motion_mode);          //小米电机初始化
     HAL_Delay(1000);
     dm4310_motor_init();
