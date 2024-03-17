@@ -14,7 +14,7 @@ void cShoot::Shoot_ControlLoop()
     Shoot_SpdChoose();//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
-//    Heat_Protect();//热量保护
+    Heat_Protect();//热量保护
 }
 
 /**
@@ -27,13 +27,16 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
+    if (shoot_permit==SHOOT_PERMIT)
     {
-        gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0/9.0/31.0*110.0);
-    }
-    else if(rammer_flag==-1)
-    {
-        gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0/9.0/31.0*110.0);
+        if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
+        {
+            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0/9.0/31.0*110.0);
+        }
+        else if(rammer_flag==-1)
+        {
+            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0/9.0/31.0*110.0);
+        }
     }
 
     rammer_flag=0;
@@ -158,11 +161,13 @@ int cShoot::Heat_Cal()
         heat_now_user += 100;  //100是一发大弹丸热量
         shootspd_drop = 0;
     }
-    heat_now_user-=(float)cool_spd/200; //周期是5ms
+    heat_now_user-=(float)cool_spd/200.0f; //周期是5ms
     if(heat_now_user<0)
     {
         heat_now_user=0;
     }
+//    usart_printf("%d,%d\r\n",heat_now_user,heat_now);
+
     return (heat_now_user>heat_now) ? heat_now_user : heat_now ;//返回较大的值作为当前热量标准
 }
 
@@ -177,7 +182,9 @@ void  cShoot::Heat_Protect()
        shoot_permit=SHOOT_PERMIT;
    }
    else
+   {
        shoot_permit=SHOOT_FORBID;
+   }
 
 }
 /**

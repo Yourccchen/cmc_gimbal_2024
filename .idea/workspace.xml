@@ -20,11 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 现在Yaw轴PID单位级对了">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 现在Yaw轴跟随很好">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +200,9 @@
       <workItem from="1710292273202" duration="15753000" />
       <workItem from="1710391522643" duration="2364000" />
       <workItem from="1710467478569" duration="7602000" />
-      <workItem from="1710581106608" duration="2163000" />
+      <workItem from="1710581106608" duration="2870000" />
+      <workItem from="1710585092504" duration="23000" />
+      <workItem from="1710655147821" duration="7338000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -531,7 +533,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710511983270</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="perf: 现在Yaw轴跟随很好">
+      <created>1710583973329</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1710583973329</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +562,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: 增加了按键V云台反转功能" />
     <MESSAGE value="perf: 优化了拨弹参数，暂时先把热量控制相关部分注释了" />
     <MESSAGE value="perf: 优化了Yaw轴参数" />
     <MESSAGE value="perf: 优化了Yaw轴参数_2" />
@@ -578,7 +586,8 @@
     <MESSAGE value="feat: 加入了按下CTRL进入自由模式的功能" />
     <MESSAGE value="revert: 留一个版本2" />
     <MESSAGE value="perf: 现在Yaw轴PID单位级对了" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 现在Yaw轴PID单位级对了" />
+    <MESSAGE value="perf: 现在Yaw轴跟随很好" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 现在Yaw轴跟随很好" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
