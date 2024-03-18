@@ -40,12 +40,7 @@ void User_Init()
     gimbal.Gimbal_KalmanInit();//云台的卡尔曼算法初始函数
     Laser_On();
     IMU_UartInit();
-
-    HAL_Delay(2000);
-    init_cybergear(&mi_motor[0],0x7F,Motion_mode);          //小米电机初始化
-    HAL_Delay(1000);
-    dm4310_motor_init();
-    ctrl_enable();             //达妙电机初始化
+    dm4310_motor_init();//达妙电机初始化
 
     MX_FREERTOS_Init();        //FreeRTOS初始化
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时

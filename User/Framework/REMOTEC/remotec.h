@@ -117,4 +117,5 @@ void portSetScope();
 void portSetRammer(void);
 void portSetTurn(void);
 int portSetFree(void);
+int8_t portSetRedraw(void);
 #endif//HERO_TEST_REMOTEC_H

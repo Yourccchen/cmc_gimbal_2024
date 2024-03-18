@@ -166,6 +166,7 @@ int cShoot::Heat_Cal()
     {
         heat_now_user=0;
     }
+
 //    usart_printf("%d,%d\r\n",heat_now_user,heat_now);
 
     return (heat_now_user>heat_now) ? heat_now_user : heat_now ;//返回较大的值作为当前热量标准
@@ -177,7 +178,7 @@ int cShoot::Heat_Cal()
 void  cShoot::Heat_Protect()
 {
     //如果热量限制减去当前热量大于等于100，允许发弹，其余情况均不允许发弹
-   if(heat_limit-Heat_Cal()>=100)
+   if( ( heat_limit - Heat_Cal() ) >=100)
    {
        shoot_permit=SHOOT_PERMIT;
    }
@@ -205,7 +206,7 @@ int8_t cShoot::GetFricStatus(void)
   */
 void cShoot::Shoot_SpdChoose()
 {
-    SHOOT_SPEED=6200;
+    SHOOT_SPEED=6500;
 }
 
 /**

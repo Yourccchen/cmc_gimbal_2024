@@ -385,7 +385,7 @@ int8_t portSetCarMode(void)
   */
 int8_t portSetControlMode(void)
 {
-    return RC_GetDatas().rc.s[1];//左侧拨杆
+    return RC_GetDatas().rc.s[1];
 }
 /**
   *@breif   射击模式切换
@@ -481,4 +481,13 @@ void portSetTurn(void)
 int portSetFree(void)
 {
     return rc_ctrl.key.CONTRL.Now_State;
+}
+
+int8_t portSetRedraw(void)
+{
+    portHandle(&rc_ctrl.key.B);
+    if(rc_ctrl.key.B.Is_Click_Once)
+        return 1;
+    else
+        return 0;
 }

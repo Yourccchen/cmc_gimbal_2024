@@ -92,5 +92,6 @@ void cMotor::UpdateMotorInfo()
                 RealAngle_Ecd=motor->para.angle;
                 RealSpeed=IMU_Speed_CH100(YAW_ANGLE);
             }
+            break;
     }
 }

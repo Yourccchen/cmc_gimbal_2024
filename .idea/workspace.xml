@@ -20,10 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 现在Yaw轴跟随很好">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 自瞄跟随很好，但弹道还需调整">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -202,7 +207,9 @@
       <workItem from="1710467478569" duration="7602000" />
       <workItem from="1710581106608" duration="2870000" />
       <workItem from="1710585092504" duration="23000" />
-      <workItem from="1710655147821" duration="7338000" />
+      <workItem from="1710655147821" duration="7783000" />
+      <workItem from="1710676416932" duration="4625000" />
+      <workItem from="1710760924658" duration="2774000" />
     </task>
     <task id="LOCAL-00001" summary="build: 建立英雄云台C板工程">
       <created>1699874062731</created>
@@ -540,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710583973329</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="perf: 自瞄跟随很好，但弹道还需调整">
+      <created>1710664823944</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1710664823944</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -562,7 +576,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: 优化了拨弹参数，暂时先把热量控制相关部分注释了" />
     <MESSAGE value="perf: 优化了Yaw轴参数" />
     <MESSAGE value="perf: 优化了Yaw轴参数_2" />
     <MESSAGE value="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1" />
@@ -587,7 +600,8 @@
     <MESSAGE value="revert: 留一个版本2" />
     <MESSAGE value="perf: 现在Yaw轴PID单位级对了" />
     <MESSAGE value="perf: 现在Yaw轴跟随很好" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 现在Yaw轴跟随很好" />
+    <MESSAGE value="perf: 自瞄跟随很好，但弹道还需调整" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 自瞄跟随很好，但弹道还需调整" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
