@@ -81,11 +81,27 @@ static void crc16_update(uint16_t *currect_crc, const uint8_t *src, uint32_t len
     }
     *currect_crc = crc;
 }
-static float last_angle;
-static int32_t rotate_times;
+
 
 static float IMU_AngleIncreLoop(float angle_now)
 {
+    static float last_angle;
+    static int32_t rotate_times;
+    float this_angle;
+    this_angle = angle_now;
+    if ((this_angle - last_angle) > 300)
+        rotate_times--;
+    if ((this_angle - last_angle) < -300)
+        rotate_times++;
+    angle_now = this_angle + rotate_times * 360.0f;
+    last_angle = this_angle;
+    return angle_now;
+}
+
+static float IMU_AngleIncreLoop1(float angle_now)
+{
+    static float last_angle;
+    static int32_t rotate_times;
     float this_angle;
     this_angle = angle_now;
     if ((this_angle - last_angle) > 300)
@@ -100,7 +116,7 @@ static float IMU_AngleIncreLoop(float angle_now)
 float IMU_Angle_CH100(uint8_t which)
 {
     Yaw_Angle=IMU_AngleIncreLoop(angle[2]);
-    Pih_Angle=angle[1];
+    Pih_Angle=IMU_AngleIncreLoop1(angle[1]);
     Roll_Angle=angle[0];
     switch (which)
     {

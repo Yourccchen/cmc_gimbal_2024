@@ -10,8 +10,6 @@
 #include "gimbalc.h"
 #include "debugc.h"
 
-
-
 void GimbalControlTask(void const * argument)
 {
 
@@ -20,10 +18,6 @@ void GimbalControlTask(void const * argument)
     /* Infinite loop */
     for (;;)
     {
-
-        init_cybergear(&mi_motor[0],0x7F,Motion_mode);
-        ctrl_enable();
-
         gimbal.count_time_send++;
         if(gimbal.count_time_send > 4) gimbal.count_time_send = 0;
         CurrentTime = xTaskGetTickCount();

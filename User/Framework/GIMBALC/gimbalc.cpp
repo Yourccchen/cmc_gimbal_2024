@@ -246,7 +246,7 @@ void cGimbal::Gimbal_PosC()
             Pitch_ImuLimit(PihTarget); //陀螺仪
             break;
         case CYBERGEAR:
-//            Pitch_MILimit(PihTarget); //小米电机
+            Pitch_MILimit(PihTarget); //小米电机
             break;
     }
 
@@ -568,6 +568,7 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",motors_pid[PihSpd].PID_Out,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f\r\n",PihTarget,mi_motor[0].Angle,mi_motor[0].Speed);
+    usart_printf("%f,%f\r\n",mi_motor[0].Angle,IMU_Angle_CH100(PIH_ANGLE));
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
