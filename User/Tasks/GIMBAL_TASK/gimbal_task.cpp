@@ -18,6 +18,8 @@ void GimbalControlTask(void const * argument)
     /* Infinite loop */
     for (;;)
     {
+
+
         gimbal.count_time_send++;
         if(gimbal.count_time_send > 4) gimbal.count_time_send = 0;
         CurrentTime = xTaskGetTickCount();

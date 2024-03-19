@@ -20,14 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 将使能放到循环中">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/CH100/CH100.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/CH100/CH100.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,14 +208,9 @@
       <workItem from="1710585092504" duration="23000" />
       <workItem from="1710655147821" duration="7783000" />
       <workItem from="1710676416932" duration="4625000" />
-      <workItem from="1710760924658" duration="8626000" />
-    </task>
-    <task id="LOCAL-00002" summary="feat: 移植C盘陀螺仪文件">
-      <created>1699969504753</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1699969504753</updated>
+      <workItem from="1710760924658" duration="9279000" />
+      <workItem from="1710816292764" duration="2933000" />
+      <workItem from="1710849222090" duration="7523000" />
     </task>
     <task id="LOCAL-00003" summary="fix: 解决了任务无法进入的问题">
       <created>1700053874588</created>
@@ -552,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710765545804</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）">
+      <created>1710772088275</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1710772088275</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -574,7 +577,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: 优化了Yaw轴参数_2" />
     <MESSAGE value="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1" />
     <MESSAGE value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
     <MESSAGE value="fix: 删除了C板IMU例程，优化了拨弹的反转问题" />
@@ -599,7 +601,8 @@
     <MESSAGE value="perf: 现在Yaw轴跟随很好" />
     <MESSAGE value="perf: 自瞄跟随很好，但弹道还需调整" />
     <MESSAGE value="perf: 将使能放到循环中" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 将使能放到循环中" />
+    <MESSAGE value="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

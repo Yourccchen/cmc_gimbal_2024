@@ -27,8 +27,10 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if (shoot_permit==SHOOT_PERMIT)
+//    usart_printf("%d,%d,%f,%f\r\n",shoot_permit,GetFricStatus(),gimbal.motors[ShootLMotor].RealSpeed,gimbal.motors[ShootRMotor].RealSpeed);
+    if (shoot_permit==SHOOT_PERMIT &&  GetFricStatus()  )
     {
+
         if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
         {
             gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0/9.0/31.0*110.0);
@@ -167,8 +169,6 @@ int cShoot::Heat_Cal()
         heat_now_user=0;
     }
 
-//    usart_printf("%d,%d\r\n",heat_now_user,heat_now);
-
     return (heat_now_user>heat_now) ? heat_now_user : heat_now ;//返回较大的值作为当前热量标准
 }
 
@@ -194,7 +194,7 @@ void  cShoot::Heat_Protect()
   */
 int8_t cShoot::GetFricStatus(void)
 {
-    if (abs(gimbal.motors[ShootSpdL].RealSpeed) > 2000 && abs(gimbal.motors[ShootSpdR].RealSpeed) > 2000)
+    if (abs(gimbal.motors[ShootLMotor].RealSpeed) > 2000 && abs(gimbal.motors[ShootRMotor].RealSpeed) > 2000)
     {
         return FRIC_ON;
     }
