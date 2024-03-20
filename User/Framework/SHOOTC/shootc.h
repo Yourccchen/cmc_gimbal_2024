@@ -29,7 +29,7 @@ public:
     uint8_t  smallORbig;    //能量机关状态
 
     ///摩擦轮、拨弹轮相关参数
-    int16_t fric_flag=0;     //摩擦轮标志位:0为关摩擦轮，1为开摩擦轮
+    int16_t fric_flag=3;     //摩擦轮标志位:3为关摩擦轮，1为开摩擦轮
     int16_t fric_count=0;    //摩擦轮收到遥控器发送指令的的次数
 
     int16_t rammer_flag=0;   //0为不转，1为转一次,-1为反转一次。无其他数值可能
@@ -39,6 +39,8 @@ public:
     int8_t shoot_permit=0;   //是否允许拨弹标志位，1为允许，0为禁止；默认为0
     uint8_t shootspd_reach=0;//摩擦轮是否达到目标速度标志
     uint8_t shootspd_drop=0; //摩擦轮是否掉速标志
+    uint16_t heat_now_user=0;     //自行计算的当前热量，结合裁判系统反馈的两者配合限制拨弹
+
     void Shoot_ControlLoop();//发弹主循环，但不包含最重要的位置环和速度环
     void Shoot_PosC();
     void Shoot_SpeedC();
@@ -54,7 +56,6 @@ public:
 private:
     int32_t stuck_time=0;       //拨弹轮堵转时间
     int32_t reverse_time=0;     //拨弹轮反转时间
-    uint16_t heat_now_user;     //自行计算的当前热量，结合裁判系统反馈的两者配合限制拨弹
 };
 
 #endif //HERO_TEST_SHOOTC_H

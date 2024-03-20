@@ -27,7 +27,6 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-//    usart_printf("%d,%d,%f,%f\r\n",shoot_permit,GetFricStatus(),gimbal.motors[ShootLMotor].RealSpeed,gimbal.motors[ShootRMotor].RealSpeed);
     if (shoot_permit==SHOOT_PERMIT &&  GetFricStatus()  )
     {
 
@@ -89,11 +88,9 @@ void cShoot::ShootSpeedClean()
     gimbal.motors_pid[ShootSpdL].PID_Target=0;
     gimbal.motors_pid[ShootSpdR].PID_Target=0;
 
-    gimbal.motors_pid[RamSpd].PID_Target=0;
-
     ///ADRC目标值清零
-    gimbal.adrc[0].Target=0;
-    gimbal.adrc[1].Target=0;
+//    gimbal.adrc[0].Target=0;
+//    gimbal.adrc[1].Target=0;
     //清除漏电流，防止关闭摩擦轮后电机仍以小速度旋转
     if(abs(gimbal.motors[ShootLMotor].RealSpeed)<100
      ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100)
@@ -103,8 +100,8 @@ void cShoot::ShootSpeedClean()
         gimbal.motors_pid[ShootSpdR].PID_Out=0;
 
         ///ADRC相关
-        ShootLOUT_ADRC=0;
-        ShootROUT_ADRC=0;
+//        ShootLOUT_ADRC=0;
+//        ShootROUT_ADRC=0;
     }
 
     gimbal.motors_pid[RamSpd].PID_Out=0;
@@ -144,31 +141,34 @@ void cShoot::Stuck_Check()
   */
 int cShoot::Heat_Cal()
 {
-    if(fric_flag==OPENFRIC && abs(SHOOT_SPEED - gimbal.motors[ShootSpdL].RealSpeed) < 200 && shootspd_reach == 0)
-    {//如果现在摩擦轮打开，并且速度与目标值只差200
+    if(fric_flag==OPENFRIC && abs(SHOOT_SPEED - abs(gimbal.motors[ShootLMotor].RealSpeed) ) < 300 && shootspd_reach == 0)
+    {//如果现在摩擦轮打开，并且速度与目标值只差300
         shootspd_reach=1;
     }
     if(fric_flag==CLOSEFRIC)
     {
         shootspd_reach=0;
-        shootspd_drop=0;
+//        shootspd_drop=0;
     }
-    if(shootspd_reach == 1 && (abs(gimbal.motors[ShootSpdL].RealSpeed) < SHOOT_SPEED*0.9) && shootspd_drop == 0)
+    if(shootspd_reach == 1 && (abs(gimbal.motors[ShootLMotor].RealSpeed) < SHOOT_SPEED*0.9) )
     {//开摩擦轮检测到掉速
         shootspd_reach = 0;
-        shootspd_drop = 1;//掉速标志位置1
-    }
-    if(shootspd_drop == 1)
-    {
         heat_now_user += 100;  //100是一发大弹丸热量
-        shootspd_drop = 0;
+//        shootspd_drop = 1;//掉速标志位置1
+
     }
+//    if(shootspd_drop == 1)
+//    {
+
+//        shootspd_drop = 0;
+//    }
     heat_now_user-=(float)cool_spd/200.0f; //周期是5ms
+
     if(heat_now_user<0)
     {
         heat_now_user=0;
     }
-
+//    usart_printf("%d,%d,%d\r\n",fric_flag,heat_now_user,shootspd_reach);
     return (heat_now_user>heat_now) ? heat_now_user : heat_now ;//返回较大的值作为当前热量标准
 }
 

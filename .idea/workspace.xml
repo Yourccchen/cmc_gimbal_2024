@@ -20,15 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,14 +207,8 @@
       <workItem from="1710676416932" duration="4625000" />
       <workItem from="1710760924658" duration="9279000" />
       <workItem from="1710816292764" duration="2933000" />
-      <workItem from="1710849222090" duration="7523000" />
-    </task>
-    <task id="LOCAL-00003" summary="fix: 解决了任务无法进入的问题">
-      <created>1700053874588</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1700053874588</updated>
+      <workItem from="1710849222090" duration="8603000" />
+      <workItem from="1710934292799" duration="9370000" />
     </task>
     <task id="LOCAL-00004" summary="feat: C板内置IMU可以正常接收到数据">
       <created>1700056753468</created>
@@ -555,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710772088275</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断">
+      <created>1710859698417</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1710859698417</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +575,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: 加了MATLAB导出的速度环代码，同时修改时基为TIM1" />
     <MESSAGE value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
     <MESSAGE value="fix: 删除了C板IMU例程，优化了拨弹的反转问题" />
     <MESSAGE value="perf: 优化Yaw轴参数，同时分开计算键鼠操作和遥控器操作的卡尔曼滤波值" />
@@ -602,7 +599,8 @@
     <MESSAGE value="perf: 自瞄跟随很好，但弹道还需调整" />
     <MESSAGE value="perf: 将使能放到循环中" />
     <MESSAGE value="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）" />
+    <MESSAGE value="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

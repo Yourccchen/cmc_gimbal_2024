@@ -585,13 +585,9 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
 //    usart_printf("%f,%f,%f,%f\r\n",portSetYawSpeed(),MouseYaw,portSetPihSpeed(),MousePih);
-    //倍镜打印//
-//    usart_printf("%f,%f,%f\r\n",ScopeUTarget,motors[ScopeUMotor].RealAngle_Ecd,motors_pid[ScopeUSpd].PID_Out);
 
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
 //                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
-//    usart_printf("%f,%f,%f\r\n",vx,vy,vz);
-//    usart_printf("%f,%f\r\n",motor[Motor1].para.pos,motor[Motor1].para.angle);
-//    usart_printf("%d,%d,%d\r\n",gimbal.shoot.heat_limit,gimbal.shoot.cool_spd
-//                 ,gimbal.shoot.heat_now);
+    //热量打印//
+//    usart_printf("%f,%d,%d,%d,%d\r\n",gimbal.motors[ShootLMotor].RealSpeed,gimbal.shoot.heat_limit,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user,gimbal.shoot.cool_spd);
 }
