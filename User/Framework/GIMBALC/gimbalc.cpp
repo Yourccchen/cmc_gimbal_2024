@@ -304,7 +304,6 @@ void cGimbal::Gimbal_PosC()
 ///电机速度环
 void cGimbal::Gimbal_SpeedC()
 {
-//    MatlabPID_ParamSet();
     //根据算法发送电流
     //Yaw轴算法选择
     if(count_time_send==2)

@@ -20,12 +20,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 解决了热量读取的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,14 +207,8 @@
       <workItem from="1710760924658" duration="9279000" />
       <workItem from="1710816292764" duration="2933000" />
       <workItem from="1710849222090" duration="8603000" />
-      <workItem from="1710934292799" duration="9370000" />
-    </task>
-    <task id="LOCAL-00004" summary="feat: C板内置IMU可以正常接收到数据">
-      <created>1700056753468</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1700056753468</updated>
+      <workItem from="1710934292799" duration="9697000" />
+      <workItem from="1711008696851" duration="3063000" />
     </task>
     <task id="LOCAL-00005" summary="feat: 增加了IMU角度连续化部分">
       <created>1700465894289</created>
@@ -553,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710859698417</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="fix: 解决了热量读取的问题">
+      <created>1710947889026</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1710947889027</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -575,7 +575,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: 重新用回了维特智能IMU，Yaw轴效果好很多了" />
     <MESSAGE value="fix: 删除了C板IMU例程，优化了拨弹的反转问题" />
     <MESSAGE value="perf: 优化Yaw轴参数，同时分开计算键鼠操作和遥控器操作的卡尔曼滤波值" />
     <MESSAGE value="perf: 加上随动更改Yaw参数，增加了Pitch保护，找到了小米电机上电-46度解决办法" />
@@ -600,7 +599,24 @@
     <MESSAGE value="perf: 将使能放到循环中" />
     <MESSAGE value="fix: Pitch猛抬头暂时解决（但是每次上电需要在最低角度）" />
     <MESSAGE value="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断" />
+    <MESSAGE value="fix: 解决了热量读取的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 解决了热量读取的问题" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp</url>
+          <line>44</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="com.jetbrains.cidr.embedded.openocd.conf.type">
+        <watch expression="gimbal.motors_pid[RamPos].PID_Target" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

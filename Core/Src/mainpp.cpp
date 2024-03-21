@@ -56,6 +56,7 @@ int main()
     User_Init();
     while(1)
     {
+        init_cybergear(&mi_motor[0],0x7F,Motion_mode);
         HAL_Delay(100);
     }
 }

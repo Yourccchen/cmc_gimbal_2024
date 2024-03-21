@@ -32,11 +32,11 @@ void cShoot::Shoot_PosC()
 
         if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
         {
-            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0/9.0/31.0*110.0);
+            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
         }
         else if(rammer_flag==-1)
         {
-            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0/9.0/31.0*110.0);
+            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
         }
     }
 
@@ -103,11 +103,14 @@ void cShoot::ShootSpeedClean()
 //        ShootLOUT_ADRC=0;
 //        ShootROUT_ADRC=0;
     }
-
+    //积分项清零
+    gimbal.motors_pid[RamSpd].PID_ErrAll=0;
+    gimbal.motors_pid[RamPos].PID_ErrAll=0;
+    //电流清零
     gimbal.motors_pid[RamSpd].PID_Out=0;
 
     //摩擦轮关闭情况下，让目标值始终等于当前编码值，防止开启摩擦轮时偏差过大导致疯转
-    gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
+    gimbal.setMotorPos(RamPos, gimbal.motors[RamMotor].RealAngle_Ecd);
 }
 
 /**
@@ -178,7 +181,7 @@ int cShoot::Heat_Cal()
 void  cShoot::Heat_Protect()
 {
     //如果热量限制减去当前热量大于等于100，允许发弹，其余情况均不允许发弹
-   if( ( heat_limit - Heat_Cal() ) >=100)
+   if( ( heat_limit - Heat_Cal() ) >=105)
    {
        shoot_permit=SHOOT_PERMIT;
    }
