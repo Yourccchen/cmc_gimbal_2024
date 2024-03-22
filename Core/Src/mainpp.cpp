@@ -38,13 +38,14 @@ void User_Init()
     CAN_All_Init();            //CAN通信相关配置初始化（设置过滤条件、打开CAN中断等）
 
     gimbal.Gimbal_KalmanInit();//云台的卡尔曼算法初始函数
-    Laser_On();
+//    Laser_On();
     IMU_UartInit();
     dm4310_motor_init();//达妙电机初始化
 
-    init_cybergear(&mi_motor[0],0x7F,Motion_mode);
-    HAL_Delay(1000);
-    init_cybergear(&mi_motor[0],0x7F,Motion_mode);
+//    init_cybergear(&mi_motor[0],0x7F,Motion_mode);
+//    HAL_Delay(1000);
+//    init_cybergear(&mi_motor[0],0x7F,Motion_mode);
+
 
     MX_FREERTOS_Init();        //FreeRTOS初始化
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时
@@ -56,7 +57,6 @@ int main()
     User_Init();
     while(1)
     {
-        init_cybergear(&mi_motor[0],0x7F,Motion_mode);
         HAL_Delay(100);
     }
 }

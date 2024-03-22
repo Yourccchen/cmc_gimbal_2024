@@ -17,14 +17,15 @@
 //#include "imu_wit.h"
 #include "CH100.h"
 float Shoot_SpeedNow = 0;
-int8_t MyColor, Fan_Type;
+int8_t My_Color, Fu_Type;
 int32_t id = 0;
+int InitPermit=0;
 
 void Vision_JudgeUpdate(float shoot_speed, int8_t color, int8_t type)
 {
     Shoot_SpeedNow = shoot_speed;
-    MyColor = color;
-    Fan_Type = type;
+    My_Color = color;
+    Fu_Type = type;
 }
 
 /**
@@ -38,7 +39,6 @@ uint8_t Buf[sizeof(SendPacket)];
 
 void VisionChattingLoop(uint8_t mode)
 {
-    float ShootSpeed = Shoot_SpeedNow;
 //	float w = IMU_Quaternion().w;
 //	float x = IMU_Quaternion().x;
 //	float y = IMU_Quaternion().y;
@@ -49,17 +49,19 @@ void VisionChattingLoop(uint8_t mode)
 //	if (Color_now == 1)	send_packet.color =0;
 //	if (Color_now == 0)	send_packet.color =1;
     send_packet.header = 0x5A;
-    send_packet.shoot_spd =  gimbal.shoot.shoot_spd_now;
+    send_packet.shoot_spd =  Shoot_SpeedNow;
     send_packet.pitch = IMU_Angle_CH100(PIH_ANGLE);
     send_packet.yaw = IMU_Angle_CH100(YAW_ANGLE);
 //    send_packet.roll = roll;
 
-//    if(MyColor == 0)
+//    if(My_Color == 0)
 //        send_packet.enemy_color = 'B';
 //    else
 //        send_packet.enemy_color = 'R';
 
     send_packet.enemy_color = 'B';
+
+
 //	send_packet.packet_id = id;
 
     std::copy(reinterpret_cast<const uint8_t*>(&send_packet),
@@ -67,7 +69,6 @@ void VisionChattingLoop(uint8_t mode)
     Append_CRC16_Check_Sum(Buf, sizeof(SendPacket));
     CDC_Transmit_FS(Buf, sizeof(SendPacket));
     id++;
-    //这里放发送的函数
 }
 
 /**
@@ -83,6 +84,16 @@ void VisionComTask(void const* argument)
     /* Infinite loop */
     for (;;)
     {
+//        if(gimbal.GimbalPower==0)
+//        {
+//            InitPermit=1;
+//        }
+//        if(gimbal.GimbalPower==1 && InitPermit==1)
+//        {
+            init_cybergear(&mi_motor[0],0x7F,Motion_mode);
+//            InitPermit=0;
+//        }
+
         CurrentTime = xTaskGetTickCount();
         int8_t Zimiao = portIsZimiao();
 
@@ -91,3 +102,4 @@ void VisionComTask(void const* argument)
     }
     /* USER CODE END VisionComTask */
 }
+

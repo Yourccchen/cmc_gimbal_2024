@@ -3,6 +3,7 @@
 //
 
 #include "gimbalc.h"
+#include "laser.h"
 
 bool GIMBAL=0;
 cGimbal gimbal; //定义云台总类
@@ -148,6 +149,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             PihTarget=mi_motor[0].Angle;
             //底盘目标值给0
             vx=vy=vz=0;
+            Laser_Off();
             break;
         }
     }
@@ -564,8 +566,8 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
     //拨弹轮打印//
-    usart_printf("%f,%f,%f\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-                 motors[RamMotor].RealAngle_Ecd);
+    usart_printf("%f,%f,%f,%d,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+                 motors[RamMotor].RealAngle_Ecd,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f,%f,%f,%f\r\n",lowfilter.Filter(vision_pkt.offset_yaw), YawTarget, motors[YawMotor].RealAngle_Imu
 //    ,-lowfilter.Filter(vision_pkt.offset_pitch), PihTarget,  mi_motor[0].Angle, motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
@@ -588,5 +590,6 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
 //                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
     //热量打印//
-//    usart_printf("%f,%d,%d,%d,%d\r\n",gimbal.motors[ShootLMotor].RealSpeed,gimbal.shoot.heat_limit,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user,gimbal.shoot.cool_spd);
+//    usart_printf("%d,%d,%d,%d\r\n",gimbal.shoot.heat_limit,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user,gimbal.shoot.cool_spd);
+//    usart_printf("%d\r\n",gimbal.GimbalPower);
 }

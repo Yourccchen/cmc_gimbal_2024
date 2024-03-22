@@ -199,6 +199,7 @@ public:
     int8_t AimbotMode=0;     //自瞄模式
     uint32_t Last_ID;        //自瞄的上次ID
 
+    int8_t GimbalPower;
     ///分时发送控制变量///
     int32_t count_time_send=0;
 private:

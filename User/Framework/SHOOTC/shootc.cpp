@@ -27,7 +27,7 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if (shoot_permit==SHOOT_PERMIT &&  GetFricStatus()  )
+    if (shoot_permit==SHOOT_PERMIT &&  GetFricStatus()  &&  abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
     {
 
         if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
@@ -123,17 +123,17 @@ void cShoot::Stuck_Check()
     {
         stuck_time++;
     }
-    if(stuck_time>50)//堵转超过250ms
+    if(stuck_time>250)//堵转超过1.25s
     {
         gimbal.motors_pid[RamSpd].PID_ErrAll=0;
         gimbal.motors_pid[RamPos].PID_ErrAll=0;
 
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
-        Shoot_SendCurrent(0,0,0,-3000);
+        Shoot_SendCurrent(0,0,0,-2000);
         rammer_flag=0;
         reverse_time++;
     }
-    if(reverse_time>100)//反转0.5s
+    if(reverse_time>50)//反转0.25s
     {
         reverse_time=0;
         stuck_time=0;
@@ -181,7 +181,7 @@ int cShoot::Heat_Cal()
 void  cShoot::Heat_Protect()
 {
     //如果热量限制减去当前热量大于等于100，允许发弹，其余情况均不允许发弹
-   if( ( heat_limit - Heat_Cal() ) >=105)
+   if( ( heat_limit - Heat_Cal() ) >=110)
    {
        shoot_permit=SHOOT_PERMIT;
    }

@@ -188,6 +188,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.shoot.heat_limit = (uint16_t)(recvData[0] << 8 | recvData[1]);//热量限制
                 gimbal.shoot.cool_spd = (uint16_t)(recvData[2] << 8 | recvData[3]);//冷却速度
                 gimbal.shoot.heat_now = (uint16_t)(recvData[4] << 8 | recvData[5]);//枪管热量
+                gimbal.GimbalPower=recvData[6];//云台口是否供电，供电为1，不供电为0
             }
             if (RxMeg.StdId == CAN_JUDGE_PARAM_ID)   //裁判系统信息的补充
             {//判断信息
