@@ -119,7 +119,7 @@ public:
 
     cADRC adrc[3];
 
-    cLowPassFilter lowfilter;
+    cLowPassFilter lowfilter_yaw,lowfilter_pih;
 
     cGimbal():
         motors_pid

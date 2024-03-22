@@ -80,7 +80,7 @@ void cGimbal::Gimbal_ControlWithRC(void)
 
 /**
   *@brief  云台车体模式设置
-  *@param  car_mode决定三个模式，PROTECT保护模式，SUIDONG随动模式，TUOLUO小陀螺模式
+  *@param  car_mode决定三个模式，ZIMIAO自瞄模式，SUIDONG随动模式，TUOLUO小陀螺模式，PROTEC保护模式
   */
 void cGimbal::Gimbal_CarMode(int8_t car_mode)
 {
@@ -120,14 +120,20 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
         }
         case ZIMIAO:
         {
+            if (ChassisYawTarget - motors[YawMotor].RealAngle_Ecd > 180)
+                ChassisYawTarget -= 360;            //加减2π
+            if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
+                ChassisYawTarget += 360;
+            vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度0
             if (vision_pkt.packet_id != Last_ID)
             {
-                lowfilter.Init(60,0.005);//低通滤波器，设置截止频率和采样周期
+                lowfilter_pih.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
+                lowfilter_yaw.Init(20,0.005);//低通滤波器，设置截止频率和采样周期
 
-                PihTarget =-lowfilter.Filter(vision_pkt.offset_pitch)
+                PihTarget =-lowfilter_pih.Filter(vision_pkt.offset_pitch)
                            +mi_motor[0].Angle;
 //                    YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
-                YawTarget =vision_pkt.offset_yaw
+                YawTarget =lowfilter_yaw.Filter(vision_pkt.offset_yaw)
                            + motors[YawMotor].RealAngle_Imu;
                 Last_ID = vision_pkt.packet_id;
             }
@@ -157,7 +163,7 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
 
 /**
   *@brief  云台控制模式设置
-  *@param  control_mode决定三个模式，KEY_MODE键鼠操作，RC_MODE遥控器操作，ZIMIAO自瞄操作
+  *@param  control_mode决定三个模式，KEY_MODE键鼠操作，CLOSEFRIC关闭摩擦轮，OPENFRIC开启摩擦轮
   */
 void cGimbal::Gimbal_ControlMode(int8_t control_mode)
 {
@@ -168,15 +174,22 @@ void cGimbal::Gimbal_ControlMode(int8_t control_mode)
             ControlMode=KEY_MODE;
             if(ZimiaoFlag==OPENZIMIAO)
             {
+                if (ChassisYawTarget - motors[YawMotor].RealAngle_Ecd > 180)
+                    ChassisYawTarget -= 360;            //加减2π
+                if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
+                    ChassisYawTarget += 360;
+                vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度0
+
                 if (vision_pkt.packet_id != Last_ID)
                 {
-                    lowfilter.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
+                    lowfilter_pih.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
+                    lowfilter_yaw.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
 
-                    PihTarget =-lowfilter.Filter(vision_pkt.offset_pitch)
+                    PihTarget =-lowfilter_pih.Filter(vision_pkt.offset_pitch)
                                +mi_motor[0].Angle;
 //                    YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
-                    YawTarget =vision_pkt.offset_yaw
-                                + motors[YawMotor].RealAngle_Imu;
+                    YawTarget =lowfilter_yaw.Filter(vision_pkt.offset_yaw)
+                               + motors[YawMotor].RealAngle_Imu;
                     Last_ID = vision_pkt.packet_id;
                 }
             }
@@ -233,7 +246,7 @@ void cGimbal::Gimbal_PosC()
     PID_step(1); //进行MATLAB的PID计算，两套算法并行计算，只在最后CAN发送电流的时候作区分
 
     //根据控制模式选择云台参数
-    if(CarMode==ZIMIAO)
+    if(CarMode==ZIMIAO||ZimiaoFlag==OPENZIMIAO)
     {
         Gimbal_ParamChoose(ZIMIAO);
     }
@@ -347,8 +360,8 @@ void cGimbal::Gimbal_SpeedC()
         }
         case CYBERGEAR:
         {
-            if(ControlMode==ZIMIAO||CarMode==ZIMIAO)
-                motor_controlmode(&mi_motor[0],0,PihTarget,0,40,2);
+            if(ZimiaoFlag==OPENZIMIAO||CarMode==ZIMIAO)
+                motor_controlmode(&mi_motor[0],0,PihTarget,0,20,2);
             else if(CarMode==PROTECT || ProtectFlag==OFFLINE)
                 motor_controlmode(&mi_motor[0],0,PihTarget,0,0,0);
             else
@@ -508,14 +521,14 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             ///Yaw轴的MATLAB_PID参数///
             motors_pid[YawPos].Kp = 8;
             motors_pid[YawPos].Ki = 0;
-            motors_pid[YawPos].Kd = 0.2;
+            motors_pid[YawPos].Kd = 0.4;
             motors_pid[YawPos].SetMax(50,300,50);
 
-            motors_pid[YawSpd].Kp = 0.03;
-            motors_pid[YawSpd].Ki = 0.005;
+            motors_pid[YawSpd].Kp = 0.02;
+            motors_pid[YawSpd].Ki = 0.002;
             motors_pid[YawSpd].Kd = 0;
             motors_pid[YawSpd].SetMax(50,10,5);
-            Pid_In.Yaw_Dif_Gain = 0.2;
+            Pid_In.Yaw_Dif_Gain = 0;
             break;
         }
     }//switch结束
@@ -566,12 +579,11 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
     //拨弹轮打印//
-    usart_printf("%f,%f,%f,%d,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-                 motors[RamMotor].RealAngle_Ecd,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user);
+//    usart_printf("%f,%f,%f,%d,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+//                 motors[RamMotor].RealAngle_Ecd,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user);
     //自瞄打印
-//    usart_printf("%f,%f,%f,%f,%f,%f,%f,%f,%f\r\n",lowfilter.Filter(vision_pkt.offset_yaw), YawTarget, motors[YawMotor].RealAngle_Imu
-//    ,-lowfilter.Filter(vision_pkt.offset_pitch), PihTarget,  mi_motor[0].Angle, motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-//     motors[RamMotor].RealAngle_Ecd);
+    usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw, lowfilter_yaw.Filter(vision_pkt.offset_yaw),YawTarget, motors[YawMotor].RealAngle_Imu
+    ,-lowfilter_pih.Filter(vision_pkt.offset_pitch), PihTarget,  mi_motor[0].Angle);
 //    usart_printf("%f,%f\r\n",vision_pkt.offset_yaw,KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw));
     //滤波打印//
 //    lowfilter.Init(50,0.005);

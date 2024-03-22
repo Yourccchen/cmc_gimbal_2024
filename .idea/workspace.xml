@@ -20,14 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix:">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 热量控制没问题，毕业！">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/freertos.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/freertos.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +99,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -213,14 +219,8 @@
       <workItem from="1710934292799" duration="9697000" />
       <workItem from="1711008696851" duration="10842000" />
       <workItem from="1711040462115" duration="2118000" />
-      <workItem from="1711090125495" duration="1801000" />
-    </task>
-    <task id="LOCAL-00006" summary="fix: 接收遥控器数据正常">
-      <created>1700476289644</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1700476289644</updated>
+      <workItem from="1711090125495" duration="9668000" />
+      <workItem from="1711112130109" duration="1472000" />
     </task>
     <task id="LOCAL-00007" summary="fix: CAN收发数据正常">
       <created>1700573748919</created>
@@ -558,7 +558,14 @@
       <option name="project" value="LOCAL" />
       <updated>1711012025064</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="perf: 热量控制没问题，毕业！">
+      <created>1711092878721</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1711092878722</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -580,7 +587,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: 优化Yaw轴参数，同时分开计算键鼠操作和遥控器操作的卡尔曼滤波值" />
     <MESSAGE value="perf: 加上随动更改Yaw参数，增加了Pitch保护，找到了小米电机上电-46度解决办法" />
     <MESSAGE value="test: 调好了自瞄参数，中期测评全部录完" />
     <MESSAGE value="test: 换了新的Yaw轴电机（带减速箱）" />
@@ -605,14 +611,8 @@
     <MESSAGE value="fix: 增加了只有在摩擦轮转拨弹轮才能转的判断" />
     <MESSAGE value="fix: 解决了热量读取的问题" />
     <MESSAGE value="fix: 解决了开摩擦轮时，拨盘目标值会变成0的问题（因为开了斜坡，但没及时将PID_RampTarget更新）" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: 解决了开摩擦轮时，拨盘目标值会变成0的问题（因为开了斜坡，但没及时将PID_RampTarget更新）" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="com.jetbrains.cidr.embedded.openocd.conf.type">
-        <watch expression="gimbal.motors_pid[RamPos].PID_Target" />
-      </configuration>
-    </watches-manager>
+    <MESSAGE value="perf: 热量控制没问题，毕业！" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 热量控制没问题，毕业！" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

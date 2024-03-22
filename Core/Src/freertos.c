@@ -52,9 +52,6 @@ osThreadId defaultTaskHandle;
 osThreadId GimbalControlHandle;
 osThreadId VisionComHandle;
 osThreadId PrintControlHandle;
-osThreadId imuTaskHandle;
-uint32_t imuTaskBuffer[ 2048 ];
-osStaticThreadDef_t imuTaskControlBlock;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -65,7 +62,6 @@ void StartDefaultTask(void const * argument);
 void GimbalControlTask(void const * argument);
 void VisionComTask(void const * argument);
 void PrintControlTask(void const * argument);
-void INS_task(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -128,10 +124,6 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of PrintControl */
   osThreadDef(PrintControl, PrintControlTask, osPriorityNormal, 0, 1024);
   PrintControlHandle = osThreadCreate(osThread(PrintControl), NULL);
-
-  /* definition and creation of imuTask */
-  osThreadStaticDef(imuTask, INS_task, osPriorityRealtime, 0, 2048, imuTaskBuffer, &imuTaskControlBlock);
-  imuTaskHandle = osThreadCreate(osThread(imuTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -212,24 +204,6 @@ __weak void PrintControlTask(void const * argument)
     osDelay(1);
   }
   /* USER CODE END PrintControlTask */
-}
-
-/* USER CODE BEGIN Header_INS_task */
-/**
-* @brief Function implementing the imuTask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_INS_task */
-__weak void INS_task(void const * argument)
-{
-  /* USER CODE BEGIN INS_task */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END INS_task */
 }
 
 /* Private application code --------------------------------------------------*/

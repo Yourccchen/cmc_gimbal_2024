@@ -54,12 +54,12 @@ void VisionChattingLoop(uint8_t mode)
     send_packet.yaw = IMU_Angle_CH100(YAW_ANGLE);
 //    send_packet.roll = roll;
 
-//    if(My_Color == 0)
-//        send_packet.enemy_color = 'B';
-//    else
-//        send_packet.enemy_color = 'R';
+    if(My_Color == 0)
+        send_packet.enemy_color = 'B';
+    else
+        send_packet.enemy_color = 'R';
 
-    send_packet.enemy_color = 'B';
+//    send_packet.enemy_color = 'B';
 
 
 //	send_packet.packet_id = id;
@@ -84,15 +84,7 @@ void VisionComTask(void const* argument)
     /* Infinite loop */
     for (;;)
     {
-//        if(gimbal.GimbalPower==0)
-//        {
-//            InitPermit=1;
-//        }
-//        if(gimbal.GimbalPower==1 && InitPermit==1)
-//        {
-            init_cybergear(&mi_motor[0],0x7F,Motion_mode);
-//            InitPermit=0;
-//        }
+        init_cybergear(&mi_motor[0],0x7F,Motion_mode);
 
         CurrentTime = xTaskGetTickCount();
         int8_t Zimiao = portIsZimiao();
