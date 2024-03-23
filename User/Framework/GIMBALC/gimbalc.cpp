@@ -263,7 +263,7 @@ void cGimbal::Gimbal_PosC()
             Pitch_ImuLimit(PihTarget); //陀螺仪
             break;
         case CYBERGEAR:
-            Pitch_MILimit(PihTarget); //小米电机
+//            Pitch_MILimit(PihTarget); //小米电机
             break;
     }
 
