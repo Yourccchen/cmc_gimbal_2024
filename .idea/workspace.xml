@@ -20,9 +20,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 自瞄静态OK">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 去除电控限位">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="719477f557b57d6be6acc9bff6445625d14aa6f5" />
+        <entry key="$PROJECT_DIR$" value="9a46ecd2d924c21dfe175a7ffb23608db5b6ec8f" />
       </map>
     </option>
     <option name="RESET_MODE" value="HARD" />
@@ -212,6 +212,8 @@
       <workItem from="1711112130109" duration="2057000" />
       <workItem from="1711159734429" duration="279000" />
       <workItem from="1711176863818" duration="1000" />
+      <workItem from="1711247183579" duration="589000" />
+      <workItem from="1711259489460" duration="1000" />
     </task>
     <task id="LOCAL-00008" summary="fix: CAN收发数据正常">
       <created>1700575276751</created>

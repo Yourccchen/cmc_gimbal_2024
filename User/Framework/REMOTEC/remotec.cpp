@@ -284,7 +284,7 @@ float portSetVx(void)
     float vx;
     if (gimbal.ControlMode==KEY_MODE)
     {
-        vx = (rc_ctrl.key.D.Now_State - rc_ctrl.key.A.Now_State) * 80.0; //这儿后期加等级分档位
+        vx = (rc_ctrl.key.D.Now_State - rc_ctrl.key.A.Now_State) * 100.0; //这儿后期加等级分档位
         if (rc_ctrl.key.SHIFT.Now_State == 1)
             vx *= 2.4; //按住shift加速
     }
@@ -305,7 +305,7 @@ float portSetVy(void)
     float vy;
     if (gimbal.ControlMode==KEY_MODE)
     {
-        vy = (rc_ctrl.key.W.Now_State - rc_ctrl.key.S.Now_State) * 80.0;
+        vy = (rc_ctrl.key.W.Now_State - rc_ctrl.key.S.Now_State) * 100.0;
         if (rc_ctrl.key.SHIFT.Now_State == 1)
             vy *= 2.4; //按住shift加速
     }

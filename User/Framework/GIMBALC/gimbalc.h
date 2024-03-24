@@ -185,6 +185,7 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
+    float TuoluoDiredtion=275;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
     float ChassisYawTarget=275;//随动模式下正方向的角度

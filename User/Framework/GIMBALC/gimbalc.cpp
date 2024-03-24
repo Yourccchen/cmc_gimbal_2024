@@ -113,8 +113,12 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
                     ChassisYawTarget -= 360;            //加减2π
                 if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
                     ChassisYawTarget += 360;
+
+                if(TuoluoDiredtion-motors[YawMotor].RealAngle_Ecd >360)
+                    TuoluoDiredtion-=360;
+                if (motors[YawMotor].RealAngle_Ecd - TuoluoDiredtion > 360)
+                    TuoluoDiredtion += 360;
                 vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度0
-//                vz=0;
             }
             break;
         }
@@ -178,6 +182,11 @@ void cGimbal::Gimbal_ControlMode(int8_t control_mode)
                     ChassisYawTarget -= 360;            //加减2π
                 if (motors[YawMotor].RealAngle_Ecd - ChassisYawTarget > 180)
                     ChassisYawTarget += 360;
+
+                if(TuoluoDiredtion-motors[YawMotor].RealAngle_Ecd >360)
+                    TuoluoDiredtion-=360;
+                if (motors[YawMotor].RealAngle_Ecd - TuoluoDiredtion > 360)
+                    TuoluoDiredtion += 360;
                 vz= -motors_pid[ChassisYaw].PID_Out;    //控制底盘转动速度0
 
                 if (vision_pkt.packet_id != Last_ID)
@@ -235,7 +244,7 @@ void cGimbal::Chassis_ComLoop(float vx,float vy,float vz,int8_t car_mode,int8_t 
     //向底盘发送云台信息
     if(count_time_send==1)
     {
-        CAN_ChasisSendMsg(-(motors[YawMotor].RealAngle_Ecd-ChassisYawTarget),motors[PihMotor].RealAngle_Imu,0,gimbal.shoot.fric_flag,0,portSetRedraw());
+        CAN_ChasisSendMsg(-(motors[YawMotor].RealAngle_Ecd-TuoluoDiredtion),motors[PihMotor].RealAngle_Imu,0,gimbal.shoot.fric_flag,0,portSetRedraw());
     }
 }
 
@@ -579,11 +588,11 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
     //拨弹轮打印//
-//    usart_printf("%f,%f,%f,%d,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-//                 motors[RamMotor].RealAngle_Ecd,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user);
+    usart_printf("%f,%f,%f,%d,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+                 motors[RamMotor].RealAngle_Ecd,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user);
     //自瞄打印
-    usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw, lowfilter_yaw.Filter(vision_pkt.offset_yaw),YawTarget, motors[YawMotor].RealAngle_Imu
-    ,-lowfilter_pih.Filter(vision_pkt.offset_pitch), PihTarget,  mi_motor[0].Angle);
+//    usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw, lowfilter_yaw.Filter(vision_pkt.offset_yaw),YawTarget, motors[YawMotor].RealAngle_Imu
+//    ,-lowfilter_pih.Filter(vision_pkt.offset_pitch), PihTarget,  mi_motor[0].Angle);
 //    usart_printf("%f,%f\r\n",vision_pkt.offset_yaw,KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw));
     //滤波打印//
 //    lowfilter.Init(50,0.005);
