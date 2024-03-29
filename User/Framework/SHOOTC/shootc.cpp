@@ -59,15 +59,22 @@ void cShoot::Shoot_SpeedC()
     {
         gimbal.setMotorSpeed(ShootSpdL,-SHOOT_SPEED);
         gimbal.setMotorSpeed(ShootSpdR,SHOOT_SPEED);
+        if(gimbal.GIMBAL==OLD_HERO)
+        {
+            gimbal.setMotorSpeed(ShootSpdU,SHOOT_SPEED);
+        }
     }
     ///ADRC摩擦轮计算
-    ShootLOUT_ADRC=gimbal.adrc[0].ADRC_Calc(-SHOOT_SPEED,gimbal.motors[ShootLMotor].RealSpeed);
-    ShootROUT_ADRC=gimbal.adrc[1].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootRMotor].RealSpeed);
+//    ShootLOUT_ADRC=gimbal.adrc[0].ADRC_Calc(-SHOOT_SPEED,gimbal.motors[ShootLMotor].RealSpeed);
+//    ShootROUT_ADRC=gimbal.adrc[1].ADRC_Calc(SHOOT_SPEED,gimbal.motors[ShootRMotor].RealSpeed);
 
     ///PID摩擦轮计算
     gimbal.motors_pid[ShootSpdL].PID_GetPositionPID(gimbal.motors[ShootLMotor].RealSpeed);
     gimbal.motors_pid[ShootSpdR].PID_GetPositionPID(gimbal.motors[ShootRMotor].RealSpeed);
-
+    if(gimbal.GIMBAL==OLD_HERO)
+    {
+        gimbal.motors_pid[ShootSpdU].PID_GetPositionPID(gimbal.motors[ShootUMotor].RealSpeed);
+    }
     ///拨弹轮计算
     gimbal.motors_pid[RamSpd].PID_GetPositionPID(gimbal.motors[RamMotor].RealSpeed);
 }
@@ -87,7 +94,10 @@ void cShoot::ShootSpeedClean()
     ///PID目标值清零
     gimbal.motors_pid[ShootSpdL].PID_Target=0;
     gimbal.motors_pid[ShootSpdR].PID_Target=0;
-
+    if(gimbal.GIMBAL==OLD_HERO)
+    {
+        gimbal.motors_pid[ShootSpdU].PID_Target=0;
+    }
     ///ADRC目标值清零
 //    gimbal.adrc[0].Target=0;
 //    gimbal.adrc[1].Target=0;
@@ -103,10 +113,11 @@ void cShoot::ShootSpeedClean()
 //        ShootLOUT_ADRC=0;
 //        ShootROUT_ADRC=0;
     }
-    //积分项清零
+
+    ///拨弹轮积分项清零
     gimbal.motors_pid[RamSpd].PID_ErrAll=0;
     gimbal.motors_pid[RamPos].PID_ErrAll=0;
-    //电流清零
+    ///拨弹轮电流清零
     gimbal.motors_pid[RamSpd].PID_Out=0;
 
     //摩擦轮关闭情况下，让目标值始终等于当前编码值，防止开启摩擦轮时偏差过大导致疯转

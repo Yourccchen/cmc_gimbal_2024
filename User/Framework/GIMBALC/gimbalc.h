@@ -21,6 +21,7 @@
 #include "filters.h"
 #include "iwdgc.h"
 #include "CH100.h"
+#include "imu_wit.h"
 #include "CyberGear.h"
 #include "dm4310_ctrl.h"
 #define RAMPSTEP 100
@@ -28,7 +29,7 @@
 //反馈模式选择
 #define ECD_MODE 0     //编码器反馈
 #define IMU_MODE 1     //陀螺仪反馈
-
+#define PUTONG   10    //普通模式控制参数
 //选择是哪个角
 #define PIH_ANGLE 1  //Pitch轴角度
 #define YAW_ANGLE 2  //Yaw轴角度
@@ -69,7 +70,6 @@
 #define FRIC_OFF 0
 
 //切换新旧英雄判断
-extern bool GIMBAL;
 
 #define OLD_HERO 0
 #define NEW_HERO 1
@@ -188,7 +188,7 @@ public:
     float TuoluoDiredtion=275;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=275;//随动模式下正方向的角度
+    float ChassisYawTarget=273;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=-66, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
@@ -203,6 +203,9 @@ public:
     int8_t GimbalPower;
     ///分时发送控制变量///
     int32_t count_time_send=0;
+
+    ///新旧英雄判断///
+    bool GIMBAL=0;
 private:
     //Pitch轴限幅
     float _Pitch_EcdUpLimit=-119;

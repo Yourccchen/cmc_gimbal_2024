@@ -47,7 +47,7 @@ void MX_USART3_UART_Init(void);
 void MX_USART6_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-void IMU_Receive_Data(void);
+void WIT_IMU_Receive_Data(void);
 void REMOTEC_UartIrqHandler(void);
 void DEBUGC_UartIrqHandler(UART_HandleTypeDef *huart);
 void DEBUGC_UartIdleCallback(UART_HandleTypeDef *huart);

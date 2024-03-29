@@ -24,7 +24,8 @@ typedef enum
     CAN_YAW_RCV_ID = 0x209,
     CAN_YAW_SEND_ID = 0x2FF,
 
-    CAN_PIH_SEND_ID = 0x1FF,
+    CAN_PIH_RCV_ID=0x207,
+    CAN_PIH_SEND_ID = 0x1FF, //0x207
 
     //注释分别对应DATA[i]&[i+1]中的内容
     CAN_CHASSIS_VAL_ID = 0x401, //x轴速度 y轴速度 z轴速度 模式

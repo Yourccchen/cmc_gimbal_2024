@@ -103,7 +103,16 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
-            //回调函数
+            if (RxMeg.StdId == CAN_PIH_RCV_ID)
+            {//右摩擦轮
+                gimbal.motors[PihMotor].Connected = 1;
+                gimbal.motors[PihMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
+                gimbal.motors[PihMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
+                gimbal.motors[PihMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
+                gimbal.motors[PihMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
+                gimbal.motors[PihMotor].Null = (int16_t)(recvData[7]);
+            }
+
             ///小米电机部分
             Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
             switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
@@ -126,7 +135,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
             if (RxMeg.StdId == 0xB)
             {
                 dm4310_fbdata(&motor[Motor1], recvData);
-//                can2_rx_callback();
             }
             if (RxMeg.StdId == CAN_SHOOT_LEFT_ID)
             {//左摩擦轮
@@ -236,12 +244,9 @@ void CAN_PitchSendCurrent(int16_t current)
     tx_msg.StdId = CAN_PIH_SEND_ID;
     tx_msg.IDE = CAN_ID_STD;
     tx_msg.RTR = CAN_RTR_DATA;
-    tx_msg.DLC = 0x04;
-    send_data[0] = 0;
-    send_data[1] = 0; //预留给双枪管
-
-    send_data[2] = (current >> 8);
-    send_data[3] = current & 0xff;
+    tx_msg.DLC = 0x08;
+    send_data[4] = (current >> 8);
+    send_data[5] = current & 0xff;
 
     HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
 }
