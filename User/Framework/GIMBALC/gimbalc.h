@@ -139,7 +139,7 @@ public:
                 },
          motors
                 {
-/*PihMotor*/        {GM6020,CYBERGEAR,PIH_ANGLE,CYBERGEAR},
+/*PihMotor*/        {GM6020,IMU_MODE,PIH_ANGLE,MATLAB},
 /*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,DAMIAO},
 /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
 /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
@@ -188,7 +188,7 @@ public:
     float TuoluoDiredtion=275;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=273;//随动模式下正方向的角度
+    float ChassisYawTarget=93;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=-66, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
@@ -211,8 +211,8 @@ private:
     float _Pitch_EcdUpLimit=-119;
     float _Pitch_EcdLowLimit=-163;
 
-    float _Pitch_ImuUpLimit = 15;
-    float _Pitch_ImuLowLimit=-20;
+    float _Pitch_ImuUpLimit = 30;
+    float _Pitch_ImuLowLimit=-15;
 
     float _Pitch_MIUpLimit=-28;
     float _Pitch_MILowLimit=-70;

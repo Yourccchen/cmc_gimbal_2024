@@ -61,7 +61,7 @@ void cShoot::Shoot_SpeedC()
         gimbal.setMotorSpeed(ShootSpdR,SHOOT_SPEED);
         if(gimbal.GIMBAL==OLD_HERO)
         {
-            gimbal.setMotorSpeed(ShootSpdU,SHOOT_SPEED);
+            gimbal.setMotorSpeed(ShootSpdU,-SHOOT_SPEED);
         }
     }
     ///ADRC摩擦轮计算
@@ -103,12 +103,13 @@ void cShoot::ShootSpeedClean()
 //    gimbal.adrc[1].Target=0;
     //清除漏电流，防止关闭摩擦轮后电机仍以小速度旋转
     if(abs(gimbal.motors[ShootLMotor].RealSpeed)<100
-     ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100)
+     ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100
+     ||abs(gimbal.motors[ShootUMotor].RealSpeed)<100)
     {
         ///PID相关
         gimbal.motors_pid[ShootSpdL].PID_Out=0;
         gimbal.motors_pid[ShootSpdR].PID_Out=0;
-
+        gimbal.motors_pid[ShootSpdU].PID_Out=0;
         ///ADRC相关
 //        ShootLOUT_ADRC=0;
 //        ShootROUT_ADRC=0;

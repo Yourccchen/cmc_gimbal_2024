@@ -81,9 +81,9 @@ void cMotor::UpdateMotorInfo()
             if(Which_Angle==PIH_ANGLE)
             {
                 ///英雄的Pih反向!!!!!!!!!///
-                RealAngle_Imu=IMU_Angle_CH100(PIH_ANGLE)-180.0f; //IMU读取到的角度，直接进行计算
+                RealAngle_Imu=-IMU_Angle_CH100(PIH_ANGLE); //IMU读取到的角度，直接进行计算
                 RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
-                RealSpeed=IMU_Speed_CH100(PIH_ANGLE);     //IMU读取到的速度，直接进行计算
+                RealSpeed=-IMU_Speed_CH100(PIH_ANGLE);     //IMU读取到的速度，直接进行计算
             }
             else if(Which_Angle==YAW_ANGLE)
             {

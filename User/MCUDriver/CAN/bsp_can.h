@@ -24,17 +24,17 @@ typedef enum
     CAN_YAW_RCV_ID = 0x209,
     CAN_YAW_SEND_ID = 0x2FF,
 
-    CAN_PIH_RCV_ID=0x207,
-    CAN_PIH_SEND_ID = 0x1FF, //0x207
+    CAN_PIH_RCV_ID = 0x20A,
+    CAN_PIH_SEND_ID = 0x2FF, //0x20A
 
     //注释分别对应DATA[i]&[i+1]中的内容
     CAN_CHASSIS_VAL_ID = 0x401, //x轴速度 y轴速度 z轴速度 模式
     CAN_CHASSIS_YAW_ID = 0x402, //yaw轴角度 pitch轴角度 状态标志位 车间标志位
 
     CAN_SHOOT_LEFT_ID = 0x201,  //英雄左摩擦轮,ID为1
-    CAN_SHOOT_RIGHT_ID = 0x202, //英雄右摩擦轮,ID为2
+    CAN_SHOOT_RIGHT_ID = 0x202, //英雄上摩擦轮,ID为2
     CAN_RAMC_ID = 0X203,        //英雄拨弹轮,ID为3
-    CAN_SHOOT_UP_ID = 0X204,    //英雄上摩擦轮,ID为4
+    CAN_SHOOT_UP_ID = 0X204,    //英雄右摩擦轮,ID为4
     CAN_SCOPE_UP_ID=0x206,
     CAN_SCOPE_DOWN_ID=0x207,
 

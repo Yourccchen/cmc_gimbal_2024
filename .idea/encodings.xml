@@ -12,6 +12,8 @@
     <file url="file://$PROJECT_DIR$/User/Framework/IMU/algorithm/user_lib.c" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/User/Framework/IMU/bsp/bsp_spi.c" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/User/Framework/IWDG" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/Sliding/Sliding.cpp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/User/Framework/Sliding/Sliding.hpp" charset="GBK" />
     <file url="file://$PROJECT_DIR$/User/Framework/VISION" charset="GBK" />
   </component>
 </project>

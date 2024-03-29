@@ -112,20 +112,19 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[PihMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[PihMotor].Null = (int16_t)(recvData[7]);
             }
-
             ///小米电机部分
-            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
-            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
-            {
-                case 0x7F:
-                    if(RxMeg.ExtId>>24!= 0)               //检查是否为广播模式
-                        Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
-                    else
-                        mi_motor[0].MCU_ID = recvData[0];
-                    break;
-                default:
-                    break;
-            }
+//            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
+//            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
+//            {
+//                case 0x7F:
+//                    if(RxMeg.ExtId>>24!= 0)               //检查是否为广播模式
+//                        Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
+//                    else
+//                        mi_motor[0].MCU_ID = recvData[0];
+//                    break;
+//                default:
+//                    break;
+//            }
         }
     }
     if (hcan->Instance == CAN2)
@@ -245,8 +244,8 @@ void CAN_PitchSendCurrent(int16_t current)
     tx_msg.IDE = CAN_ID_STD;
     tx_msg.RTR = CAN_RTR_DATA;
     tx_msg.DLC = 0x08;
-    send_data[4] = (current >> 8);
-    send_data[5] = current & 0xff;
+    send_data[2] = (current >> 8);
+    send_data[3] = current & 0xff;
 
     HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
 }
