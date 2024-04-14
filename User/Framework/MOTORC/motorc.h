@@ -48,8 +48,8 @@ public:
 
     int8_t Which_Angle;           //哪个角度，Yaw or Pitch
     int8_t Which_Mode;            //电机反馈模式
-    int8_t Algorithm;            //算法选择
-    int MotorType;  //电机类型
+    int8_t Algorithm;             //算法选择
+    int MotorType;                //电机类型
 
     void UpdateMotorInfo();       //处理电机数据
     int16_t GetEncoderContinueAngel(int16_t Last, int16_t Now);

@@ -83,7 +83,8 @@ void cShoot::Shoot_SpeedC()
   */
 void cShoot::Shoot_SendCurrent(float LOut,float ROut,float UOut,float RamOut)
 {
-    CAN_ShootSendCurrent(LOut,ROut,UOut,RamOut);
+    CAN_ShootSendCurrent(LOut,ROut,UOut);
+    CAN_RamSendCurrent(RamOut);
 }
 
 /**

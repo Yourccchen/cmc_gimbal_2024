@@ -76,20 +76,23 @@ void cMotor::UpdateMotorInfo()
 
                 RealAngle_Ecd = ((float) AllAngle * ENCODER_TO_ANGLE) / M2006_RATION; //实际角度，用于计算
             }
+            else if(MotorType == DAMIAO)
+            {
+                RealAngle_Ecd=motor[Motor2].para.angle;
+                RealSpeed=motor[Motor2].para.speed;
+            }
             break;
         case IMU_MODE:
             if(Which_Angle==PIH_ANGLE)
             {
                 ///英雄的Pih反向!!!!!!!!!///
                 RealAngle_Imu=-IMU_Angle_CH100(PIH_ANGLE); //IMU读取到的角度，直接进行计算
-                RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
                 RealSpeed=-IMU_Speed_CH100(PIH_ANGLE);     //IMU读取到的速度，直接进行计算
             }
             else if(Which_Angle==YAW_ANGLE)
             {
                 RealAngle_Imu=IMU_Angle_CH100(YAW_ANGLE);
-//                RealAngle_Ecd=((float) RawAngle * ENCODER_TO_ANGLE);
-                RealAngle_Ecd=motor->para.angle;
+                RealAngle_Ecd=motor[Motor1].para.angle;
                 RealSpeed=IMU_Speed_CH100(YAW_ANGLE);
             }
             break;

@@ -24,7 +24,7 @@ void ctrl_clear_err(void);
 void ctrl_add(void);
 void ctrl_minus(void);
 void ctrl_send(void);
-void ctrl_velset(float VelSet);
+void ctrl_posvelset(float PosSet,float VelSet);
 void ctrl_torset(float TorSet);
 #endif /* __DM4310_CTRL_H__ */
 

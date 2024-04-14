@@ -21,19 +21,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="refactor: 重新换成老头，只改了代码，功能还没对">
-      <change afterPath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/stm32f4xx_it.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/CYBERGEAR/CyberGear.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/imu_wit.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/IMU_WIT/witreg.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,9 +114,9 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">

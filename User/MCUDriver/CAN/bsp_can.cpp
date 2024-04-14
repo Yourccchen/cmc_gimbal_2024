@@ -8,7 +8,6 @@
 #include "gimbalc.h"
 #include "shootc.h"
 #include "visioncom_task.h"
-#include "CyberGear.h"
 ///掉线检测
 uint16_t isRecvShoot; //摩擦轮掉线检测
 uint16_t isRecvYaw;   //Yaw掉线检测
@@ -103,38 +102,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
-            if (RxMeg.StdId == CAN_PIH_RCV_ID)
-            {//右摩擦轮
-                gimbal.motors[PihMotor].Connected = 1;
-                gimbal.motors[PihMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
-                gimbal.motors[PihMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
-                gimbal.motors[PihMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
-                gimbal.motors[PihMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
-                gimbal.motors[PihMotor].Null = (int16_t)(recvData[7]);
-            }
-            ///小米电机部分
-//            Motor_Can_ID=Get_Motor_ID(RxMeg.ExtId);//首先获取回传电机ID信息
-//            switch(Motor_Can_ID)                          //将对应ID电机信息提取至对应结构体
-//            {
-//                case 0x7F:
-//                    if(RxMeg.ExtId>>24!= 0)               //检查是否为广播模式
-//                        Motor_Data_Handler(&mi_motor[0],recvData,RxMeg.ExtId);
-//                    else
-//                        mi_motor[0].MCU_ID = recvData[0];
-//                    break;
-//                default:
-//                    break;
-//            }
-        }
-    }
-    if (hcan->Instance == CAN2)
-    {
-        if (HAL_Status == HAL_OK)                                                    //在这里接收数据
-        {
-            if (RxMeg.StdId == 0xB)
-            {
-                dm4310_fbdata(&motor[Motor1], recvData);
-            }
             if (RxMeg.StdId == CAN_SHOOT_LEFT_ID)
             {//左摩擦轮
                 gimbal.motors[ShootLMotor].Connected = 1;
@@ -153,6 +120,22 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ShootRMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[ShootRMotor].Null = (int16_t)(recvData[7]);
             }
+            if (RxMeg.StdId == 0x03)
+            {
+                dm4310_fbdata(&motor[Motor2], recvData);
+            }
+
+        }
+    }
+    if (hcan->Instance == CAN2)
+    {
+        if (HAL_Status == HAL_OK)                                                    //在这里接收数据
+        {
+            if (RxMeg.StdId == 0x0B)
+            {
+                dm4310_fbdata(&motor[Motor1], recvData);
+            }
+
             if (RxMeg.StdId == CAN_RAMC_ID)
             {//拨弹轮
                 gimbal.motors[RamMotor].Connected = 1;
@@ -308,11 +291,11 @@ void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t f
 }
 
 /**
-  *@breif   CAN发送电流给摩擦轮两电机与拨弹轮
+  *@breif   CAN发送电流给摩擦轮电机
   *@param   none
   *@retval  none
   */
-void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc , int16_t ramc)
+void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc)
 {
     CAN_TxHeaderTypeDef tx_msg;
     uint32_t send_mail_box = 0;
@@ -327,11 +310,27 @@ void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc , int16_t 
     send_data[2] = (friRc >> 8);
     send_data[3] = friRc;
 
-    send_data[4] = (ramc >> 8);
-    send_data[5] = ramc;
-
     send_data[6] = (friUc >> 8);
     send_data[7] = friUc;
+
+    HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
+}
+/**
+  *@breif   CAN发送电流给摩擦轮电机
+  *@param   none
+  *@retval  none
+  */
+void CAN_RamSendCurrent(int16_t Ramc)
+{
+    CAN_TxHeaderTypeDef tx_msg;
+    uint32_t send_mail_box = 0;
+    uint8_t send_data[8];
+    tx_msg.StdId = CAN_SHOOT_SEND_ID;
+    tx_msg.IDE = CAN_ID_STD;
+    tx_msg.RTR = CAN_RTR_DATA;
+    tx_msg.DLC = 0x08;
+    send_data[4] = (Ramc >> 8);
+    send_data[5] = Ramc;
 
     HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
 }

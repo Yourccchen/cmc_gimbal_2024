@@ -21,9 +21,8 @@
 #include "filters.h"
 #include "iwdgc.h"
 #include "CH100.h"
-#include "imu_wit.h"
-#include "CyberGear.h"
 #include "dm4310_ctrl.h"
+#include "laser.h"
 #define RAMPSTEP 100
 #define SHOOT_RAMPSTEP 20
 //反馈模式选择
@@ -41,8 +40,7 @@
 #define NORMAL 1    //普通PID
 #define MATLAB 2    //MATLAB算法，自带积分抗饱和(基本上所有兵种的Yaw轴可以用这个算法，Pitch轴需要根据实际情况调整)
 #define ADRC 3      //ADRC算法
-#define CYBERGEAR 4 //小米电机自带的运控模式
-#define DAMIAO 5    //达妙电机的速度模式
+#define DAMIAO 5    //达妙电机的模式
 //车体模式赋值(右侧拨杆)
 #define TUOLUO   1     //小陀螺模式
 #define SUIDONG  3     //随动模式
@@ -139,8 +137,8 @@ public:
                 },
          motors
                 {
-/*PihMotor*/        {GM6020,IMU_MODE,PIH_ANGLE,MATLAB},
-/*YawMotor*/        {GM6020,IMU_MODE,YAW_ANGLE,DAMIAO},
+/*PihMotor*/        {DAMIAO,ECD_MODE,PIH_ANGLE,DAMIAO},
+/*YawMotor*/        {DAMIAO,IMU_MODE,YAW_ANGLE,NORMAL},
 /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
 /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
 /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
@@ -189,7 +187,7 @@ public:
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
     float ChassisYawTarget=93;//随动模式下正方向的角度
-    float vx, vy, vz, PihTarget=-66, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
+    float vx, vy, vz, PihTarget=50, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
 
@@ -203,13 +201,13 @@ public:
     int8_t GimbalPower;
     ///分时发送控制变量///
     int32_t count_time_send=0;
-
+    int defpitch=0;//初始化时令PihTarget等于定值的参数
     ///新旧英雄判断///
     bool GIMBAL=0;
 private:
     //Pitch轴限幅
-    float _Pitch_EcdUpLimit=-119;
-    float _Pitch_EcdLowLimit=-163;
+    float _Pitch_EcdUpLimit=80;
+    float _Pitch_EcdLowLimit=30;
 
     float _Pitch_ImuUpLimit = 30;
     float _Pitch_ImuLowLimit=-15;

@@ -233,6 +233,7 @@ void dm4310_fbdata(motor_t *motor, uint8_t *rx_data)
 * @details:    	通过CAN总线向特定电机发送启用特定模式的命令
 ************************************************************************
 **/
+int count_number=0;
 void enable_motor_mode(hcan_t* hcan, uint16_t motor_id, uint16_t mode_id)
 {
 	uint8_t data[8];
@@ -246,7 +247,13 @@ void enable_motor_mode(hcan_t* hcan, uint16_t motor_id, uint16_t mode_id)
 	data[5] = 0xFF;
 	data[6] = 0xFF;
 	data[7] = 0xFC;
-	
+
+//    if(count_number % 100 ==0)
+//    {
+//        HAL_GPIO_TogglePin(LED_G_GPIO_Port,LED_G_Pin);
+//        count_number = 0;
+//    }
+//    count_number++;
 	canx_send_data(hcan, id, data, 8);
 }
 /**
@@ -368,7 +375,7 @@ void mit_ctrl(hcan_t* hcan, uint16_t motor_id, float pos, float vel,float kp, fl
 ************************************************************************
 * @brief:      	pos_speed_ctrl: 位置速度控制函数
 * @param[in]:   hcan:			指向CAN_HandleTypeDef结构的指针，用于指定CAN总线
-* @param[in]:   motor_id:	电机ID，指定目标电机
+* @param[in]:   motor_id:	    电机ID，指定目标电机
 * @param[in]:   vel:			速度给定值
 * @retval:     	void
 * @details:    	通过CAN总线向电机发送位置速度控制命令

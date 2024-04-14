@@ -84,8 +84,6 @@ void VisionComTask(void const* argument)
     /* Infinite loop */
     for (;;)
     {
-        init_cybergear(&mi_motor[0],0x7F,Motion_mode);
-
         CurrentTime = xTaskGetTickCount();
         int8_t Zimiao = portIsZimiao();
 

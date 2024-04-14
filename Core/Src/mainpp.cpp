@@ -42,7 +42,10 @@ void User_Init()
     IMU_UartInit();
     dm4310_motor_init();//达妙电机初始化
 
-    gimbal.GIMBAL=OLD_HERO;
+//    gimbal.PihTarget=motor[Motor2].para.angle;
+//    gimbal.PihTarget=motor[Motor2].para.angle;
+//    gimbal.PihTarget=motor[Motor2].para.angle;
+    gimbal.GIMBAL=NEW_HERO;
     MX_FREERTOS_Init();        //FreeRTOS初始化
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时
 }
@@ -53,6 +56,6 @@ int main()
     User_Init();
     while(1)
     {
-        HAL_Delay(100);
+
     }
 }

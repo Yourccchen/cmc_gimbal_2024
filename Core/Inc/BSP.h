@@ -24,8 +24,8 @@
 #include "laser.h"
 #include "spi.h"
 #include "i2c.h"
-#include "CyberGear.h"
 #include "bsp_can.h"
 #include "CH100.h"
 #include "dm4310_ctrl.h"
+#include "motorc.h"
 #endif //CMC_GIMBAL_2024_BSP_H

@@ -288,7 +288,6 @@ void USART1_IRQHandler(void)
   /* USER CODE BEGIN USART1_IRQn 1 */
 
       CH100_IMU_Receive_Data();
-//      WIT_IMU_Receive_Data();
 
   /* USER CODE END USART1_IRQn 1 */
 }

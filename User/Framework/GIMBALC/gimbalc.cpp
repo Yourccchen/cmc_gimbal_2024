@@ -3,7 +3,7 @@
 //
 
 #include "gimbalc.h"
-#include "laser.h"
+
 
 
 cGimbal gimbal; //定义云台总类
@@ -136,7 +136,8 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
                 lowfilter_yaw.Init(20,0.005);//低通滤波器，设置截止频率和采样周期
 
                 PihTarget =-lowfilter_pih.Filter(vision_pkt.offset_pitch)
-                           +mi_motor[0].Angle;
+                           +motors[PihMotor].RealAngle_Ecd;
+
 //                    YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
                 YawTarget =lowfilter_yaw.Filter(vision_pkt.offset_yaw)
                            + motors[YawMotor].RealAngle_Imu;
@@ -152,19 +153,12 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             motors_pid[YawSpd].PID_Out=0;
             Pid_Out.YawCurrent = 0;
             YawTarget=motors[YawMotor].RealAngle_Imu;
-            motor[Motor1].ctrl.kd_set=0;
             //PIH轴输出为0
             motors_pid[PihPos].PID_Out=0;
             motors_pid[PihSpd].PID_Out=0;
             Pid_Out.PihCurrent=0;
-            if(gimbal.GIMBAL==NEW_HERO)
-            {
-                PihTarget=mi_motor[0].Angle;
-            }
-            if(gimbal.GIMBAL==OLD_HERO)
-            {
-                PihTarget=motors[PihMotor].RealAngle_Imu;
-            }
+
+            PihTarget=motor[Motor2].para.angle;
             //底盘目标值给0
             vx=vy=vz=0;
             break;
@@ -202,7 +196,7 @@ void cGimbal::Gimbal_ControlMode(int8_t control_mode)
                     lowfilter_yaw.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
 
                     PihTarget =-lowfilter_pih.Filter(vision_pkt.offset_pitch)
-                               +mi_motor[0].Angle;
+                               +motors[PihMotor].RealAngle_Ecd;
 //                    YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
                     YawTarget =lowfilter_yaw.Filter(vision_pkt.offset_yaw)
                                + motors[YawMotor].RealAngle_Imu;
@@ -278,14 +272,11 @@ void cGimbal::Gimbal_PosC()
         case IMU_MODE:
             Pitch_ImuLimit(PihTarget); //陀螺仪
             break;
-        case CYBERGEAR:
-//            Pitch_MILimit(PihTarget);   //小米电机
-            break;
     }
 
     portSetScope();//倍镜角度控制
     //通过遥控器设置Pih轴、Yaw轴、底盘跟随的目标值
-    setMotorPos(PihPos,PihTarget);
+//    setMotorPos(PihPos,PihTarget);
     setMotorPos(YawPos,YawTarget);
     setMotorPos(ChassisYaw,ChassisYawTarget);
     //开镜电机的位置环目标值
@@ -294,7 +285,7 @@ void cGimbal::Gimbal_PosC()
     portSetTurn();//云台反转。如果按下V，云台立马反转180°，如果没有按下，不影响程序运行
 
     //MATLAB的PID数据更新
-    Pid_In.PihAngle_set = PihTarget;
+//    Pid_In.PihAngle_set = PihTarget;
 
     Pid_In.PihAngle_Now=motors[PihMotor].RealAngle_Imu;
     Pid_In.PihSpeed_Now=motors[PihMotor].RealSpeed;
@@ -339,6 +330,11 @@ void cGimbal::Gimbal_PosC()
 ///电机速度环
 void cGimbal::Gimbal_SpeedC()
 {
+    if(defpitch<=100)
+    {
+        PihTarget=50;
+        defpitch++;
+    }
     //根据算法发送电流
     //Yaw轴算法选择
     if(count_time_send==2)
@@ -347,21 +343,18 @@ void cGimbal::Gimbal_SpeedC()
         {
             case NORMAL:
             {
-                CAN_YawSendCurrent((int16_t) motors_pid[YawSpd].PID_Out);
+                if(CarMode!=PROTECT)
+                {
+                    ctrl_torset(motors_pid[YawSpd].PID_Out);
+                    ctrl_send(); //达妙电机的发送can信号
+                }
+//                CAN_YawSendCurrent((int16_t) motors_pid[YawSpd].PID_Out);
                 break;
             }
             case MATLAB:
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
                 break;
-            }
-            case DAMIAO:
-            {
-                if(ControlMode!=PROTECT)
-                {
-                    ctrl_torset(motors_pid[YawSpd].PID_Out);
-                    ctrl_send(); //达妙电机的发送can信号
-                }
             }
         }
     }
@@ -375,18 +368,16 @@ void cGimbal::Gimbal_SpeedC()
         }
         case MATLAB:
         {
-            CAN_PitchSendCurrent(- Pid_Out.PihCurrent);
+            CAN_PitchSendCurrent(-Pid_Out.PihCurrent);
             break;
         }
-        case CYBERGEAR:
+        case DAMIAO:
         {
-            if(ZimiaoFlag==OPENZIMIAO||CarMode==ZIMIAO)
-                motor_controlmode(&mi_motor[0],0,PihTarget,0,20,2);
-            else if(CarMode==PROTECT || ProtectFlag==OFFLINE)
-                motor_controlmode(&mi_motor[0],0,PihTarget,0,0,0);
-            else
-                motor_controlmode(&mi_motor[0],0,PihTarget,0,150,3);
-
+            if(CarMode!=PROTECT)
+            {
+                ctrl_posvelset(PihTarget,7); //°、rad/s
+                ctrl_send(); //达妙电机的发送can信号
+            }
         }
     }
 
@@ -599,8 +590,8 @@ void cGimbal::Printf_Test()
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu,motors[PihMotor].RealSpeed);
-//    usart_printf("%f,%f,%f\r\n",PihTarget,mi_motor[0].Angle,mi_motor[0].Speed);
+//    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu,motors[PihMotor].RealSpeed);
+    usart_printf("%f,%f,%f,%d\r\n",PihTarget,motors[PihMotor].RealAngle_Ecd,motors[PihMotor].RealSpeed,defpitch);
 //    usart_printf("%f,%f\r\n",mi_motor[0].Angle,IMU_Angle_CH100(PIH_ANGLE));
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);

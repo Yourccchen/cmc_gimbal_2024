@@ -3,6 +3,7 @@
 #include "can_driver.h"
 #include "string.h"
 
+///Motor1是YAW轴，Motor2是PITCH轴
 motor_t motor[num];
 int lcd_flag;
 int8_t motor_id = 1;
@@ -20,7 +21,7 @@ void dm4310_motor_init(void)
 {
 	// 初始化Motor1和Motor2的电机结构
 	memset(&motor[Motor1], 0, sizeof(motor[Motor1]));
-//	memset(&motor[Motor2], 0, sizeof(motor[Motor2]));
+	memset(&motor[Motor2], 0, sizeof(motor[Motor2]));
 //	memset(&motor[Motor3], 0, sizeof(motor[Motor2]));
 
 	// 设置Motor1的电机信息
@@ -28,12 +29,12 @@ void dm4310_motor_init(void)
 	motor[Motor1].ctrl.mode = 0;		// 0: MIT模式   1: 位置速度模式   2: 速度模式
 	motor[Motor1].cmd.mode = 0;
 
-//	// 设置Motor2的电机信息
-//	motor[Motor2].id = 1;
-//	motor[Motor2].ctrl.mode = 2;
-//	motor[Motor2].cmd.mode = 2;
-//
-//	// 设置Motor3的电机信息
+	// 设置Motor2的电机信息
+	motor[Motor2].id = 0x02;
+	motor[Motor2].ctrl.mode = 1;
+	motor[Motor2].cmd.mode = 1;
+
+	// 设置Motor3的电机信息
 //	motor[Motor3].id = 2;
 //	motor[Motor3].ctrl.mode = 2;
 //	motor[Motor3].cmd.mode = 2;
@@ -132,14 +133,11 @@ void motor_para_minus(motor_t *motor)
 **/
 void ctrl_enable(void)
 {
-	switch(motor_id)
-	{
-		case 1:
-			// 启用Motor1的电机控制
-			motor[Motor1].start_flag = 1;
-			dm4310_enable(&hcan2, &motor[Motor1]);
-			break;
-	}
+    // 启用Motor1、Motor2的电机控制
+    motor[Motor1].start_flag = 1;
+    dm4310_enable(&hcan2, &motor[Motor1]);//Yaw轴电机
+    motor[Motor2].start_flag = 1;
+    dm4310_enable(&hcan1, &motor[Motor2]);//Pitch轴电机
 }
 /**
 ************************************************************************
@@ -182,16 +180,16 @@ void ctrl_set(void)
 }
 /**
 ************************************************************************
-* @brief:      	ctrl_velset: 设置电机速度函数
-* @param:      	VelSet 要设置的电机速度大小与kd大小
+* @brief:      	ctrl_posvelset: 设置电机位置速度参数设置函数
+* @param:       PosSet,VelSet
 * @retval:     	void
-* @details:    	设置电机速度，以适配位置环的输出更改
+* @details:    	设置电机位置、最大速度
 ************************************************************************
 **/
-void ctrl_velset(float VelSet)
+void ctrl_posvelset(float PosSet,float VelSet)
 {
-    motor[Motor1].ctrl.kd_set=0;
-    motor[Motor1].ctrl.vel_set=VelSet;
+    motor[Motor2].ctrl.pos_set=PosSet*deg2rad;
+    motor[Motor2].ctrl.vel_set=VelSet;
 }
 /**
 ************************************************************************
@@ -297,6 +295,7 @@ void ctrl_send(void)
 //		case 1:
 			 // 向Motor1发送控制命令
             dm4310_ctrl_send(&hcan2, &motor[Motor1]);
+            dm4310_ctrl_send(&hcan1, &motor[Motor2]);
 //			break;
 //	}
 }

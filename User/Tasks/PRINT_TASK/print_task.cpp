@@ -19,7 +19,6 @@ void PrintControlTask(void const* argument)
     {
         ctrl_enable();
 
-
         CurrentTime = xTaskGetTickCount();
         gimbal.Printf_Test();
 
