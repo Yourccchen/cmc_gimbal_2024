@@ -343,7 +343,7 @@ void cGimbal::Gimbal_SpeedC()
         {
             case NORMAL:
             {
-                if(CarMode!=PROTECT)
+                if(ProtectFlag!=OFFLINE)
                 {
                     ctrl_torset(motors_pid[YawSpd].PID_Out);
                     ctrl_send(); //达妙电机的发送can信号
@@ -373,7 +373,7 @@ void cGimbal::Gimbal_SpeedC()
         }
         case DAMIAO:
         {
-            if(CarMode!=PROTECT)
+            if(ProtectFlag!=OFFLINE)
             {
                 ctrl_posvelset(PihTarget,7); //°、rad/s
                 ctrl_send(); //达妙电机的发送can信号
@@ -591,15 +591,16 @@ void cGimbal::Printf_Test()
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
 //    usart_printf("%f,%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu,motors[PihMotor].RealSpeed);
-    usart_printf("%f,%f,%f,%d\r\n",PihTarget,motors[PihMotor].RealAngle_Ecd,motors[PihMotor].RealSpeed,defpitch);
+//    usart_printf("%f,%f,%f,%d\r\n",PihTarget,motors[PihMotor].RealAngle_Ecd,motors[PihMotor].RealSpeed,defpitch);
 //    usart_printf("%f,%f\r\n",mi_motor[0].Angle,IMU_Angle_CH100(PIH_ANGLE));
     //底盘打印//
 //    usart_printf("%f,%f\r\n",vx,vy);
 //    usart_printf("%f,%f,%f,%f\r\n",motors[YawMotor].RealAngel_Ecd,motors_pid[ChassisYaw].PID_Out,ChassisYawTarget,vz);
     //摩擦轮打印//
-//    usart_printf("%f,%f,%f,%f\r\n",
+//    usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",
 //                 gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed);
+//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
+//                 motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,motors[RamMotor].RealAngle_Ecd);
     //ADRC打印//
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
@@ -624,8 +625,8 @@ void cGimbal::Printf_Test()
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
 //    usart_printf("%f,%f,%f,%f\r\n",portSetYawSpeed(),MouseYaw,portSetPihSpeed(),MousePih);
 
-//    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
-//                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
+    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
+                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
 //    usart_printf("%f,%f,%f,%f\r\n", IMU_Angle_Wit(PIH_ANGLE),IMU_Angle_Wit(YAW_ANGLE),YawTarget,PihTarget);
     //热量打印//
 //    usart_printf("%d,%d,%d,%d\r\n",gimbal.shoot.heat_limit,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user,gimbal.shoot.cool_spd);

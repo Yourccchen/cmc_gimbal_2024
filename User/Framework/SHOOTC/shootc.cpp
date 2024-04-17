@@ -27,7 +27,7 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if (shoot_permit==SHOOT_PERMIT &&  GetFricStatus()  &&  abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
+    if (GetFricStatus()  &&  abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
     {
 
         if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
@@ -104,8 +104,7 @@ void cShoot::ShootSpeedClean()
 //    gimbal.adrc[1].Target=0;
     //清除漏电流，防止关闭摩擦轮后电机仍以小速度旋转
     if(abs(gimbal.motors[ShootLMotor].RealSpeed)<100
-     ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100
-     ||abs(gimbal.motors[ShootUMotor].RealSpeed)<100)
+     ||abs(gimbal.motors[ShootRMotor].RealSpeed)<100)
     {
         ///PID相关
         gimbal.motors_pid[ShootSpdL].PID_Out=0;

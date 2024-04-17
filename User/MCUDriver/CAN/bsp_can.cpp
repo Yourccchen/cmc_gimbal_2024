@@ -131,7 +131,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
-            if (RxMeg.StdId == 0x0B)
+            if (RxMeg.StdId == 0x00)
             {
                 dm4310_fbdata(&motor[Motor1], recvData);
             }
@@ -145,6 +145,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[RamMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[RamMotor].Null = (int16_t)(recvData[7]);
             }
+
             if (RxMeg.StdId == CAN_SHOOT_UP_ID)
             {//上摩擦轮
                 gimbal.motors[ShootUMotor].Connected = 1;
@@ -329,6 +330,7 @@ void CAN_RamSendCurrent(int16_t Ramc)
     tx_msg.IDE = CAN_ID_STD;
     tx_msg.RTR = CAN_RTR_DATA;
     tx_msg.DLC = 0x08;
+
     send_data[4] = (Ramc >> 8);
     send_data[5] = Ramc;
 
