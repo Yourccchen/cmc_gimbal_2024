@@ -11,7 +11,7 @@
   */
 void cShoot::Shoot_ControlLoop()
 {
-    Shoot_SpdChoose();//速度选择
+    Shoot_SpdChoose(5500);//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
     Heat_Protect();//热量保护
@@ -219,9 +219,9 @@ int8_t cShoot::GetFricStatus(void)
 /**
   *@brief   摩擦轮的速度选择
   */
-void cShoot::Shoot_SpdChoose()
+void cShoot::Shoot_SpdChoose(float spd)
 {
-    SHOOT_SPEED=6500;
+    SHOOT_SPEED=spd;
 }
 
 /**

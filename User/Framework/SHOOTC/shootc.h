@@ -50,7 +50,7 @@ public:
     void Heat_Protect();
     int8_t GetFricStatus();
     void ShootSpeedClean();
-    void Shoot_SpdChoose();
+    void Shoot_SpdChoose(float spd);
     void Shoot_ParamChoose();
 
 private:

@@ -20,18 +20,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 浅调了一下pitch，但效果还是不好">
-      <change afterPath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.hpp" afterDir="false" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 新车功能正常，后续Yaw与保护待优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/PRINT_TASK/print_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,14 +230,7 @@
       <workItem from="1713278874933" duration="3266000" />
       <workItem from="1713324910893" duration="358000" />
       <workItem from="1713358635764" duration="710000" />
-      <workItem from="1713494571038" duration="2859000" />
-    </task>
-    <task id="LOCAL-00010" summary="perf: YAW轴跟随效果现在不错">
-      <created>1700644188746</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1700644188746</updated>
+      <workItem from="1713494571038" duration="5444000" />
     </task>
     <task id="LOCAL-00011" summary="perf: PIH轴现在效果能看">
       <created>1700651287368</created>
@@ -580,7 +568,14 @@
       <option name="project" value="LOCAL" />
       <updated>1713104185163</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="perf: 新车功能正常，后续Yaw与保护待优化">
+      <created>1713530834717</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1713530834717</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +597,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="build: 重新换回1:1的6020电机，增加了键鼠下自瞄的按键R" />
     <MESSAGE value="perf: 学期开始，留一个版本（只有参数改动）" />
     <MESSAGE value="fix: 之前git出问题，现在是正常版本" />
     <MESSAGE value="feat: IMU换成了CH100，现在可以正常控制，效果还需优化" />
@@ -627,7 +621,8 @@
     <MESSAGE value="perf: 自瞄静态OK" />
     <MESSAGE value="fix: 修改了小陀螺无法直行的问题" />
     <MESSAGE value="feat: 新云台Pitch轴改用达妙电机,目前可以正常控制,但是用了一个抽象方法解决初始化时Pihtarget=0的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 新云台Pitch轴改用达妙电机,目前可以正常控制,但是用了一个抽象方法解决初始化时Pihtarget=0的问题" />
+    <MESSAGE value="perf: 新车功能正常，后续Yaw与保护待优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: 新车功能正常，后续Yaw与保护待优化" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
