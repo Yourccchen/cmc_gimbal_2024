@@ -23,6 +23,7 @@
 #include "CH100.h"
 #include "dm4310_ctrl.h"
 #include "laser.h"
+#include "Sliding.hpp"
 #define RAMPSTEP 100
 #define SHOOT_RAMPSTEP 20
 //反馈模式选择
@@ -41,6 +42,7 @@
 #define MATLAB 2    //MATLAB算法，自带积分抗饱和(基本上所有兵种的Yaw轴可以用这个算法，Pitch轴需要根据实际情况调整)
 #define ADRC 3      //ADRC算法
 #define DAMIAO 5    //达妙电机的模式
+#define SMC 6
 //车体模式赋值(右侧拨杆)
 #define TUOLUO   1     //小陀螺模式
 #define SUIDONG  3     //随动模式
@@ -117,6 +119,8 @@ public:
 
     cADRC adrc[3];
 
+    cSMC sliding;
+
     cLowPassFilter lowfilter_yaw,lowfilter_pih;
 
     cGimbal():
@@ -131,7 +135,7 @@ public:
 /*ShootSpeedPidL*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidU*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ChassisYawPid*/   {1.5,0,5       ,PID_DEFAULT_ERRALL_MAX,100,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
+/*ChassisYawPid*/   {2.5,0,6       ,PID_DEFAULT_ERRALL_MAX,100,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
 /*ScopeUSpeedPid*/  {3,0.2,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
 /*ScopeUPosPid*/    {3,0,0.2      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
                 },
@@ -166,6 +170,7 @@ public:
     void Pitch_ImuLimit(float& Target);
     void Pitch_MILimit(float& Target);
     void Gimbal_KalmanInit(void);
+    void Sliding_Cal(void);
     void Online_Check();
     void Printf_Test();
 
@@ -186,7 +191,7 @@ public:
     float TuoluoDiredtion=275;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=93;//随动模式下正方向的角度
+    float ChassisYawTarget=302;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=50, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体

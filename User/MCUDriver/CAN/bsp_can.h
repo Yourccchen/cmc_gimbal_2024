@@ -53,7 +53,7 @@ void CAN_PitchSendCurrent(int16_t current);
 void CAN_ChasisSendSpd(int16_t vx, int16_t vy, int16_t vz, int8_t car_mode, int8_t is_aimbot);
 void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t fric_status, int8_t rammer_status,
                        int8_t redraw_status);
-void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc);
+void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc,int16_t Ramc);
 void CAN_RamSendCurrent(int16_t Ramc);
 void CAN_ScopeSendCurrent(int16_t scopeu);
 

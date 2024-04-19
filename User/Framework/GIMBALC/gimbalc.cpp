@@ -3,9 +3,6 @@
 //
 
 #include "gimbalc.h"
-
-
-
 cGimbal gimbal; //定义云台总类
 extern ReceivePacket vision_pkt;
 
@@ -325,6 +322,9 @@ void cGimbal::Gimbal_PosC()
 
     //拨弹轮、摩擦轮的位置环和速度环
     shoot.Shoot_PosC();
+
+    //滑模控制计算函数
+    Sliding_Cal();
 }
 
 ///电机速度环
@@ -348,12 +348,20 @@ void cGimbal::Gimbal_SpeedC()
                     ctrl_torset(motors_pid[YawSpd].PID_Out);
                     ctrl_send(); //达妙电机的发送can信号
                 }
-//                CAN_YawSendCurrent((int16_t) motors_pid[YawSpd].PID_Out);
                 break;
             }
             case MATLAB:
             {
                 CAN_YawSendCurrent((int16_t)Pid_Out.YawCurrent);
+                break;
+            }
+            case SMC:
+            {
+                if(ProtectFlag!=OFFLINE)
+                {
+                ctrl_torset(sliding.Out());
+                ctrl_send(); //达妙电机的发送can信号
+                }
                 break;
             }
         }
@@ -363,7 +371,7 @@ void cGimbal::Gimbal_SpeedC()
     {
         case NORMAL:
         {
-            CAN_PitchSendCurrent(-(int16_t)motors_pid[PihSpd].PID_Out);
+            CAN_PitchSendCurrent((int16_t)motors_pid[PihSpd].PID_Out);
             break;
         }
         case MATLAB:
@@ -378,6 +386,7 @@ void cGimbal::Gimbal_SpeedC()
                 ctrl_posvelset(PihTarget,7); //°、rad/s
                 ctrl_send(); //达妙电机的发送can信号
             }
+            break;
         }
     }
 
@@ -389,22 +398,22 @@ void cGimbal::Gimbal_SpeedC()
             case NORMAL:
             {
                 shoot.Shoot_SendCurrent(motors_pid[ShootSpdL].PID_Out, motors_pid[ShootSpdR].PID_Out,
-                                        motors_pid[ShootSpdU].PID_Out, motors_pid[RamSpd].PID_Out);
+                                        motors_pid[RamSpd].PID_Out);
                 break;
             }
             case ADRC:
             {
-                shoot.Shoot_SendCurrent(shoot.ShootLOUT_ADRC, shoot.ShootROUT_ADRC, shoot.ShootUOUT_ADRC,
+                shoot.Shoot_SendCurrent(shoot.ShootLOUT_ADRC, shoot.ShootROUT_ADRC,
                                         motors_pid[RamSpd].PID_Out);
                 break;
             }
         }
     }
     //开镜电机发电流
-    if(count_time_send==4)
-    {
-        CAN_ScopeSendCurrent((int16_t)motors_pid[ScopeUSpd].PID_Out);
-    }
+//    if(count_time_send==4)
+//    {
+//        CAN_ScopeSendCurrent((int16_t)motors_pid[ScopeUSpd].PID_Out);
+//    }
 }
 
 /**
@@ -472,15 +481,17 @@ void cGimbal::Gimbal_KalmanInit(void)
     KalmanCreate(&ZIMIAO_Pih, 30, 200); //暂时没用
 }
 
+void cGimbal::Sliding_Cal(void)
+{
+    sliding.SetParam(1.8*10e-5,60,2.5,1.1,0.5,10);
+//    sliding.SetParam(1.8*10e-5,Debug_Param().pos_kp,Debug_Param().pos_ki,1.1,0.5,10);
+    sliding.ErrorUpdate(YawTarget,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealSpeed);
+    sliding.SmcCalculate();
+}
+
 ///选择各种模式下的PID参数、ADRC参数
 void cGimbal::Gimbal_ParamChoose(int8_t mode)
 {
-    if(gimbal.GIMBAL==OLD_HERO)
-    {//旧云台Pih轴采用6020电机，选择IMU模式和普通PID算法
-        gimbal.motors[PihMotor].Which_Mode=IMU_MODE;
-        gimbal.motors[PihMotor].Algorithm=MATLAB;
-    }
-
     adrc[0].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
     adrc[1].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
     adrc[2].ADRCParamInit(1500, 0.05, 5, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
@@ -503,16 +514,16 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
 //            Pid_In.YawS_N = 0;
 //            Pid_In.YawS_MO = 10;
             ///Yaw轴的普通PID参数///
-            motors_pid[YawPos].Kp = 5.5;
+            motors_pid[YawPos].Kp = 7;
             motors_pid[YawPos].Ki = 0;
             motors_pid[YawPos].Kd = 0.2;
             motors_pid[YawPos].SetMax(50,300,50);
 
-            motors_pid[YawSpd].Kp = 0.02;
-            motors_pid[YawSpd].Ki = 0.003;
+            motors_pid[YawSpd].Kp = 0.04;
+            motors_pid[YawSpd].Ki = 0.0035;
             motors_pid[YawSpd].Kd = 0;
             motors_pid[YawSpd].SetMax(50,10,5);
-            Pid_In.Yaw_Dif_Gain = 0.2;
+            Pid_In.Yaw_Dif_Gain = 0.3;
             ///Pih轴的普通PID参数///
 //            motors_pid[PihPos].Kp = 50;
 //            motors_pid[PihPos].Ki = 0;
@@ -585,8 +596,8 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f,%f\r\n",motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[PihMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n",Pid_Out.YawCurrent,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawSpd].PID_Target,motors[YawMotor].RealSpeed);
+//    usart_printf("%f,%f,%f\r\n",sliding.Out(),motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -605,8 +616,8 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,shoot.ShootLOUT_ADRC,motors[ShootLMotor].RealSpeed,
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,shoot.ShootROUT_ADRC,motors[ShootRMotor].RealSpeed);
     //拨弹轮打印//
-//    usart_printf("%f,%f,%f,%d,%d\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-//                 motors[RamMotor].RealAngle_Ecd,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user);
+//    usart_printf("%f,%f,%f\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+//                 motors[RamMotor].RealAngle_Ecd);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw, lowfilter_yaw.Filter(vision_pkt.offset_yaw),YawTarget, motors[YawMotor].RealAngle_Imu
 //    ,-lowfilter_pih.Filter(vision_pkt.offset_pitch), PihTarget,  mi_motor[0].Angle);
@@ -625,10 +636,10 @@ void cGimbal::Printf_Test()
 //    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
 //    usart_printf("%f,%f,%f,%f\r\n",portSetYawSpeed(),MouseYaw,portSetPihSpeed(),MousePih);
 
-    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
-                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
+//    usart_printf("%f,%f,%f,%f,%f,%f\r\n", IMU_Angle_CH100(1), IMU_Angle_CH100(2),IMU_Angle_CH100(3),
+//                 IMU_Speed_CH100(1),IMU_Speed_CH100(2),IMU_Speed_CH100(3));
 //    usart_printf("%f,%f,%f,%f\r\n", IMU_Angle_Wit(PIH_ANGLE),IMU_Angle_Wit(YAW_ANGLE),YawTarget,PihTarget);
     //热量打印//
 //    usart_printf("%d,%d,%d,%d\r\n",gimbal.shoot.heat_limit,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user,gimbal.shoot.cool_spd);
-//    usart_printf("%d\r\n",gimbal.GimbalPower);
+//    usart_printf("%d\r\n",gimbal.ProtectFlag);
 }

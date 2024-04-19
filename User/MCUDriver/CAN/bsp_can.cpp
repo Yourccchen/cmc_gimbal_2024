@@ -102,6 +102,22 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
     {
         if (HAL_Status == HAL_OK)                                                    //在这里接收数据
         {
+
+            if (RxMeg.StdId == 0x03)
+            {
+                dm4310_fbdata(&motor[Motor2], recvData);
+            }
+
+        }
+    }
+    if (hcan->Instance == CAN2)
+    {
+        if (HAL_Status == HAL_OK)                                                    //在这里接收数据
+        {
+            if (RxMeg.StdId == 0x00)
+            {
+                dm4310_fbdata(&motor[Motor1], recvData);
+            }
             if (RxMeg.StdId == CAN_SHOOT_LEFT_ID)
             {//左摩擦轮
                 gimbal.motors[ShootLMotor].Connected = 1;
@@ -120,22 +136,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ShootRMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[ShootRMotor].Null = (int16_t)(recvData[7]);
             }
-            if (RxMeg.StdId == 0x03)
-            {
-                dm4310_fbdata(&motor[Motor2], recvData);
-            }
-
-        }
-    }
-    if (hcan->Instance == CAN2)
-    {
-        if (HAL_Status == HAL_OK)                                                    //在这里接收数据
-        {
-            if (RxMeg.StdId == 0x00)
-            {
-                dm4310_fbdata(&motor[Motor1], recvData);
-            }
-
             if (RxMeg.StdId == CAN_RAMC_ID)
             {//拨弹轮
                 gimbal.motors[RamMotor].Connected = 1;
@@ -296,7 +296,7 @@ void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t f
   *@param   none
   *@retval  none
   */
-void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc)
+void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc,int16_t Ramc)
 {
     CAN_TxHeaderTypeDef tx_msg;
     uint32_t send_mail_box = 0;
@@ -308,13 +308,13 @@ void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc, int16_t friUc)
     send_data[0] = (friLc >> 8);
     send_data[1] = friLc;
 
+    send_data[4] = (Ramc >> 8);
+    send_data[5] = Ramc;
+
     send_data[2] = (friRc >> 8);
     send_data[3] = friRc;
 
-    send_data[6] = (friUc >> 8);
-    send_data[7] = friUc;
-
-    HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
+    HAL_CAN_AddTxMessage(&hcan2,&tx_msg,send_data,&send_mail_box);
 }
 /**
   *@breif   CAN发送电流给摩擦轮电机
