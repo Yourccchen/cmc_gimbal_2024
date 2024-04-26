@@ -351,6 +351,7 @@ int8_t portSetCarMode(void)
     //非连续键值处理 即上一次是0，本次是1，判断为按了一次
     portHandle(&rc_ctrl.key.X);
     portHandle(&rc_ctrl.key.G);
+
     if(gimbal.ControlMode==KEY_MODE)
     {
         //Z小陀螺 X随动 G保护

@@ -119,7 +119,7 @@ public:
 
     cADRC adrc[3];
 
-    cSMC sliding;
+    cSMC sliding[2];
 
     cLowPassFilter lowfilter_yaw,lowfilter_pih;
 
@@ -168,7 +168,6 @@ public:
 
     void Pitch_EcdLimit(float & Target);
     void Pitch_ImuLimit(float& Target);
-    void Pitch_MILimit(float& Target);
     void Gimbal_KalmanInit(void);
     void Sliding_Cal(void);
     void Online_Check();
@@ -188,7 +187,7 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
-    float TuoluoDiredtion=275;
+    float TuoluoDiredtion=302;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
     float ChassisYawTarget=302;//随动模式下正方向的角度
@@ -217,8 +216,6 @@ private:
     float _Pitch_ImuUpLimit = 30;
     float _Pitch_ImuLowLimit=-15;
 
-    float _Pitch_MIUpLimit=-28;
-    float _Pitch_MILowLimit=-70;
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;

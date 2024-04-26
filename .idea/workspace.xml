@@ -20,10 +20,18 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 现在弹道很稳！！！">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: Yaw轴上滑模控制，响应很快">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/can.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/can.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +102,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -227,14 +240,13 @@
       <workItem from="1713597951364" duration="64000" />
       <workItem from="1713598242131" duration="4000" />
       <workItem from="1713616295460" duration="478000" />
-      <workItem from="1713618687584" duration="1805000" />
-    </task>
-    <task id="LOCAL-00012" summary="perf: 云台回来了（虽然效果还没达到之前的高度）">
-      <created>1700652448595</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1700652448595</updated>
+      <workItem from="1713618687584" duration="1930000" />
+      <workItem from="1713788714728" duration="5577000" />
+      <workItem from="1713880699429" duration="1651000" />
+      <workItem from="1713923643316" duration="5212000" />
+      <workItem from="1713942200182" duration="1501000" />
+      <workItem from="1714110797571" duration="569000" />
+      <workItem from="1714118619808" duration="4444000" />
     </task>
     <task id="LOCAL-00013" summary="perf: 移植好了融合滤波IMU算法，效果非常好">
       <created>1700889692840</created>
@@ -572,7 +584,14 @@
       <option name="project" value="LOCAL" />
       <updated>1713538619762</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="perf: Yaw轴上滑模控制，响应很快">
+      <created>1713621232223</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1713621232223</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,7 +613,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: 之前git出问题，现在是正常版本" />
     <MESSAGE value="feat: IMU换成了CH100，现在可以正常控制，效果还需优化" />
     <MESSAGE value="fix: 解决了关摩擦轮没法立即速度到零的问题,现在遥控器控制正常" />
     <MESSAGE value="docs: README更改遥控器内容" />
@@ -619,7 +637,8 @@
     <MESSAGE value="feat: 新云台Pitch轴改用达妙电机,目前可以正常控制,但是用了一个抽象方法解决初始化时Pihtarget=0的问题" />
     <MESSAGE value="perf: 新车功能正常，后续Yaw与保护待优化" />
     <MESSAGE value="perf: 现在弹道很稳！！！" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 现在弹道很稳！！！" />
+    <MESSAGE value="perf: Yaw轴上滑模控制，响应很快" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: Yaw轴上滑模控制，响应很快" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

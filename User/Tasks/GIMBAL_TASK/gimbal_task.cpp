@@ -12,13 +12,19 @@
 
 void GimbalControlTask(void const * argument)
 {
-
     /* USER CODE BEGIN GimbalControlTask */
     portTickType CurrentTime;
     /* Infinite loop */
     for (;;)
     {
-
+        if(gimbal.ProtectFlag==OFFLINE)
+        {
+            ctrl_disable();
+        }
+        else
+        {
+            ctrl_enable();
+        }
 
         gimbal.count_time_send++;
         if(gimbal.count_time_send > 4) gimbal.count_time_send = 0;

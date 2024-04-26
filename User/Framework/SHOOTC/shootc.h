@@ -47,7 +47,7 @@ public:
     void Shoot_SendCurrent(float LOut,float ROut,float RamOut);
     void Stuck_Check();
     int Heat_Cal();
-    void Heat_Protect();
+    int8_t Heat_Protect();
     int8_t GetFricStatus();
     void ShootSpeedClean();
     void Shoot_SpdChoose(float spd);

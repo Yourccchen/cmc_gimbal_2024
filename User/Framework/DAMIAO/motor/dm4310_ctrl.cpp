@@ -150,14 +150,19 @@ void ctrl_enable(void)
 **/
 void ctrl_disable(void)
 {
-	switch(motor_id)
-	{
-		case 1:
-			// 禁用Motor1的电机控制
-			motor[Motor1].start_flag = 0;
-			dm4310_disable(&hcan1, &motor[Motor1]);
-			break;
-	}
+//	switch(motor_id)
+//	{
+//		case 1:
+//			// 禁用Motor1的电机控制
+//			motor[Motor1].start_flag = 0;
+//			dm4310_disable(&hcan1, &motor[Motor1]);
+//			break;
+//	}
+    // 禁用Motor1、Motor2的电机控制
+    motor[Motor1].start_flag = 1;
+    dm4310_disable(&hcan2, &motor[Motor1]);//Yaw轴电机
+    motor[Motor2].start_flag = 1;
+    dm4310_disable(&hcan1, &motor[Motor2]);//Pitch轴电机
 }
 /**
 ************************************************************************

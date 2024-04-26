@@ -84,7 +84,7 @@ void cShoot::Shoot_SpeedC()
 void cShoot::Shoot_SendCurrent(float LOut,float ROut,float RamOut)
 {
     CAN_ShootSendCurrent(LOut,ROut,RamOut);
-//    CAN_RamSendCurrent(RamOut);
+    CAN_RamSendCurrent(RamOut);
 }
 
 /**
@@ -190,16 +190,16 @@ int cShoot::Heat_Cal()
 /**
   *@brief   热量保护
   */
-void  cShoot::Heat_Protect()
+int8_t cShoot::Heat_Protect()
 {
     //如果热量限制减去当前热量大于等于100，允许发弹，其余情况均不允许发弹
    if( ( heat_limit - Heat_Cal() ) >=110)
    {
-       shoot_permit=SHOOT_PERMIT;
+       return SHOOT_PERMIT;
    }
    else
    {
-       shoot_permit=SHOOT_FORBID;
+       return SHOOT_FORBID;
    }
 
 }
