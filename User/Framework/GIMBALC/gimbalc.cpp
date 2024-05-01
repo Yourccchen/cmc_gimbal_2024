@@ -132,11 +132,11 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
                 lowfilter_pih.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
                 lowfilter_yaw.Init(20,0.005);//低通滤波器，设置截止频率和采样周期
 
-                PihTarget =-lowfilter_pih.Filter(vision_pkt.offset_pitch)
+                PihTarget =-vision_pkt.offset_pitch
                            +motors[PihMotor].RealAngle_Ecd;
 
 //                    YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
-                YawTarget =lowfilter_yaw.Filter(vision_pkt.offset_yaw)
+                YawTarget =vision_pkt.offset_yaw
                            + motors[YawMotor].RealAngle_Imu;
                 Last_ID = vision_pkt.packet_id;
             }
@@ -194,10 +194,10 @@ void cGimbal::Gimbal_ControlMode(int8_t control_mode)
                     lowfilter_pih.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
                     lowfilter_yaw.Init(50,0.005);//低通滤波器，设置截止频率和采样周期
 
-                    PihTarget =-lowfilter_pih.Filter(vision_pkt.offset_pitch)
+                    PihTarget =-vision_pkt.offset_pitch
                                +motors[PihMotor].RealAngle_Ecd;
 //                    YawTarget = KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw)
-                    YawTarget =lowfilter_yaw.Filter(vision_pkt.offset_yaw)
+                    YawTarget =vision_pkt.offset_yaw
                                + motors[YawMotor].RealAngle_Imu;
                     Last_ID = vision_pkt.packet_id;
                 }
@@ -302,7 +302,7 @@ void cGimbal::Gimbal_PosC()
     Pid_In.YawSpeed_Now=motors[YawMotor].RealSpeed;
 
     //计算Pih轴和Yaw轴的位置环输出
-    float Pihout=motors_pid[PihPos].PID_GetPositionPID(motors[PihMotor].RealAngle_Imu);
+    float PihOut=motors_pid[PihPos].PID_GetPositionPID(motors[PihMotor].RealAngle_Imu);
     float YawOut=motors_pid[YawPos].PID_GetPositionPID(motors[YawMotor].RealAngle_Imu);
 //    float ScopeUOut=motors_pid[ScopeUPos].PID_GetPositionPID(motors[ScopeUMotor].RealAngle_Ecd);
 
@@ -311,14 +311,14 @@ void cGimbal::Gimbal_PosC()
     YawOut=YawOut+Pid_In.Yaw_Dif_Gain* (motors_pid[YawPos].PID_Target - motors_pid[YawPos].PID_LastTarget);
 
     motors_pid[PihPos].PID_LastTarget=motors_pid[PihPos].PID_Target;
-    Pihout=Pihout+Pid_In.Pih_Dif_Gain* (motors_pid[PihPos].PID_Target - motors_pid[PihPos].PID_LastTarget);
+    PihOut=PihOut+Pid_In.Pih_Dif_Gain* (motors_pid[PihPos].PID_Target - motors_pid[PihPos].PID_LastTarget);
 
     //计算出底盘Yaw的PID_Out,赋值给vz
     motors_pid[ChassisYaw].PID_OutMax=100;
     motors_pid[ChassisYaw].PID_GetPositionPID(motors[YawMotor].RealAngle_Ecd);
 
     //串级PID，位置环的输出是速度环的目标值
-    setMotorSpeed(PihSpd,Pihout);
+    setMotorSpeed(PihSpd,PihOut);
     setMotorSpeed(YawSpd,YawOut);
 //    setMotorSpeed(ScopeUSpd,ScopeUOut);
 
@@ -484,14 +484,14 @@ void cGimbal::Sliding_Cal(void)
 {
     if(CarMode!=ZIMIAO)
     {
-        sliding[YawMotor].SetParam(1.8*10e-5,250,5,1.1,0.5,10);
-//    sliding.SetParam(1.8*10e-5,Debug_Param().pos_kp,Debug_Param().pos_ki,1.1,0.5,10);
+        sliding[YawMotor].SetParam(1.8*10e-5,250,5,1.1,0.5,10,EXPONENT);
+//    sliding.SetParam(1.8*10e-5,Debug_Param().pos_kp,Debug_Param().pos_ki,1.1,0.5,10,EXPONENT);
         sliding[YawMotor].ErrorUpdate(YawTarget,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealSpeed);
         sliding[YawMotor].SmcCalculate();
     }
    else
     {
-        sliding[YawMotor].SetParam(1.8*10e-5,250,5,1.1,0.5,10);
+        sliding[YawMotor].SetParam(1.8*10e-5,250,5,1.1,0.5,10,EXPONENT);
         sliding[YawMotor].ErrorUpdate(YawTarget,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealSpeed);
         sliding[YawMotor].SmcCalculate();
     }
@@ -522,13 +522,13 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
 //            Pid_In.YawS_N = 0;
 //            Pid_In.YawS_MO = 10;
             ///Yaw轴的普通PID参数///
-            motors_pid[YawPos].Kp = 6;
+            motors_pid[YawPos].Kp = 7;
             motors_pid[YawPos].Ki = 0;
             motors_pid[YawPos].Kd = 0.2;
             motors_pid[YawPos].SetMax(50,300,50);
 
             motors_pid[YawSpd].Kp = 0.04;
-            motors_pid[YawSpd].Ki = 0.003;
+            motors_pid[YawSpd].Ki = 0.002;
             motors_pid[YawSpd].Kd = 0;
             motors_pid[YawSpd].SetMax(50,10,5);
             Pid_In.Yaw_Dif_Gain = 0.25;
@@ -604,8 +604,8 @@ void cGimbal::Printf_Test()
 {
     //Yaw打印//
 //    usart_printf("%f,%f,%f\r\n",TuoluoDiredtion,-(motors[YawMotor].RealAngle_Ecd-TuoluoDiredtion),motors[YawMotor].RealAngle_Ecd);
-    usart_printf("%f,%f,%f\r\n",sliding[YawMotor].Out(),motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+//    usart_printf("%f,%f,%f\r\n",sliding[YawMotor].Out(),motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
+    usart_printf("%f,%f,%f,%d,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,360,motors[YawMotor].RealSpeed);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -627,8 +627,8 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f\r\n",motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
 //                 motors[RamMotor].RealAngle_Ecd);
     //自瞄打印
-//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
-//    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
+//    usart_printf("%f,%f,%f,%f,%f,%f,%d\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
+//    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd,CarMode);
 //    usart_printf("%f,%f\r\n",vision_pkt.offset_yaw,KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw));
     //滤波打印//
 //    lowfilter.Init(50,0.005);

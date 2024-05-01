@@ -119,7 +119,7 @@ public:
 
     cADRC adrc[3];
 
-    cSMC sliding[2];
+    cSMC sliding[3];
 
     cLowPassFilter lowfilter_yaw,lowfilter_pih;
 
@@ -142,7 +142,7 @@ public:
          motors
                 {
 /*PihMotor*/        {DAMIAO,ECD_MODE,PIH_ANGLE,DAMIAO},
-/*YawMotor*/        {DAMIAO,IMU_MODE,YAW_ANGLE,SMC},
+/*YawMotor*/        {DAMIAO,IMU_MODE,YAW_ANGLE,NORMAL},
 /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
 /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
 /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
@@ -187,10 +187,10 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
-    float TuoluoDiredtion=302;
+    float TuoluoDiredtion=278;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=302;//随动模式下正方向的角度
+    float ChassisYawTarget=278;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=50, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
