@@ -50,8 +50,8 @@ void VisionChattingLoop(uint8_t mode)
 //	if (Color_now == 0)	send_packet.color =1;
     send_packet.header = 0x5A;
     send_packet.shoot_spd =  Shoot_SpeedNow;
-    send_packet.pitch = IMU_Angle_CH100(PIH_ANGLE);
-    send_packet.yaw = IMU_Angle_CH100(YAW_ANGLE);
+    send_packet.pitch = -IMU_Angle_CH100(PIH_ANGLE);
+    send_packet.yaw = -IMU_Angle_CH100(YAW_ANGLE);
 //    send_packet.roll = roll;
 
     if(My_Color == 0)

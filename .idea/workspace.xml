@@ -20,14 +20,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 将摩擦轮改到了CAN1，同时增加了保护模式下失能电机的保护">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: YAW轴还是改回PID，现在可以正常控制">
+      <change afterPath="$PROJECT_DIR$/User/Framework/LED/LED.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/User/Framework/LED/LED.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/gpio.c" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/gpio.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/Sliding/Sliding.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" beforeDir="false" afterPath="$PROJECT_DIR$/cmc_gimbal_2024.ioc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,9 +100,9 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
@@ -247,14 +249,9 @@
       <workItem from="1714222729630" duration="620000" />
       <workItem from="1714291504008" duration="39000" />
       <workItem from="1714388995510" duration="12190000" />
-      <workItem from="1714539976968" duration="1798000" />
-    </task>
-    <task id="LOCAL-00014" summary="fix: 因为融合滤波算法返回角度值存在问题，还是改回了原版IMU算法，">
-      <created>1701076912569</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1701076912569</updated>
+      <workItem from="1714539976968" duration="5329000" />
+      <workItem from="1714568695633" duration="2685000" />
+      <workItem from="1714623557264" duration="9628000" />
     </task>
     <task id="LOCAL-00015" summary="feat: 新云台Pih换用小米电机，能控制，但开机零点问题和读取数据问题还未解决">
       <created>1701420772255</created>
@@ -592,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714123849361</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="perf: YAW轴还是改回PID，现在可以正常控制">
+      <created>1714545820315</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1714545820315</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -614,7 +618,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: 解决了关摩擦轮没法立即速度到零的问题,现在遥控器控制正常" />
     <MESSAGE value="docs: README更改遥控器内容" />
     <MESSAGE value="revert: 加入达妙电机相关代码前，留一个正常版本" />
     <MESSAGE value="feat: 加入达妙电机相关代码，暂未测试" />
@@ -639,7 +642,8 @@
     <MESSAGE value="perf: 现在弹道很稳！！！" />
     <MESSAGE value="perf: Yaw轴上滑模控制，响应很快" />
     <MESSAGE value="perf: 将摩擦轮改到了CAN1，同时增加了保护模式下失能电机的保护" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 将摩擦轮改到了CAN1，同时增加了保护模式下失能电机的保护" />
+    <MESSAGE value="perf: YAW轴还是改回PID，现在可以正常控制" />
+    <option name="LAST_COMMIT_MESSAGE" value="perf: YAW轴还是改回PID，现在可以正常控制" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

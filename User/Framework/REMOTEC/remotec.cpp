@@ -286,7 +286,7 @@ float portSetVx(void)
     {
         vx = (rc_ctrl.key.D.Now_State - rc_ctrl.key.A.Now_State) * 100.0; //这儿后期加等级分档位
         if (rc_ctrl.key.SHIFT.Now_State == 1)
-            vx *= 2.4; //按住shift加速
+            vx *= 1.5; //按住shift加速
     }
     else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)
     {
@@ -307,7 +307,7 @@ float portSetVy(void)
     {
         vy = (rc_ctrl.key.W.Now_State - rc_ctrl.key.S.Now_State) * 100.0;
         if (rc_ctrl.key.SHIFT.Now_State == 1)
-            vy *= 2.4; //按住shift加速
+            vy *= 1.5; //按住shift加速
     }
 
     else if(gimbal.ControlMode== OPENFRIC || CLOSEFRIC)

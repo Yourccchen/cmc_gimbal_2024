@@ -25,7 +25,7 @@
 #include "laser.h"
 #include "Sliding.hpp"
 #define RAMPSTEP 100
-#define SHOOT_RAMPSTEP 20
+#define SHOOT_RAMPSTEP 50
 //反馈模式选择
 #define ECD_MODE 0     //编码器反馈
 #define IMU_MODE 1     //陀螺仪反馈
@@ -119,7 +119,7 @@ public:
 
     cADRC adrc[3];
 
-    cSMC sliding[3];
+    cSMC sliding[5];
 
     cLowPassFilter lowfilter_yaw,lowfilter_pih;
 
@@ -132,8 +132,8 @@ public:
 /*YawPosPid*/       {1,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
 /*RamSpeedPid*/     {20,0,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
 /*RamPosPid*/       {3,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ShootSpeedPidL*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
-/*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
+/*ShootSpeedPidL*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,15000,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
+/*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,15000,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Normal_e,PositionPID_e},
 /*ShootSpeedPidU*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ChassisYawPid*/   {1.2,0,8      ,PID_DEFAULT_ERRALL_MAX,100,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
 /*ScopeUSpeedPid*/  {3,0.2,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
