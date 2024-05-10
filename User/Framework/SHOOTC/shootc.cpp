@@ -5,13 +5,13 @@
 #include "shootc.h"
 #include "gimbalc.h"
 #include "bsp_can.h"
-
+extern ReceivePacket vision_pkt;
 /**
   *@brief   射击主循环，主要包括堵转检测、热量检测、速度设置、参数选择等
   */
 void cShoot::Shoot_ControlLoop()
 {
-    Shoot_SpdChoose(5500);//速度选择
+    Shoot_SpdChoose(5800);//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
     Heat_Protect();//热量保护
@@ -27,12 +27,11 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if ( Heat_Protect()&&   abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
+    if ( Heat_Protect()&& abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
     {
-
-        if(rammer_flag==1)//0为不转，1为转一次，-1为翻转一次。无其他数值可能
-        {
-
+        //0为不转，1为转一次，-1为翻转一次。无其他数值可能
+        if(rammer_flag==1 )
+        {//手动拨弹或者视觉允许发弹指令到达时拨弹
             gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
         }
         else if(rammer_flag==-1)
@@ -201,7 +200,7 @@ void cShoot::Shoot_SpdChoose(float spd)
 void cShoot::Shoot_ParamChoose()
 {
     //拨弹轮PID设置
-    gimbal.motors_pid[RamPos].SetKpid(1.6,0,0.1); //目前满载时2稳定
+    gimbal.motors_pid[RamPos].SetKpid(1.8,0,0.1); //目前满载时2稳定
     gimbal.motors_pid[RamPos].PID_OutMax=200;
     gimbal.motors_pid[RamPos].PID_RampStep=5;
 

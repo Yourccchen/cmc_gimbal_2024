@@ -28,4 +28,5 @@
 #include "CH100.h"
 #include "dm4310_ctrl.h"
 #include "motorc.h"
+#include "LEDC.h"
 #endif //CMC_GIMBAL_2024_BSP_H

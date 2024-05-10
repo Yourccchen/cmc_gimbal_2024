@@ -36,7 +36,7 @@ void User_Init()
     Power_on();                //电源打开
     REMOTEC_Init();            //遥控器初始化
     CAN_All_Init();            //CAN通信相关配置初始化（设置过滤条件、打开CAN中断等）
-
+    UI_Init();
     gimbal.Gimbal_KalmanInit();//云台的卡尔曼算法初始函数
     Laser_On();
     IMU_UartInit();

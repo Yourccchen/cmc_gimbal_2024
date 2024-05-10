@@ -98,9 +98,9 @@ typedef struct corCoRoutineControlBlock
      for( ;; )
      {
          // This co-routine just delays for a fixed period, then toggles
-         // an LED.  Two co-routines are created using this function, so
+         // an LEDIO.  Two co-routines are created using this function, so
          // the uxIndex parameter is used to tell the co-routine which
-         // LED to flash and how int32_t to delay.  This assumes xQueue has
+         // LEDIO to flash and how int32_t to delay.  This assumes xQueue has
          // already been created.
          vParTestToggleLED( cLedToFlash[ uxIndex ] );
          crDELAY( xHandle, uxFlashRates[ uxIndex ] );
@@ -117,8 +117,8 @@ typedef struct corCoRoutineControlBlock
  TaskHandle_t xHandle;
 
      // Create two co-routines at priority 0.  The first is given index 0
-     // so (from the code above) toggles LED 5 every 200 ticks.  The second
-     // is given index 1 so toggles LED 6 every 400 ticks.
+     // so (from the code above) toggles LEDIO 5 every 200 ticks.  The second
+     // is given index 1 so toggles LEDIO 6 every 400 ticks.
      for( uxIndex = 0; uxIndex < 2; uxIndex++ )
      {
          xCoRoutineCreate( vFlashCoRoutine, 0, uxIndex );
@@ -441,7 +441,7 @@ void vCoRoutineSchedule( void );
  *
  * Example usage:
  <pre>
- // A co-routine receives the number of an LED to flash from a queue.  It
+ // A co-routine receives the number of an LEDIO to flash from a queue.  It
  // blocks on the queue until the number is received.
  static void prvCoRoutineFlashWorkTask( CoRoutineHandle_t xHandle, UBaseType_t uxIndex )
  {
@@ -459,7 +459,7 @@ void vCoRoutineSchedule( void );
 
         if( xResult == pdPASS )
         {
-            // We received the LED to flash - flash it!
+            // We received the LEDIO to flash - flash it!
             vParTestToggleLED( uxLEDToFlash );
         }
     }

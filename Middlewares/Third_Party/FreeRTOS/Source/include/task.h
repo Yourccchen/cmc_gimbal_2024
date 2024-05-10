@@ -746,7 +746,7 @@ void vTaskDelete( TaskHandle_t xTaskToDelete ) PRIVILEGED_FUNCTION;
 
 	 for( ;; )
 	 {
-		 // Simply toggle the LED every 500ms, blocking between each toggle.
+		 // Simply toggle the LEDIO every 500ms, blocking between each toggle.
 		 vToggleLED();
 		 vTaskDelay( xDelay );
 	 }

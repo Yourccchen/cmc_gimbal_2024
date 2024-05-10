@@ -84,8 +84,6 @@ void VisionComTask(void const* argument)
     /* Infinite loop */
     for (;;)
     {
-
-
         CurrentTime = xTaskGetTickCount();
         int8_t Zimiao = portIsZimiao();
 
