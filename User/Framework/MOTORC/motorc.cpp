@@ -36,6 +36,7 @@ int16_t cMotor::GetEncoderContinueAngel(int16_t Last, int16_t Now)
 }
 
 
+
 /**
   *@brief   处理电机数据，计算出电机输出端对外的速度（rpm）和角度（°）
   *@param   none
@@ -56,7 +57,7 @@ void cMotor::UpdateMotorInfo()
 
                 RealAngle_Ecd = ((float) AllAngle * ENCODER_TO_ANGLE) / M3508_RATION; //实际角度，用于计算
             }
-            else if (MotorType == GM6020|| MotorType == M3508_OffReducer )
+            else if ((MotorType == GM6020)|| (MotorType == M3508_OffReducer) )
             {
                 RealSpeed = (float) RawSpeed;       //实际速度，用于计算
                 LastAngle = NowAngle;
@@ -68,13 +69,7 @@ void cMotor::UpdateMotorInfo()
             }
             else if(MotorType == M2006)
             {
-                RealSpeed = (float) (RawSpeed / M2006_RATION); //实际速度，用于计算
-                LastAngle = NowAngle;
-                NowAngle = RawAngle;
-                IncreAngle = GetEncoderContinueAngel(LastAngle, NowAngle);
-                AllAngle += IncreAngle; //转子角度
-
-                RealAngle_Ecd = ((float) AllAngle * ENCODER_TO_ANGLE) / M2006_RATION; //实际角度，用于计算
+                RealSpeed =((float)RawSpeed / M2006_RATION); //实际速度，用于计算
             }
             else if(MotorType == DAMIAO)
             {

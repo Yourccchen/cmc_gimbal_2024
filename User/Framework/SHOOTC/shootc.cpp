@@ -11,7 +11,7 @@ extern ReceivePacket vision_pkt;
   */
 void cShoot::Shoot_ControlLoop()
 {
-    Shoot_SpdChoose(5800);//速度选择
+    Shoot_SpdChoose(5600);//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
     Heat_Protect();//热量保护
@@ -29,17 +29,34 @@ void cShoot::Shoot_PosC()
 
     if ( Heat_Protect()&& abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
     {
+        if(gimbal.ZimiaoFlag==OPENZIMIAO || gimbal.CarMode==ZIMIAO)
         //0为不转，1为转一次，-1为翻转一次。无其他数值可能
-        if(rammer_flag==1 )
-        {//手动拨弹或者视觉允许发弹指令到达时拨弹
-            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
-        }
-        else if(rammer_flag==-1)
         {
-            gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
+            if(rammer_flag==1 || vision_pkt.suggest_fire==1)
+
+            {//手动拨弹或者视觉允许发弹指令到达时拨弹
+                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
+            }
+            else if(rammer_flag==-1)
+            {
+                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
+            }
+        }
+        else
+        {
+            if(rammer_flag==1)
+
+            {//手动拨弹或者视觉允许发弹指令到达时拨弹
+                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
+            }
+            else if(rammer_flag==-1)
+            {
+                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
+            }
         }
     }
 
+    vision_pkt.suggest_fire=0;
     rammer_flag=0;
 
     float RamOut=gimbal.motors_pid[RamPos].PID_GetPositionPID(gimbal.motors[RamMotor].RealAngle_Ecd);
@@ -71,9 +88,9 @@ void cShoot::Shoot_SpeedC()
 /**
   *@brief   摩擦轮与拨弹轮的电流发送
   */
-void cShoot::Shoot_SendCurrent(float LOut,float ROut,float RamOut)
+void cShoot::Shoot_SendCurrent(float LOut,float ROut,float ScopeOut,float RamOut)
 {
-    CAN_ShootSendCurrent(LOut,ROut,RamOut);
+    CAN_ShootSendCurrent(LOut,ROut,ScopeOut);
     CAN_RamSendCurrent(RamOut);
 }
 
@@ -120,7 +137,7 @@ void cShoot::Stuck_Check()
         gimbal.motors_pid[RamPos].PID_ErrAll=0;
 
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
-        Shoot_SendCurrent(0,0,-2000);
+        Shoot_SendCurrent(0,0,0,-2000);
         rammer_flag=0;
         reverse_time++;
     }

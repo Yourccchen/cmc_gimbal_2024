@@ -7,14 +7,17 @@
 #include "stm32f4xx_hal.h"
 
 #define M3508_RATION  (3591.0f / 187.0f)  //电机减速比19左右
-#define M2006_RATION  (36 / 1.0f)
+#define M2006_RATION  (36.0f / 1.0f)
 #define ENCODER_TO_ANGLE   (360.0f / 8192.0f)   //编码器脉冲数 -> 转动角度(度)
 #define ANGLE_TO_ENCODER  (8192.0f / 360.0f)
 
-#define M3508             20
-#define M3508_OffReducer  21
-#define M2006             22
-#define GM6020            23
+typedef enum
+{
+    M3508=20,
+    M3508_OffReducer=21,
+    M2006=22,
+    GM6020=23
+}eMotorType;
 
 #ifdef __cplusplus//防止C文件调用该文件时报错
 class cMotor

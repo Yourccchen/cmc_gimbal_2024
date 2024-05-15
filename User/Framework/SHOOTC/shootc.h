@@ -44,7 +44,7 @@ public:
     void Shoot_ControlLoop();//发弹主循环，但不包含最重要的位置环和速度环
     void Shoot_PosC();
     void Shoot_SpeedC();
-    void Shoot_SendCurrent(float LOut,float ROut,float RamOut);
+    void Shoot_SendCurrent(float LOut,float ROut,float ScopeOut,float RamOut);
     void Stuck_Check();
     int Heat_Cal();
     int8_t Heat_Protect();

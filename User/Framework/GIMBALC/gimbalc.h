@@ -105,8 +105,7 @@ typedef enum
     RamMotor=2,
     ShootLMotor=3,
     ShootRMotor=4,
-    ShootUMotor=5,
-    ScopeUMotor=6
+    ScopeUMotor=5
 }eMotors;
 
 class cGimbal
@@ -120,7 +119,7 @@ public:
 
     cADRC adrc[3];
 
-    cSMC sliding[5];
+    cSMC sliding[6];
 
     cLowPassFilter lowfilter_yaw,lowfilter_pih;
 
@@ -137,8 +136,8 @@ public:
 /*ShootSpeedPidR*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,15000,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ShootSpeedPidU*/  {7,0,0       ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,SHOOT_RAMPSTEP,Ramp_e,PositionPID_e},
 /*ChassisYawPid*/   {1.2,0,8      ,PID_DEFAULT_ERRALL_MAX,100,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
-/*ScopeUSpeedPid*/  {3,0.2,0      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
-/*ScopeUPosPid*/    {3,0,0.2      ,PID_DEFAULT_ERRALL_MAX,PID_DEFAULT_OUTPUT_MAX,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Ramp_e,PositionPID_e},
+/*ScopeUSpeedPid*/  {1,0.14,0      ,20000,5000,5000,RAMPSTEP,Normal_e,PositionPID_e},
+/*ScopeUPosPid*/    {0.1,0,0      ,1000,80,10,RAMPSTEP,Normal_e,PositionPID_e},
                 },
          motors
                 {
@@ -147,7 +146,6 @@ public:
 /*RamMotor*/        {M3508,ECD_MODE,RAM_ANGLE,NORMAL},
 /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
 /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
-/*ShootUMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
 /*ScopeUMotor*/     {M2006,ECD_MODE,ROLL_ANGLE,NORMAL},
                 }
                 {}

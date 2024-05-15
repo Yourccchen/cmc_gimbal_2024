@@ -20,25 +20,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: shift加速改为150%，优化了云台参数">
-      <change afterPath="$PROJECT_DIR$/User/Framework/LED/LEDC.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/LED/LEDC.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/Framework/LED/readme.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/MCUDriver/LEDIO/ledio.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/User/MCUDriver/LEDIO/ledio.h" afterDir="false" />
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了物理UI的LED灯">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists_template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists_template.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Inc/BSP.h" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Inc/BSP.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Middlewares/Third_Party/FreeRTOS/Source/include/croutine.h" beforeDir="false" afterPath="$PROJECT_DIR$/Middlewares/Third_Party/FreeRTOS/Source/include/croutine.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Middlewares/Third_Party/FreeRTOS/Source/include/task.h" beforeDir="false" afterPath="$PROJECT_DIR$/Middlewares/Third_Party/FreeRTOS/Source/include/task.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/LED/LED.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/LED/LED.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -262,14 +254,11 @@
       <workItem from="1714913620897" duration="5211000" />
       <workItem from="1714997475137" duration="1847000" />
       <workItem from="1715083673529" duration="3209000" />
-      <workItem from="1715352095311" duration="1000" />
-    </task>
-    <task id="LOCAL-00016" summary="feat: 解决了小米电机启动时需要硬件先自启动的问题">
-      <created>1701421112765</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1701421112765</updated>
+      <workItem from="1715352095311" duration="4034000" />
+      <workItem from="1715410137499" duration="3130000" />
+      <workItem from="1715606477023" duration="2227000" />
+      <workItem from="1715697644796" duration="6525000" />
+      <workItem from="1715779012923" duration="14544000" />
     </task>
     <task id="LOCAL-00017" summary="fix: 解决了小米电机启动时会自转46°的问题">
       <created>1701489272941</created>
@@ -607,7 +596,14 @@
       <option name="project" value="LOCAL" />
       <updated>1714659581783</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="feat: 增加了物理UI的LED灯">
+      <created>1715352178653</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1715352178654</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -630,7 +626,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="revert: 加入达妙电机相关代码前，留一个正常版本" />
     <MESSAGE value="feat: 加入达妙电机相关代码，暂未测试" />
     <MESSAGE value="feat: 加入达妙电机相关代码，现在可以正常控制" />
     <MESSAGE value="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化" />
@@ -655,7 +650,8 @@
     <MESSAGE value="perf: 将摩擦轮改到了CAN1，同时增加了保护模式下失能电机的保护" />
     <MESSAGE value="perf: YAW轴还是改回PID，现在可以正常控制" />
     <MESSAGE value="feat: shift加速改为150%，优化了云台参数" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: shift加速改为150%，优化了云台参数" />
+    <MESSAGE value="feat: 增加了物理UI的LED灯" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了物理UI的LED灯" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
