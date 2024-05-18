@@ -27,7 +27,8 @@ void GimbalControlTask(void const * argument)
         }
 
         gimbal.count_time_send++;
-        if(gimbal.count_time_send > 4) gimbal.count_time_send = 0;
+        if(gimbal.count_time_send > 4)
+            gimbal.count_time_send = 0;
         CurrentTime = xTaskGetTickCount();
         gimbal.Gimbal_ControlLoop();
         gimbal.Printf_Test();

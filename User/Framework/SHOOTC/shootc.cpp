@@ -37,7 +37,9 @@ void cShoot::Shoot_PosC()
             {//手动拨弹或者视觉允许发弹指令到达时拨弹
                 gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
             }
+
             else if(rammer_flag==-1)
+
             {
                 gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
             }
@@ -49,7 +51,9 @@ void cShoot::Shoot_PosC()
             {//手动拨弹或者视觉允许发弹指令到达时拨弹
                 gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
             }
+
             else if(rammer_flag==-1)
+
             {
                 gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
             }
@@ -72,7 +76,7 @@ void cShoot::Shoot_PosC()
   */
 void cShoot::Shoot_SpeedC()
 {
-    if(gimbal.CarMode!=PROTECT&&gimbal.ProtectFlag!=OFFLINE&&gimbal.ControlMode==OPENFRIC)
+    if(gimbal.CarMode!=PROTECT&&gimbal.ProtectFlag!=OFFLINE&&gimbal.shoot.fric_flag==OPENFRIC)
     {
         gimbal.setMotorSpeed(ShootSpdL,-SHOOT_SPEED);
         gimbal.setMotorSpeed(ShootSpdR,SHOOT_SPEED);
