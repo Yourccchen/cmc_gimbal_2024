@@ -246,8 +246,4 @@ void cPID::PID_Clear()
     PID_ErrAll = 0.0;
     PID_Out = 0.0;
     PID_LastOut = 0.0;
-    PID_Target = 0.0;
-    PID_Input = 0.0;
-    PID_Mode = Normal_e;
-    PID_RampTarget = 0.0;
 }

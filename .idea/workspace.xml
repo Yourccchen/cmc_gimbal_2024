@@ -20,11 +20,17 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了小云台的roll、pitch轴倍镜">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/PID/pid.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/PID/pid.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,14 +259,8 @@
       <workItem from="1715606477023" duration="2227000" />
       <workItem from="1715697644796" duration="6525000" />
       <workItem from="1715779012923" duration="15344000" />
-      <workItem from="1715998944599" duration="4893000" />
-    </task>
-    <task id="LOCAL-00019" summary="feat: 增加了拨弹轮目标值与当前值偏差过大时疯转的问题">
-      <created>1701925415339</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1701925415339</updated>
+      <workItem from="1715998944599" duration="7443000" />
+      <workItem from="1716038494922" duration="6739000" />
     </task>
     <task id="LOCAL-00020" summary="feat: 重新换回了IMU的融合滤波算法">
       <created>1701958971349</created>
@@ -598,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1716017740032</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。">
+      <created>1716018879022</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1716018879022</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,7 +628,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化" />
     <MESSAGE value="perf: 现在优化了控制,但随动模式仍有超调" />
     <MESSAGE value="feat: 加入了按下CTRL进入自由模式的功能" />
     <MESSAGE value="revert: 留一个版本2" />
@@ -646,7 +652,19 @@
     <MESSAGE value="feat: 增加了物理UI的LED灯" />
     <MESSAGE value="feat: 增加了倍镜" />
     <MESSAGE value="feat: 增加了小云台的roll、pitch轴倍镜" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了小云台的roll、pitch轴倍镜" />
+    <MESSAGE value="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Core/Src/mainpp.cpp</url>
+          <line>42</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -176,6 +176,7 @@ public:
     void Gimbal_KalmanInit(void);
     void Sliding_Cal(void);
     void Online_Check();
+    void MotorPos_Init(float ReverseAngle, int WhichMotor, int WhichPosPid, int WhichSpdPid,float ErrMax);
     void Printf_Test();
 
     ///车体模式变量///
@@ -210,7 +211,7 @@ public:
     int8_t GimbalPower;
     ///分时发送控制变量///
     int32_t count_time_send=0;
-    int defpitch=0;//初始化时令PihTarget等于定值的参数
+
     ///新旧英雄判断///
     bool GIMBAL=0;
 private:
@@ -225,6 +226,11 @@ private:
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
     int16_t RC_CheckTimes=20;
+
+    int _defpitch=0;//初始化时令PihTarget等于定值的参数
+    int _InitFlag=0;
+    int _defscopeu=0;
+    int _defscopel=0;
 };
 
 extern cGimbal gimbal;

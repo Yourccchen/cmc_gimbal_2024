@@ -311,6 +311,10 @@ void cGimbal::Gimbal_PosC()
     //开镜电机的位置环目标值
     setMotorPos(ScopeUPos,ScopeUTarget);
     setMotorPos(ScopeLPos,ScopeLTarget);
+//    if(_InitFlag==0)
+//    {
+//        MotorPos_Init(-100,ScopeLMotor,ScopeLPos,ScopeUSpd,4000);
+//    }
     portSetTurn();//云台反转。如果按下V，云台立马反转180°，如果没有按下，不影响程序运行
 
     //MATLAB的PID数据更新
@@ -363,10 +367,10 @@ void cGimbal::Gimbal_PosC()
 ///电机速度环
 void cGimbal::Gimbal_SpeedC()
 {
-    if(defpitch<=100)
+    if(_defpitch<=100)
     {
         PihTarget=50;
-        defpitch++;
+        _defpitch++;
     }
     //根据算法发送电流
     //Yaw轴算法选择
@@ -654,6 +658,20 @@ void cGimbal::Online_Check()
     }
 }
 
+///电机复位函数
+void cGimbal::MotorPos_Init(float ReverseAngle, int WhichMotor, int WhichPosPid, int WhichSpdPid,float ErrMax)
+{
+    setMotorPos(WhichPosPid,motors[WhichMotor].RealAngle_Ecd+ReverseAngle); //首先让电机反转固定的角度
+    if(motors_pid[WhichSpdPid].PID_Out>ErrMax)
+    {
+        motors[WhichMotor].ClearAngle();//清除角度并获得初始角度
+        setMotorPos(WhichPosPid,motors[WhichMotor].RealAngle_Ecd); //将目标值赋值为初始化后的角度
+        motors_pid[WhichPosPid].PID_Clear();
+        motors_pid[WhichSpdPid].PID_Clear();
+        _InitFlag=1;
+    }
+}
+
 ///打印函数
 void cGimbal::Printf_Test()
 {
@@ -704,6 +722,6 @@ void cGimbal::Printf_Test()
     //开镜电机打印//
 //    usart_printf("%f,%f,%f,%f,%d\r\n",motors_pid[ScopeUSpd].PID_Out,motors_pid[ScopeUPos].PID_Target
 //                 ,gimbal.motors[ScopeUMotor].RealAngle_Ecd,gimbal.motors[ScopeUMotor].RealSpeed,gimbal.motors[ScopeUMotor].RawAngle);
-//    usart_printf("%f,%f,%f,%f\r\n",motors_pid[ScopeUPos].PID_Target,gimbal.motors[ScopeUMotor].RealAngle_Ecd,
-//                 motors_pid[ScopeLPos].PID_Target,gimbal.motors[ScopeLMotor].RealAngle_Ecd);
+    usart_printf("%f,%f,%f,%f\r\n",motors_pid[ScopeUPos].PID_Target,gimbal.motors[ScopeUMotor].RealAngle_Ecd,
+                 motors_pid[ScopeLPos].PID_Target,gimbal.motors[ScopeLMotor].RealAngle_Ecd);
 }

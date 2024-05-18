@@ -68,34 +68,6 @@ void CAN_Filter_Init(CAN_HandleTypeDef* hcan)
     }
 }
 
-static float Ecd_IncreLoop(float angle_now)
-{
-    static float last_angle;
-    static int32_t rotate_times;
-    float this_angle;
-    this_angle = angle_now;
-    if ((this_angle - last_angle) > 6000)
-        rotate_times--;
-    if ((this_angle - last_angle) < -6000)
-        rotate_times++;
-    angle_now = this_angle + rotate_times * 8192.0f;
-    last_angle = this_angle;
-    return angle_now;
-}
-static float Ecd_IncreLoop1(float angle_now)
-{
-    static float last_angle;
-    static int32_t rotate_times;
-    float this_angle;
-    this_angle = angle_now;
-    if ((this_angle - last_angle) > 6000)
-        rotate_times--;
-    if ((this_angle - last_angle) < -6000)
-        rotate_times++;
-    angle_now = this_angle + rotate_times * 8192.0f;
-    last_angle = this_angle;
-    return angle_now;
-}
 /**
   *@brief   CAN接收回调函数
   *@param   hcan句柄
@@ -142,7 +114,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ScopeUMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
                 gimbal.motors[ScopeUMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[ScopeUMotor].Null = (int16_t)(recvData[7]);
-                gimbal.motors[ScopeUMotor].RealAngle_Ecd=Ecd_IncreLoop( (float)gimbal.motors[ScopeUMotor].RawAngle ) * ENCODER_TO_ANGLE /M2006_RATION;
+
             }
             if (RxMeg.StdId == CAN_SCOPE_LOW_ID)
             {//开镜上电机
@@ -152,7 +124,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ScopeLMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
                 gimbal.motors[ScopeLMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[ScopeLMotor].Null = (int16_t)(recvData[7]);
-                gimbal.motors[ScopeLMotor].RealAngle_Ecd=Ecd_IncreLoop1( (float)gimbal.motors[ScopeLMotor].RawAngle ) * ENCODER_TO_ANGLE /M2006_RATION;
             }
         }
     }

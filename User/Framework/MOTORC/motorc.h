@@ -53,12 +53,17 @@ public:
     int8_t Which_Mode;            //电机反馈模式
     int8_t Algorithm;             //算法选择
     int MotorType;                //电机类型
+    float InitAngle=0;
+
 
     void UpdateMotorInfo();       //处理电机数据
     int16_t GetEncoderContinueAngel(int16_t Last, int16_t Now);
-
+    float Ecd_IncreLoop();
+    void ClearAngle();
 private:
-
+    float _last_angle;
+    float _this_angle;
+    int32_t _rotate_times;        //旋转圈数
 };
 #endif
 
