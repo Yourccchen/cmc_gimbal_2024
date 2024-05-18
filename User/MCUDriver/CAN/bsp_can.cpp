@@ -82,7 +82,20 @@ static float Ecd_IncreLoop(float angle_now)
     last_angle = this_angle;
     return angle_now;
 }
-
+static float Ecd_IncreLoop1(float angle_now)
+{
+    static float last_angle;
+    static int32_t rotate_times;
+    float this_angle;
+    this_angle = angle_now;
+    if ((this_angle - last_angle) > 6000)
+        rotate_times--;
+    if ((this_angle - last_angle) < -6000)
+        rotate_times++;
+    angle_now = this_angle + rotate_times * 8192.0f;
+    last_angle = this_angle;
+    return angle_now;
+}
 /**
   *@brief   CAN接收回调函数
   *@param   hcan句柄
@@ -130,6 +143,16 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)  //接收回调�
                 gimbal.motors[ScopeUMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
                 gimbal.motors[ScopeUMotor].Null = (int16_t)(recvData[7]);
                 gimbal.motors[ScopeUMotor].RealAngle_Ecd=Ecd_IncreLoop( (float)gimbal.motors[ScopeUMotor].RawAngle ) * ENCODER_TO_ANGLE /M2006_RATION;
+            }
+            if (RxMeg.StdId == CAN_SCOPE_LOW_ID)
+            {//开镜上电机
+                gimbal.motors[ScopeLMotor].Connected = 1;
+                gimbal.motors[ScopeLMotor].RawAngle = (int16_t)(recvData[0] << 8 | recvData[1]);     //0~8191
+                gimbal.motors[ScopeLMotor].RawSpeed = (int16_t)(recvData[2] << 8 | recvData[3]);     //rpm
+                gimbal.motors[ScopeLMotor].RawTorqueCurrent = (int16_t)(recvData[4] << 8 | recvData[5]);    //转矩
+                gimbal.motors[ScopeLMotor].RawTemperature = (int16_t)(recvData[6]);                  //温度
+                gimbal.motors[ScopeLMotor].Null = (int16_t)(recvData[7]);
+                gimbal.motors[ScopeLMotor].RealAngle_Ecd=Ecd_IncreLoop1( (float)gimbal.motors[ScopeLMotor].RawAngle ) * ENCODER_TO_ANGLE /M2006_RATION;
             }
         }
     }
@@ -282,7 +305,7 @@ void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t f
   *@param   none
   *@retval  none
   */
-void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc,int16_t scopeu)
+void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc)
 {
     CAN_TxHeaderTypeDef tx_msg;
     uint32_t send_mail_box = 0;
@@ -297,13 +320,10 @@ void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc,int16_t scopeu)
     send_data[2] = (friRc >> 8);
     send_data[3] = friRc;
 
-    send_data[6] = (scopeu >> 8);
-    send_data[7] = scopeu;
-
     HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
 }
 /**
-  *@breif   CAN发送电流给摩擦轮电机
+  *@breif   CAN发送电流给拨弹轮电机
   *@param   none
   *@retval  none
   */
@@ -327,7 +347,7 @@ void CAN_RamSendCurrent(int16_t Ramc)
   *@param   none
   *@retval  none
   */
-void CAN_ScopeSendCurrent(int16_t scopeu)
+void CAN_ScopeSendCurrent(int16_t scopeu,int16_t scopel)
 {
     CAN_TxHeaderTypeDef tx_msg;
     uint32_t send_mail_box = 0;
@@ -337,8 +357,11 @@ void CAN_ScopeSendCurrent(int16_t scopeu)
     tx_msg.RTR = CAN_RTR_DATA;
     tx_msg.DLC = 0x08;
 
-    send_data[6] = (scopeu >> 8);
-    send_data[7] = scopeu;
+    send_data[0] = (scopeu >> 8);
+    send_data[1] = scopeu;
+
+    send_data[2] = (scopel >> 8);
+    send_data[3] = scopel;
 
     HAL_CAN_AddTxMessage(&hcan1,&tx_msg,send_data,&send_mail_box);
 }

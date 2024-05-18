@@ -20,12 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了物理UI的LED灯">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了倍镜">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
@@ -258,14 +256,8 @@
       <workItem from="1715410137499" duration="3130000" />
       <workItem from="1715606477023" duration="2227000" />
       <workItem from="1715697644796" duration="6525000" />
-      <workItem from="1715779012923" duration="14544000" />
-    </task>
-    <task id="LOCAL-00017" summary="fix: 解决了小米电机启动时会自转46°的问题">
-      <created>1701489272941</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1701489272941</updated>
+      <workItem from="1715779012923" duration="15344000" />
+      <workItem from="1715998944599" duration="3822000" />
     </task>
     <task id="LOCAL-00018" summary="fix: 修改了摩擦轮反向的低级问题">
       <created>1701780700213</created>
@@ -603,7 +595,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715352178654</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="feat: 增加了倍镜">
+      <created>1715797481423</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1715797481424</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,7 +625,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: 加入达妙电机相关代码，暂未测试" />
     <MESSAGE value="feat: 加入达妙电机相关代码，现在可以正常控制" />
     <MESSAGE value="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化" />
     <MESSAGE value="perf: 现在优化了控制,但随动模式仍有超调" />
@@ -651,7 +649,8 @@
     <MESSAGE value="perf: YAW轴还是改回PID，现在可以正常控制" />
     <MESSAGE value="feat: shift加速改为150%，优化了云台参数" />
     <MESSAGE value="feat: 增加了物理UI的LED灯" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了物理UI的LED灯" />
+    <MESSAGE value="feat: 增加了倍镜" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了倍镜" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -34,10 +34,11 @@ typedef enum
     CAN_SHOOT_LEFT_ID = 0x201,  //英雄左摩擦轮,ID为1
     CAN_SHOOT_RIGHT_ID = 0x202, //英雄右摩擦轮,ID为2
     CAN_RAMC_ID = 0X203,        //英雄拨弹轮,ID为3
-    CAN_SCOPE_UP_ID=0x204,      //倍镜电机,ID为4
+    CAN_SCOPE_UP_ID=0x205,      //上倍镜电机,ID为5
+    CAN_SCOPE_LOW_ID=0x206,     //下倍镜电机，ID为6
 
     CAN_SHOOT_SEND_ID = 0x200,
-    CAN_SCOPE_SEND_ID = 0x200,
+    CAN_SCOPE_SEND_ID = 0x1FF,
 
     CAN_JUDGE_BARREL_ID = 0x405, //枪管热量限制 枪管冷却速度 枪管当前热量 机动枪管当前热量（双枪步兵用）
     CAN_JUDGE_PARAM_ID = 0x407   //当前弹速 弹速限制 队伍颜色 能量机关状态
@@ -51,9 +52,9 @@ void CAN_PitchSendCurrent(int16_t current);
 void CAN_ChasisSendSpd(int16_t vx, int16_t vy, int16_t vz, int8_t car_mode, int8_t is_aimbot);
 void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t fric_status, int8_t rammer_status,
                        int8_t redraw_status);
-void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc,int16_t scopeu);
+void CAN_ShootSendCurrent(int16_t friLc, int16_t friRc);
 void CAN_RamSendCurrent(int16_t Ramc);
-void CAN_ScopeSendCurrent(int16_t scopeu);
+void CAN_ScopeSendCurrent(int16_t scopeu,int16_t scopel);
 
 ///以下为达妙电机相关CAN函数
 typedef CAN_HandleTypeDef hcan_t;

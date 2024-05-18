@@ -94,7 +94,9 @@ typedef enum
     ShootSpdU=8,
     ChassisYaw=9,
     ScopeUSpd=10,
-    ScopeUPos=11
+    ScopeUPos=11,
+    ScopeLSpd=12,
+    ScopeLPos=13
 }eMotorsPid;
 
 ///电机枚举类型
@@ -105,13 +107,14 @@ typedef enum
     RamMotor=2,
     ShootLMotor=3,
     ShootRMotor=4,
-    ScopeUMotor=5
+    ScopeUMotor=5,
+    ScopeLMotor=6
 }eMotors;
 
 class cGimbal
 {
 public:
-    cPID motors_pid[12];
+    cPID motors_pid[14];
 
     cMotor motors[7];
 
@@ -138,6 +141,8 @@ public:
 /*ChassisYawPid*/   {1.2,0,8      ,PID_DEFAULT_ERRALL_MAX,100,PID_DEFAULT_OUTPUT_STEP_MAX,RAMPSTEP,Normal_e,PositionPID_e},
 /*ScopeUSpeedPid*/  {1,0.14,0      ,20000,5000,5000,RAMPSTEP,Normal_e,PositionPID_e},
 /*ScopeUPosPid*/    {0.1,0,0      ,1000,80,10,RAMPSTEP,Normal_e,PositionPID_e},
+/*ScopeLSpeedPid*/  {1,0.14,0      ,20000,5000,5000,RAMPSTEP,Normal_e,PositionPID_e},
+/*ScopeLPosPid*/    {0.1,0,0      ,1000,80,10,RAMPSTEP,Normal_e,PositionPID_e},
                 },
          motors
                 {
@@ -147,6 +152,7 @@ public:
 /*ShootLMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},//纯速度环，无角度控制
 /*ShootRMotor*/     {M3508_OffReducer,ECD_MODE,NO_ANGLE,NORMAL},
 /*ScopeUMotor*/     {M2006,ECD_MODE,ROLL_ANGLE,NORMAL},
+/*ScopeLMotor*/     {M2006,ECD_MODE,ROLL_ANGLE,NORMAL},
                 }
                 {}
 
@@ -186,12 +192,12 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
-    float TuoluoDiredtion=278;
+    float TuoluoDiredtion=285;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=278;//随动模式下正方向的角度
+    float ChassisYawTarget=285;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=50, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
-    float ScopeUTarget;
+    float ScopeUTarget,ScopeLTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
 
     ///射击控制变量//

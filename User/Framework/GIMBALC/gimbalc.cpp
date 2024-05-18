@@ -170,6 +170,8 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             //开镜电机
             ScopeUTarget=motors[ScopeUMotor].RealAngle_Ecd;
             motors_pid[ScopeUSpd].PID_Out=0;
+            ScopeLTarget=motors[ScopeLMotor].RealAngle_Ecd;
+            motors_pid[ScopeLSpd].PID_Out=0;
             //底盘目标值给0
             vx=vy=vz=0;
             break;
@@ -294,15 +296,17 @@ void cGimbal::Gimbal_PosC()
             Pitch_ImuLimit(PihTarget); //陀螺仪
             break;
     }
+    //倍镜角度控制
+    portSetScope();
 
-    portSetScope();//倍镜角度控制
     //通过遥控器设置Pih轴、Yaw轴、底盘跟随的目标值
 //    setMotorPos(PihPos,PihTarget);
     setMotorPos(YawPos,YawTarget);
     setMotorPos(ChassisYaw,ChassisYawTarget);
+
     //开镜电机的位置环目标值
     setMotorPos(ScopeUPos,ScopeUTarget);
-
+    setMotorPos(ScopeLPos,ScopeLTarget);
     portSetTurn();//云台反转。如果按下V，云台立马反转180°，如果没有按下，不影响程序运行
 
     //MATLAB的PID数据更新
@@ -320,6 +324,7 @@ void cGimbal::Gimbal_PosC()
     float PihOut=motors_pid[PihPos].PID_GetPositionPID(motors[PihMotor].RealAngle_Imu);
     float YawOut=motors_pid[YawPos].PID_GetPositionPID(motors[YawMotor].RealAngle_Imu);
     float ScopeUOut=motors_pid[ScopeUPos].PID_GetPositionPID(motors[ScopeUMotor].RealAngle_Ecd);
+    float ScopeLOut=motors_pid[ScopeLPos].PID_GetPositionPID(motors[ScopeLMotor].RealAngle_Ecd);
 
     //前馈控制
     motors_pid[YawPos].PID_LastTarget=motors_pid[YawPos].PID_Target;
@@ -336,14 +341,14 @@ void cGimbal::Gimbal_PosC()
     setMotorSpeed(PihSpd,PihOut);
     setMotorSpeed(YawSpd,YawOut);
     setMotorSpeed(ScopeUSpd,ScopeUOut);
-
+    setMotorSpeed(ScopeLSpd,ScopeLOut);
     //计算Pih轴和Yaw轴的速度环输出
     motors_pid[YawSpd].PID_GetPositionPID(motors[YawMotor].RealSpeed);
     motors_pid[PihSpd].PID_GetPositionPID(motors[PihMotor].RealSpeed);
 
     //计算开镜电机速度环输出
     motors_pid[ScopeUSpd].PID_GetPositionPID(motors[ScopeUMotor].RealSpeed);
-
+    motors_pid[ScopeLSpd].PID_GetPositionPID(motors[ScopeLMotor].RealSpeed);
     //拨弹轮、摩擦轮的位置环和速度环
     shoot.Shoot_PosC();
 
@@ -430,24 +435,24 @@ void cGimbal::Gimbal_SpeedC()
             case NORMAL:
             {
                 shoot.Shoot_SendCurrent(motors_pid[ShootSpdL].PID_Out, motors_pid[ShootSpdR].PID_Out,
-                                        motors_pid[ScopeUSpd].PID_Out,motors_pid[RamSpd].PID_Out);
+                                        motors_pid[RamSpd].PID_Out);
                 break;
             }
             case ADRC:
             {
                 shoot.Shoot_SendCurrent(shoot.ShootLOUT_ADRC, shoot.ShootROUT_ADRC,
-                                        motors_pid[ScopeUSpd].PID_Out,motors_pid[RamSpd].PID_Out);
+                                        motors_pid[RamSpd].PID_Out);
                 break;
             }
             case SMC:
             {
                 shoot.Shoot_SendCurrent(sliding[ShootLMotor].Out(), sliding[ShootRMotor].Out(),
-                                        motors_pid[ScopeUSpd].PID_Out,motors_pid[RamSpd].PID_Out);
+                                        motors_pid[RamSpd].PID_Out);
             }
         }
     }
     //开镜电机发电流
-//    CAN_ScopeSendCurrent((int16_t)motors_pid[ScopeUSpd].PID_Out);
+    CAN_ScopeSendCurrent(motors_pid[ScopeUSpd].PID_Out,motors_pid[ScopeLSpd].PID_Out);
 }
 
 /**
@@ -592,6 +597,14 @@ void cGimbal::Gimbal_ParamChoose(int8_t mode)
             motors_pid[ScopeUSpd].Kp = 100;
             motors_pid[ScopeUSpd].Ki = 0.05;
             motors_pid[ScopeUSpd].Kd = 0;
+
+            motors_pid[ScopeLPos].Kp = 2.6;
+            motors_pid[ScopeLPos].Ki = 0;
+            motors_pid[ScopeLPos].Kd = 0;
+
+            motors_pid[ScopeLSpd].Kp = 100;
+            motors_pid[ScopeLSpd].Ki = 0.05;
+            motors_pid[ScopeLSpd].Kd = 0;
             break;
         }
         case ZIMIAO://自瞄模式
@@ -684,11 +697,13 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f\r\n", IMU_Angle_Wit(PIH_ANGLE),IMU_Angle_Wit(YAW_ANGLE),YawTarget,PihTarget);
     //遥控器打印//
 //    usart_printf("%f,%f\r\n",YawTarget,PihTarget);
-//    usart_printf("%d,%d\r\n",RC_GetDatas().rc.s[0],RC_GetDatas().rc.s[1]);
+    usart_printf("%d\r\n",RC_GetDatas().mouse.z);
 //    usart_printf("%f,%f,%f,%f\r\n",portSetYawSpeed(),MouseYaw,portSetPihSpeed(),MousePih);
     //热量打印//
 //    usart_printf("%d,%d,%d,%d\r\n",gimbal.shoot.heat_limit,gimbal.shoot.heat_now,gimbal.shoot.heat_now_user,gimbal.shoot.cool_spd);
     //开镜电机打印//
-    usart_printf("%f,%f,%f,%f,%d\r\n",motors_pid[ScopeUSpd].PID_Out,motors_pid[ScopeUPos].PID_Target
-                 ,gimbal.motors[ScopeUMotor].RealAngle_Ecd,gimbal.motors[ScopeUMotor].RealSpeed,gimbal.motors[ScopeUMotor].RawAngle);
+//    usart_printf("%f,%f,%f,%f,%d\r\n",motors_pid[ScopeUSpd].PID_Out,motors_pid[ScopeUPos].PID_Target
+//                 ,gimbal.motors[ScopeUMotor].RealAngle_Ecd,gimbal.motors[ScopeUMotor].RealSpeed,gimbal.motors[ScopeUMotor].RawAngle);
+//    usart_printf("%f,%f,%f,%f\r\n",motors_pid[ScopeUPos].PID_Target,gimbal.motors[ScopeUMotor].RealAngle_Ecd,
+//                 motors_pid[ScopeLPos].PID_Target,gimbal.motors[ScopeLMotor].RealAngle_Ecd);
 }

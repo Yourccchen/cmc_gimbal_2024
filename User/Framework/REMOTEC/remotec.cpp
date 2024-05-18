@@ -460,8 +460,17 @@ void portSetRammer(void)
   */
 void portSetScope()
 {
-    gimbal.ScopeUTarget+=rc_ctrl.key.Q.Now_State*0.1f;
-    gimbal.ScopeUTarget-=rc_ctrl.key.E.Now_State*0.1f;
+    gimbal.ScopeUTarget-=rc_ctrl.key.Q.Now_State*0.2f;
+    gimbal.ScopeUTarget+=rc_ctrl.key.E.Now_State*0.2f;
+
+    if(rc_ctrl.mouse.z>0)
+    {
+        gimbal.ScopeLTarget+=0.2f;
+    }
+    if(rc_ctrl.mouse.z<0)
+    {
+        gimbal.ScopeLTarget-=0.2f;
+    }
 }
 
 /**

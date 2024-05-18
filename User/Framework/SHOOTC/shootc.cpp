@@ -88,9 +88,9 @@ void cShoot::Shoot_SpeedC()
 /**
   *@brief   摩擦轮与拨弹轮的电流发送
   */
-void cShoot::Shoot_SendCurrent(float LOut,float ROut,float ScopeOut,float RamOut)
+void cShoot::Shoot_SendCurrent(float LOut,float ROut,float RamOut)
 {
-    CAN_ShootSendCurrent(LOut,ROut,ScopeOut);
+    CAN_ShootSendCurrent(LOut,ROut);
     CAN_RamSendCurrent(RamOut);
 }
 
@@ -137,7 +137,7 @@ void cShoot::Stuck_Check()
         gimbal.motors_pid[RamPos].PID_ErrAll=0;
 
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
-        Shoot_SendCurrent(0,0,0,-2000);
+        Shoot_SendCurrent(0,0,-2000);
         rammer_flag=0;
         reverse_time++;
     }
