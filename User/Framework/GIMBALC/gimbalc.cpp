@@ -100,7 +100,20 @@ void cGimbal::Gimbal_CarMode(int8_t car_mode)
             UI_TUOLUO(LED_ON);
             UI_ZIMIAO(LED_OFF);
             UI_PROTECT(LED_OFF);
-            vz=100.0f;
+            if(ControlMode!=KEY_MODE)
+            {
+                Tuoluo_Reverse();
+                if(_vz_flag==1)
+                {
+                    vz=100.0f;
+                }
+                else if(_vz_flag==0)
+                {
+                    vz=-100.0f;
+                }
+            }
+            else
+                vz=-100.0f;
             break;
         }
         case SUIDONG:
@@ -663,7 +676,17 @@ void cGimbal::Zimiao_Check()
 
     _Zimiao_Check=vision_pkt.offset_yaw;
 }
-
+void cGimbal::Tuoluo_Reverse()
+{
+    if(RC_GetDatas().rc.ch[4]==-660&&_vz_flag==0)
+    {
+        _vz_flag=1;
+    }
+    else if(RC_GetDatas().rc.ch[4]==-660&&_vz_flag==1)
+    {
+        _vz_flag=0;
+    }
+}
 ///打印函数
 void cGimbal::Printf_Test()
 {

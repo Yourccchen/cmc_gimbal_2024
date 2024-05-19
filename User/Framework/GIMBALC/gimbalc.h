@@ -179,6 +179,7 @@ public:
     void Sliding_Cal(void);
     void Online_Check();
     void Zimiao_Check();
+    void Tuoluo_Reverse();
     void Printf_Test();
 
     ///车体模式变量///
@@ -227,6 +228,7 @@ private:
     float _Pitch_ImuUpLimit = 30;
     float _Pitch_ImuLowLimit=-15;
 
+    int _vz_flag=0;
 
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
