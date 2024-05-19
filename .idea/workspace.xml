@@ -20,17 +20,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="revert: 保留一个版本">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/MOTORC/motorc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/PID/pid.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/PID/pid.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="9a46ecd2d924c21dfe175a7ffb23608db5b6ec8f" />
+        <entry key="$PROJECT_DIR$" value="d57a69dff61af74ce7d2365eb8bb08a01bb09394" />
       </map>
     </option>
     <option name="RESET_MODE" value="HARD" />
@@ -261,6 +256,7 @@
       <workItem from="1715779012923" duration="15344000" />
       <workItem from="1715998944599" duration="7443000" />
       <workItem from="1716038494922" duration="6739000" />
+      <workItem from="1716077917212" duration="3000" />
     </task>
     <task id="LOCAL-00020" summary="feat: 重新换回了IMU的融合滤波算法">
       <created>1701958971349</created>
@@ -654,17 +650,6 @@
     <MESSAGE value="feat: 增加了小云台的roll、pitch轴倍镜" />
     <MESSAGE value="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: 解决了“启动时按F无法开摩擦轮，只有先用遥控器开摩擦轮再用F才能开摩擦轮”的问题。" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Core/Src/mainpp.cpp</url>
-          <line>42</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

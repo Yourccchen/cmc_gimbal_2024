@@ -61,9 +61,8 @@ public:
     float Ecd_IncreLoop();
     void ClearAngle();
 private:
-    float _last_angle;
-    float _this_angle;
-    int32_t _rotate_times;        //旋转圈数
+    float _last_angle=0;
+    int32_t _rotate_times=0;        //旋转圈数
 };
 #endif
 

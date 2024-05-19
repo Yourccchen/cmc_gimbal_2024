@@ -42,16 +42,14 @@ float cMotor::Ecd_IncreLoop()
         _rotate_times--;
     if ((RawAngle - _last_angle) < -6000)
         _rotate_times++;
-    RealAngle_Ecd = RawAngle + _rotate_times * 8192.0f;
     _last_angle = RawAngle;
+    return (RawAngle + _rotate_times * 8192.0f);
 }
 
 void cMotor::ClearAngle()
 {
-    _this_angle=0;
-    _last_angle=0;
+    InitAngle=RealAngle_Ecd - _rotate_times * 360;
     _rotate_times=0;
-    InitAngle=RealAngle_Ecd - _rotate_times*360;
 }
 
 /**
