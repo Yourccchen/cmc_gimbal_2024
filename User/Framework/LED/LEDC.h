@@ -49,7 +49,8 @@ void LED_UI(int Led1, bool Led2, bool Led3, bool Led4, bool Led5);
 void UI_Fric(LED_State_e status);  ///是否开启摩擦轮，亮是开启
 void UI_TUOLUO(LED_State_e status);  ///是否小陀螺，亮是小陀螺
 void UI_ZIMIAO(LED_State_e status);  ///是否开启自瞄，亮是开启
-void UI_PROTECT(LED_State_e status);  ///
+void UI_PROTECT(LED_State_e status);
+void UI_POWER(LED_State_e status);
 void UI_gyroscope(int Led1);  ///小陀螺， 0是关闭
-
+void UI_MIAOZHUN(LED_State_e status);
 #endif //KOSANN_UAVGIMBAL_LEDC_H

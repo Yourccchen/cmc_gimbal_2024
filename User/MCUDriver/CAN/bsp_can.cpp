@@ -275,7 +275,7 @@ void CAN_ChasisSendSpd(int16_t vx, int16_t vy, int16_t vz, int8_t car_mode, int8
   *@param
   *@retval  None
   */
-void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t fric_status, int8_t rammer_status,
+void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t power_status, int8_t rammer_status,
                        int8_t redraw_status)
 {
     CAN_TxHeaderTypeDef tx_msg;
@@ -292,7 +292,7 @@ void CAN_ChasisSendMsg(int16_t yaw, int16_t pitch, int8_t servo_status, int8_t f
     send_data[3] = pitch & 0xff;
 
     send_data[4] = servo_status;
-    send_data[5] = fric_status;
+    send_data[5] = power_status;
 
     send_data[6] = rammer_status;
     send_data[7] = redraw_status;

@@ -138,11 +138,11 @@ void UI_PROTECT(LED_State_e status)  ///保护，左边第四的LED灯
     led2.setStatus(status);
 }
 
-void UI_wait1(LED_State_e status)  ///暂定，左边第五的LED灯
+void UI_POWER(LED_State_e status)  ///功控开关，左边第五的LED灯
 {
     led3.setStatus(status);
 }
-void UI_wait2(LED_State_e status)  ///暂定，左边第六的LED灯
+void UI_MIAOZHUN(LED_State_e status)  ///暂定，左边第六的LED灯
 {
     led1.setStatus(status);
 }

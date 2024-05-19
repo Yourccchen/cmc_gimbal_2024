@@ -501,3 +501,22 @@ int8_t portSetRedraw(void)
     else
         return 0;
 }
+
+/**
+  *@breif   返回键值，按键切换为
+  */
+void portSetPower(void)
+{
+    portHandle(&rc_ctrl.key.Z);//非连续键值处理 即上一次是0，本次是1，判断为按了一次
+    if(rc_ctrl.key.Z.Is_Click_Once && gimbal.power_flag== CLOSEPOWER)
+    {
+        gimbal.power_flag=OPENPOWER;
+        UI_POWER(LED_ON);
+    }
+    else if(rc_ctrl.key.Z.Is_Click_Once && gimbal.power_flag==OPENPOWER)
+    {
+        gimbal.power_flag=CLOSEPOWER;
+        UI_POWER(LED_OFF);
+    }
+
+}

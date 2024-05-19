@@ -20,11 +20,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="feat: 增加了小云台的roll、pitch轴倍镜">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 去掉了电机复位相关的，暂时先不写。增加了自瞄时手动按下一次，拨弹一次的判断">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/LED/LEDC.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/LED/LEDC.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/LED/LEDC.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/LED/LEDC.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/REMOTEC/remotec.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/MCUDriver/CAN/bsp_can.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/VISIONCOM_TASK/visioncom_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +50,6 @@
       </map>
     </option>
     <option name="RESET_MODE" value="HARD" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -71,7 +76,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024/User/MCUDriver/LED&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Desktop/RM/Hero_Gimbal/cmc_gimbal_2024&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -84,11 +89,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\MCUDriver\LED" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework\LED" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework\Sliding" />
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework" />
-      <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\Framework\DAMIAO" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Desktop\RM\Hero_Gimbal\cmc_gimbal_2024\User\MCUDriver" />
@@ -254,13 +259,7 @@
       <workItem from="1715697644796" duration="6525000" />
       <workItem from="1715779012923" duration="15344000" />
       <workItem from="1715998944599" duration="4893000" />
-    </task>
-    <task id="LOCAL-00019" summary="feat: 增加了拨弹轮目标值与当前值偏差过大时疯转的问题">
-      <created>1701925415339</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1701925415339</updated>
+      <workItem from="1716126196697" duration="3042000" />
     </task>
     <task id="LOCAL-00020" summary="feat: 重新换回了IMU的融合滤波算法">
       <created>1701958971349</created>
@@ -598,7 +597,14 @@
       <option name="project" value="LOCAL" />
       <updated>1716017740032</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="fix: 去掉了电机复位相关的，暂时先不写。增加了自瞄时手动按下一次，拨弹一次的判断">
+      <created>1716099066515</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1716099066515</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,7 +627,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: 目前随动、小陀螺、底盘移动均正常，但还需优化" />
     <MESSAGE value="perf: 现在优化了控制,但随动模式仍有超调" />
     <MESSAGE value="feat: 加入了按下CTRL进入自由模式的功能" />
     <MESSAGE value="revert: 留一个版本2" />
@@ -646,7 +651,8 @@
     <MESSAGE value="feat: 增加了物理UI的LED灯" />
     <MESSAGE value="feat: 增加了倍镜" />
     <MESSAGE value="feat: 增加了小云台的roll、pitch轴倍镜" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 增加了小云台的roll、pitch轴倍镜" />
+    <MESSAGE value="fix: 去掉了电机复位相关的，暂时先不写。增加了自瞄时手动按下一次，拨弹一次的判断" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 去掉了电机复位相关的，暂时先不写。增加了自瞄时手动按下一次，拨弹一次的判断" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

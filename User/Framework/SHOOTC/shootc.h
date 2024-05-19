@@ -32,6 +32,7 @@ public:
     int16_t fric_flag=3;     //摩擦轮标志位:3为关摩擦轮，1为开摩擦轮
     int16_t fric_count=0;    //摩擦轮收到遥控器发送指令的的次数
 
+
     int16_t rammer_flag=0;   //0为不转，1为转一次,-1为反转一次。无其他数值可能
     int16_t rammer_count=0;  //拨弹收到遥控器发送指令的次数，大于某个值就让rammer_flag加一
     int16_t rammer_current=0;//拨弹轮当前的电流

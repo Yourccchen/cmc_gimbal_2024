@@ -70,7 +70,9 @@
 #define FRIC_ON 1
 #define FRIC_OFF 0
 
-//切换新旧英雄判断
+//功控开关
+#define OPENPOWER 1
+#define CLOSEPOWER 0
 
 #define OLD_HERO 0
 #define NEW_HERO 1
@@ -176,6 +178,7 @@ public:
     void Gimbal_KalmanInit(void);
     void Sliding_Cal(void);
     void Online_Check();
+    void Zimiao_Check();
     void Printf_Test();
 
     ///车体模式变量///
@@ -213,6 +216,9 @@ public:
     int defpitch=0;//初始化时令PihTarget等于定值的参数
     ///新旧英雄判断///
     bool GIMBAL=0;
+    ///功控开关///
+    int16_t power_flag=0;    //功控开关:0为关，1为开
+
 private:
     //Pitch轴限幅
     float _Pitch_EcdUpLimit=80;
@@ -225,6 +231,8 @@ private:
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
     int16_t RC_CheckTimes=20;
+    //自瞄接收到的上次数据
+    float _Zimiao_Check=0;
 };
 
 extern cGimbal gimbal;

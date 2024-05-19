@@ -61,6 +61,8 @@ void cGimbal::Gimbal_ControlWithRC(void)
     ControlMode=portSetControlMode();        //左侧拨杆控制控制模式，赋值给ControlMode
     ShootMode=portSetShootMode();            //左侧拨盘控制射击模式，赋值给ShootMode
     portIsZimiao();
+    portSetPower();
+    Zimiao_Check();
 
     vx=portSetVx();                          //控制底盘水平方向运动
     vy=portSetVy();                          //控制底盘垂直方向运动
@@ -240,10 +242,6 @@ void cGimbal::Gimbal_ShootMode(int8_t shoot_mode)
         case OPENFRIC:
         {
             ///射击相关部分///
-            usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",
-                         -gimbal.motors_pid[ShootSpdL].PID_Target,-gimbal.motors[ShootLMotor].RealSpeed,
-                         gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
-                         motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,motors[RamMotor].RealAngle_Ecd);
             UI_Fric(LED_ON);
             shoot.Shoot_ControlLoop(); //射击主循环，主要包括堵转检测、热量检测、速度设置、参数选择等
             break;
@@ -267,7 +265,7 @@ void cGimbal::Chassis_ComLoop(float vx,float vy,float vz,int8_t car_mode,int8_t 
     {
 //        if(CarMode==TUOLUO)
 //        {
-            CAN_ChasisSendMsg(-(motors[YawMotor].RealAngle_Ecd-TuoluoDiredtion),motors[PihMotor].RealAngle_Imu,0,gimbal.shoot.fric_flag,0,portSetRedraw());
+            CAN_ChasisSendMsg(-(motors[YawMotor].RealAngle_Ecd-TuoluoDiredtion),motors[PihMotor].RealAngle_Imu,0,power_flag,0,portSetRedraw());
 //        }
 //        else
 //        {
@@ -418,7 +416,7 @@ void cGimbal::Gimbal_SpeedC()
             {
                 if(CarMode==ZIMIAO||ZimiaoFlag==OPENZIMIAO)
                 {
-                    ctrl_posvelset(PihTarget,3); //°、rad/s
+                    ctrl_posvelset(PihTarget,6); //°、rad/s
                     ctrl_send(); //达妙电机的发送can信号
                 }
                 else
@@ -653,6 +651,18 @@ void cGimbal::Online_Check()
         RC_GetLastData=RC_UpdateData();//更新遥控器接受数据的检测判断
     }
 }
+///自瞄识别检测
+void cGimbal::Zimiao_Check()
+{
+    if(vision_pkt.offset_yaw!=_Zimiao_Check)
+    {
+        UI_MIAOZHUN(LED_ON);
+    }
+    else
+        UI_MIAOZHUN(LED_OFF);
+
+    _Zimiao_Check=vision_pkt.offset_yaw;
+}
 
 ///打印函数
 void cGimbal::Printf_Test()
@@ -678,10 +688,10 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",-gimbal.motors_pid[ShootSpdL].PID_Target,-gimbal.motors[ShootLMotor].RealSpeed,sliding[ShootLMotor].Out(),
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,sliding[ShootRMotor].Out());
     //拨弹轮打印//
-    usart_printf("%f,%f,%f,%f,%d,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
-                 gimbal.motors[RamMotor].RawTorqueCurrent,motors_pid[RamPos].PID_Target,
-                 motors[RamMotor].RealAngle_Ecd);
+//    usart_printf("%f,%f,%f,%f,%d,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
+//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
+//                 motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+//                 motors[RamMotor].RealAngle_Ecd);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
 //    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
@@ -708,4 +718,5 @@ void cGimbal::Printf_Test()
 //                 ,gimbal.motors[ScopeUMotor].RealAngle_Ecd,gimbal.motors[ScopeUMotor].RealSpeed,gimbal.motors[ScopeUMotor].RawAngle);
 //    usart_printf("%f,%f,%f,%f\r\n",motors_pid[ScopeUPos].PID_Target,gimbal.motors[ScopeUMotor].RealAngle_Ecd,
 //                 motors_pid[ScopeLPos].PID_Target,gimbal.motors[ScopeLMotor].RealAngle_Ecd);
+    usart_printf("%d\r\n",gimbal.shoot.GetFricStatus());
 }
