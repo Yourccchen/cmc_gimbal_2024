@@ -11,16 +11,10 @@ extern ReceivePacket vision_pkt;
   */
 void cShoot::Shoot_ControlLoop()
 {
-    Shoot_SpdChoose(5800);//速度选择
+    Shoot_SpdChoose(5600);//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
     Heat_Protect();//热量保护
-//    if(_defRam==0)
-//    {
-//        gimbal.MotorPos_Init(-150,RamMotor,RamPos,RamSpd,13000);
-//        _defRam=1;
-//    }
-
 }
 
 /**
@@ -33,21 +27,19 @@ void cShoot::Shoot_PosC()
     if(abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)>360)
         gimbal.motors_pid[RamPos].PID_Target=gimbal.motors[RamMotor].RealAngle_Ecd;
 
-    if ( Heat_Protect()&& abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5)
+    if ( Heat_Protect()&& abs(gimbal.motors_pid[RamPos].PID_Target-gimbal.motors[RamMotor].RealAngle_Ecd)<5 && GetFricStatus())
     {
         if(gimbal.ZimiaoFlag==OPENZIMIAO || gimbal.CarMode==ZIMIAO)
         //0为不转，1为转一次，-1为翻转一次。无其他数值可能
         {
-            if(rammer_flag==1 || vision_pkt.suggest_fire==1)
-
-            {//手动拨弹或者视觉允许发弹指令到达时拨弹
-                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
-            }
-
-            else if(rammer_flag==-1)
-
+            if(rammer_flag==1 )
             {
-                gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
+                if(vision_pkt.suggest_fire==1)
+                {//手动拨弹或者视觉允许发弹指令到达时拨弹
+                    gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target +  360.0f/9.0f/31.0f*110.0f);
+                    rammer_flag=0;
+                }
+                vision_pkt.suggest_fire=0;
             }
         }
         else
@@ -63,11 +55,10 @@ void cShoot::Shoot_PosC()
             {
                 gimbal.setMotorPos(RamPos, gimbal.motors_pid[RamPos].PID_Target -  360.0f/9.0f/31.0f*110.0f);
             }
+            rammer_flag=0;
         }
     }
 
-    vision_pkt.suggest_fire=0;
-    rammer_flag=0;
 
     float RamOut=gimbal.motors_pid[RamPos].PID_GetPositionPID(gimbal.motors[RamMotor].RealAngle_Ecd);
 
@@ -190,7 +181,7 @@ int cShoot::Heat_Cal()
 int8_t cShoot::Heat_Protect()
 {
     //如果热量限制减去当前热量大于等于100，允许发弹，其余情况均不允许发弹
-   if( ( heat_limit - Heat_Cal() ) >=110)
+   if( ( heat_limit - Heat_Cal() ) >=150)
    {
        return SHOOT_PERMIT;
    }

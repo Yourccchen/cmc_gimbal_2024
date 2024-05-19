@@ -56,7 +56,6 @@ public:
 private:
     int32_t stuck_time=0;       //拨弹轮堵转时间
     int32_t reverse_time=0;     //拨弹轮反转时间
-    int8_t _defRam=0;
 };
 
 #endif //HERO_TEST_SHOOTC_H

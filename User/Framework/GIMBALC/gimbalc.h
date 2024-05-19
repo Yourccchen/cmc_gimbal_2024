@@ -176,7 +176,6 @@ public:
     void Gimbal_KalmanInit(void);
     void Sliding_Cal(void);
     void Online_Check();
-    void MotorPos_Init(float ReverseAngle, int WhichMotor, int WhichPosPid, int WhichSpdPid,float ErrMax);
     void Printf_Test();
 
     ///车体模式变量///
@@ -193,10 +192,10 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
-    float TuoluoDiredtion=285;
+    float TuoluoDiredtion=330;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=285;//随动模式下正方向的角度
+    float ChassisYawTarget=330;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=50, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget,ScopeLTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
@@ -211,7 +210,7 @@ public:
     int8_t GimbalPower;
     ///分时发送控制变量///
     int32_t count_time_send=0;
-
+    int defpitch=0;//初始化时令PihTarget等于定值的参数
     ///新旧英雄判断///
     bool GIMBAL=0;
 private:
@@ -226,11 +225,6 @@ private:
     //遥控器接收到的上次数据
     int16_t RC_GetLastData=0;
     int16_t RC_CheckTimes=20;
-
-    int _defpitch=0;//初始化时令PihTarget等于定值的参数
-    int _InitFlag=0;
-    int _defscopeu=0;
-    int _defscopel=0;
 };
 
 extern cGimbal gimbal;
