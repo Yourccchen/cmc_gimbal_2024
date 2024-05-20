@@ -711,10 +711,10 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",-gimbal.motors_pid[ShootSpdL].PID_Target,-gimbal.motors[ShootLMotor].RealSpeed,sliding[ShootLMotor].Out(),
 //                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,sliding[ShootRMotor].Out());
     //拨弹轮打印//
-//    usart_printf("%f,%f,%f,%f,%d,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
-//                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
-//                 motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
-//                 motors[RamMotor].RealAngle_Ecd);
+    usart_printf("%f,%f,%f,%f,%f,%f,%f\r\n",gimbal.motors_pid[ShootSpdL].PID_Target,gimbal.motors[ShootLMotor].RealSpeed,
+                 gimbal.motors_pid[ShootSpdR].PID_Target,gimbal.motors[ShootRMotor].RealSpeed,
+                 motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
+                 motors[RamMotor].RealAngle_Ecd);
     //自瞄打印
 //    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
 //    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
@@ -741,5 +741,5 @@ void cGimbal::Printf_Test()
 //                 ,gimbal.motors[ScopeUMotor].RealAngle_Ecd,gimbal.motors[ScopeUMotor].RealSpeed,gimbal.motors[ScopeUMotor].RawAngle);
 //    usart_printf("%f,%f,%f,%f\r\n",motors_pid[ScopeUPos].PID_Target,gimbal.motors[ScopeUMotor].RealAngle_Ecd,
 //                 motors_pid[ScopeLPos].PID_Target,gimbal.motors[ScopeLMotor].RealAngle_Ecd);
-    usart_printf("%d\r\n",gimbal.shoot.GetFricStatus());
+//    usart_printf("%d\r\n",gimbal.shoot.GetFricStatus());
 }
