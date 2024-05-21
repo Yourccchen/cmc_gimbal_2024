@@ -197,7 +197,7 @@ int8_t cShoot::Heat_Protect()
   */
 int8_t cShoot::GetFricStatus(void)
 {
-    if (abs(gimbal.motors[ShootLMotor].RealSpeed) > 2000 && abs(gimbal.motors[ShootRMotor].RealSpeed) > 2000)
+    if (abs(gimbal.motors[ShootLMotor].RealSpeed) > 4000 && abs(gimbal.motors[ShootRMotor].RealSpeed) > 4000)
     {
         return FRIC_ON;
     }

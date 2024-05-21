@@ -218,7 +218,7 @@ void dm4310_fbdata(motor_t *motor, uint8_t *rx_data)
 	motor->para.Tmos = (float)(rx_data[6]);
 	motor->para.Tcoil = (float)(rx_data[7]);
 
-    motor->para.angle=IMU_AngleIncreLoop(motor->para.pos*rad2deg);
+    motor->para.angle=motor->para.pos*rad2deg;
     motor->para.speed=motor->para.vel*rad2deg;
 }
 
