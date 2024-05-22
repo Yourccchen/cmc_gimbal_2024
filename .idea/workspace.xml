@@ -20,11 +20,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="perf: 上场前最后一版">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 修改了旋转小陀螺，pitch轴电机编码器会乱的问题；增加了保护轮子电机没力的功能（之前是锁死，感觉不太好）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_drv.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,14 +257,10 @@
       <workItem from="1715998944599" duration="4893000" />
       <workItem from="1716126196697" duration="5988000" />
       <workItem from="1716211649556" duration="4600000" />
-      <workItem from="1716278026423" duration="1972000" />
-    </task>
-    <task id="LOCAL-00023" summary="feat: 增加了热量保护部分代码（暂未测试）">
-      <created>1704703130335</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1704703130335</updated>
+      <workItem from="1716278026423" duration="2223000" />
+      <workItem from="1716299361712" duration="678000" />
+      <workItem from="1716341944830" duration="1718000" />
+      <workItem from="1716384424252" duration="9003000" />
     </task>
     <task id="LOCAL-00024" summary="feat: 增加了按键V云台反转功能">
       <created>1704715565105</created>
@@ -598,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1716225308329</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="fix: 修改了旋转小陀螺，pitch轴电机编码器会乱的问题；增加了保护轮子电机没力的功能（之前是锁死，感觉不太好）">
+      <created>1716280893562</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1716280893562</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,7 +628,6 @@
       <path value="$PROJECT_DIR$/.." />
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="perf: 现在Yaw轴PID单位级对了" />
     <MESSAGE value="perf: 现在Yaw轴跟随很好" />
     <MESSAGE value="perf: 自瞄跟随很好，但弹道还需调整" />
     <MESSAGE value="perf: 将使能放到循环中" />
@@ -646,7 +652,8 @@
     <MESSAGE value="feat: 增加了功控开关 Z ，瞄准装甲板指示灯功能" />
     <MESSAGE value="feat: 增加了拨杆网上切换小陀螺方向问题" />
     <MESSAGE value="perf: 上场前最后一版" />
-    <option name="LAST_COMMIT_MESSAGE" value="perf: 上场前最后一版" />
+    <MESSAGE value="fix: 修改了旋转小陀螺，pitch轴电机编码器会乱的问题；增加了保护轮子电机没力的功能（之前是锁死，感觉不太好）" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 修改了旋转小陀螺，pitch轴电机编码器会乱的问题；增加了保护轮子电机没力的功能（之前是锁死，感觉不太好）" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

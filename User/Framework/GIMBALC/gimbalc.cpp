@@ -697,7 +697,8 @@ void cGimbal::Printf_Test()
     //Yaw打印//
 //    usart_printf("%f,%f,%f\r\n",TuoluoDiredtion,-(motors[YawMotor].RealAngle_Ecd-TuoluoDiredtion),motors[YawMotor].RealAngle_Ecd);
 //    usart_printf("%f,%f,%f\r\n",sliding[YawMotor].Out(),motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-//    usart_printf("%f,%f,%f,%d,%f\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,360,motors[YawMotor].RealSpeed);
+    usart_printf("%f,%f,%f,%f,%d\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealSpeed,
+                 motor[Motor1].para.state);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -720,8 +721,8 @@ void cGimbal::Printf_Test()
 //                 motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
 //                 motors[RamMotor].RealAngle_Ecd);
     //自瞄打印
-    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
-    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
+//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
+//    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
 //    usart_printf("%f,%f\r\n",vision_pkt.offset_yaw,KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw));
     //滤波打印//
 //    lowfilter.Init(50,0.005);
@@ -746,4 +747,5 @@ void cGimbal::Printf_Test()
 //    usart_printf("%f,%f,%f,%f\r\n",motors_pid[ScopeUPos].PID_Target,gimbal.motors[ScopeUMotor].RealAngle_Ecd,
 //                 motors_pid[ScopeLPos].PID_Target,gimbal.motors[ScopeLMotor].RealAngle_Ecd);
 //    usart_printf("%d\r\n",gimbal.shoot.GetFricStatus());
+//    usart_printf("%d\r\n",motor[Motor1].para.state);
 }

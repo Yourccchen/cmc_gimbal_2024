@@ -16,8 +16,10 @@ typedef enum
 extern motor_t motor[num];
 
 void dm4310_motor_init(void);
-void ctrl_enable(void);
-void ctrl_disable(void);
+void ctrl_enable_yaw(void);
+void ctrl_enable_pitch(void);
+void ctrl_disable_yaw(void);
+void ctrl_disable_pitch(void);
 void ctrl_set(void);
 void ctrl_clear_para(void);
 void ctrl_clear_err(void);

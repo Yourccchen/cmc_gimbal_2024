@@ -11,7 +11,7 @@ extern ReceivePacket vision_pkt;
   */
 void cShoot::Shoot_ControlLoop()
 {
-    Shoot_SpdChoose(5600);//速度选择
+    Shoot_SpdChoose(5700);//速度选择
     Shoot_ParamChoose();//参数设置
     Stuck_Check();//堵转检测
     Heat_Protect();//热量保护

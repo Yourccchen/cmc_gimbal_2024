@@ -42,7 +42,7 @@ void User_Init()
     IMU_UartInit();
     dm4310_motor_init();//达妙电机初始化
 
-
+//    ctrl_enable_yaw();
     gimbal.GIMBAL=NEW_HERO;
     MX_FREERTOS_Init();        //FreeRTOS初始化
     osKernelStart();           //FreeRTOS内核初始化，在该函数调用前，切勿使用osDelay()来延时

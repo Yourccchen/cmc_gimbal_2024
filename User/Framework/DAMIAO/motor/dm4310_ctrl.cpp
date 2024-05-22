@@ -131,11 +131,16 @@ void motor_para_minus(motor_t *motor)
 *               设置指定电机的启动标志，并调用dm4310_enable函数启用电机。
 ************************************************************************
 **/
-void ctrl_enable(void)
+void ctrl_enable_yaw(void)
 {
     // 启用Motor1、Motor2的电机控制
     motor[Motor1].start_flag = 1;
     dm4310_enable(&hcan2, &motor[Motor1]);//Yaw轴电机
+
+}
+void ctrl_enable_pitch(void)
+{
+    // 启用Motor1、Motor2的电机控制
     motor[Motor2].start_flag = 1;
     dm4310_enable(&hcan1, &motor[Motor2]);//Pitch轴电机
 }
@@ -148,19 +153,15 @@ void ctrl_enable(void)
 *               设置指定电机的启动标志为0，并调用dm4310_disable函数禁用电机。
 ************************************************************************
 **/
-void ctrl_disable(void)
+void ctrl_disable_yaw(void)
 {
-//	switch(motor_id)
-//	{
-//		case 1:
-//			// 禁用Motor1的电机控制
-//			motor[Motor1].start_flag = 0;
-//			dm4310_disable(&hcan1, &motor[Motor1]);
-//			break;
-//	}
     // 禁用Motor1、Motor2的电机控制
     motor[Motor1].start_flag = 1;
     dm4310_disable(&hcan2, &motor[Motor1]);//Yaw轴电机
+}
+
+void ctrl_disable_pitch(void)
+{
     motor[Motor2].start_flag = 1;
     dm4310_disable(&hcan1, &motor[Motor2]);//Pitch轴电机
 }

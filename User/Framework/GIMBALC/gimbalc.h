@@ -196,10 +196,10 @@ public:
     int8_t Last_ShootMode;                  //上次的射击模式
 
     int8_t ZimiaoFlag=0; //0代表关闭，1代表开启
-    float TuoluoDiredtion=330;
+    float TuoluoDiredtion=325;
     ///遥控器控制变量///
     float MousePih,MouseYaw,RCPih,RCYaw;
-    float ChassisYawTarget=330;//随动模式下正方向的角度
+    float ChassisYawTarget=325;//随动模式下正方向的角度
     float vx, vy, vz, PihTarget=50, YawTarget;//与遥控器交互用到的  车体运动参数与云台运动参数
     float ScopeUTarget,ScopeLTarget;
     extKalman_t Gimbal_YawAngle, Gimbal_PihAngle, Gimbal_MouseX, Gimbal_MouseY,ZIMIAO_Yaw,ZIMIAO_Pih;//定义一个卡尔曼滤波器结构体
@@ -212,6 +212,7 @@ public:
     uint32_t Last_ID;        //自瞄的上次ID
 
     int8_t GimbalPower;
+    int EnableFlag=1;
     ///分时发送控制变量///
     int32_t count_time_send=0;
     int defpitch=0;//初始化时令PihTarget等于定值的参数
