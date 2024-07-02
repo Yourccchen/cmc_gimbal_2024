@@ -554,9 +554,9 @@ void cGimbal::Sliding_Cal(void)
 ///选择各种模式下的PID参数、ADRC参数
 void cGimbal::Gimbal_ParamChoose(int8_t mode)
 {
-//    adrc[0].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
-//    adrc[1].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
-//    adrc[2].ADRCParamInit(1500, 0.05, 5, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
+    adrc[0].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
+    adrc[1].ADRCParamInit(1500, 0.05, 1, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
+    adrc[2].ADRCParamInit(1500, 0.05, 5, 0.5, 1, 1000, 10,0.5, 1.25, 80, 1);
 
     switch (mode)
     {
@@ -697,8 +697,8 @@ void cGimbal::Printf_Test()
     //Yaw打印//
 //    usart_printf("%f,%f,%f\r\n",TuoluoDiredtion,-(motors[YawMotor].RealAngle_Ecd-TuoluoDiredtion),motors[YawMotor].RealAngle_Ecd);
 //    usart_printf("%f,%f,%f\r\n",sliding[YawMotor].Out(),motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu);
-    usart_printf("%f,%f,%f,%f,%d\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealSpeed,
-                 motor[Motor1].para.state);
+//    usart_printf("%f,%f,%f,%f,%d\r\n", motors_pid[YawSpd].PID_Out,motors_pid[YawPos].PID_Target,motors[YawMotor].RealAngle_Imu,motors[YawMotor].RealSpeed,
+//                 motor[Motor1].para.state);
 //    usart_printf("%d,%d\r\n",Debug_Param().pos_maxIntegral,motors[YawMotor].RawSpeed);
     //Pih打印//
 //    usart_printf("%f,%f,%f\r\n",Pid_Out.PihCurrent,PihTarget,motors[PihMotor].RealAngle_Imu);
@@ -721,8 +721,8 @@ void cGimbal::Printf_Test()
 //                 motors_pid[RamSpd].PID_Out,motors_pid[RamPos].PID_Target,
 //                 motors[RamMotor].RealAngle_Ecd);
     //自瞄打印
-//    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
-//    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
+    usart_printf("%f,%f,%f,%f,%f,%f\r\n",vision_pkt.offset_yaw,YawTarget, motors[YawMotor].RealAngle_Imu
+    ,vision_pkt.offset_pitch, PihTarget,motors[PihMotor].RealAngle_Ecd);
 //    usart_printf("%f,%f\r\n",vision_pkt.offset_yaw,KalmanFilter(&ZIMIAO_Yaw,vision_pkt.offset_yaw));
     //滤波打印//
 //    lowfilter.Init(50,0.005);

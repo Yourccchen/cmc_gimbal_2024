@@ -20,15 +20,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 修改了旋转小陀螺，pitch轴电机编码器会乱的问题；增加了保护轮子电机没力的功能（之前是锁死，感觉不太好）">
+    <list default="true" id="ba40e2f8-01dd-454b-b654-6e6bda2eef63" name="更改" comment="fix: 修改了疯传云台的问题（可能）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Src/mainpp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Src/mainpp.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/DAMIAO/motor/dm4310_ctrl.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/GIMBALC/gimbalc.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Framework/SHOOTC/shootc.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/User/Tasks/GIMBAL_TASK/gimbal_task.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ce764d131250c1cace7064c42c25055270eb46fb" />
+        <entry key="$PROJECT_DIR$" value="50fe3f62b5f52d7dc147bcbdd88ac9d866e9a1c8" />
       </map>
     </option>
     <option name="RESET_MODE" value="HARD" />
@@ -97,6 +92,11 @@
     </key>
   </component>
   <component name="RunManager" selected="OpenOCD 下载并运行.cmc_gimbal_2024.elf">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="cmc_gimbal_2024.elf" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cmc_gimbal_2024" TARGET_NAME="cmc_gimbal_2024.elf" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cmc_gimbal_2024" RUN_TARGET_NAME="cmc_gimbal_2024.elf">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -261,6 +261,9 @@
       <workItem from="1716299361712" duration="678000" />
       <workItem from="1716341944830" duration="1718000" />
       <workItem from="1716384424252" duration="9003000" />
+      <workItem from="1716425987605" duration="1334000" />
+      <workItem from="1717464517638" duration="797000" />
+      <workItem from="1719885642785" duration="1016000" />
     </task>
     <task id="LOCAL-00024" summary="feat: 增加了按键V云台反转功能">
       <created>1704715565105</created>
